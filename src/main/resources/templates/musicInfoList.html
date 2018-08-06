@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>learn Resources</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<div style="text-align: center;margin:0 auto;width: 1000px; ">
+    <table width="100%" border="1" cellspacing="1" cellpadding="0">
+        <tr>
+            <td>id</td>
+            <td>歌手</td>
+            <td>文件大小</td>
+            <td>歌名</td>
+        </tr>
+        <!--/*@thymesVar id="learnList" type=""*/-->
+        <tr th:each="music : ${musicInfoList}">
+            <td th:text="${music.id}">---</td>
+            <td th:text="${music.singerName}">---</td>
+            <td th:text="${music.musicSize}">---</td>
+            <td th:text="${music.musicName}">---</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
