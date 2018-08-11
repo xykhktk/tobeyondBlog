@@ -1,7 +1,7 @@
 package com.tobeyond.blog.service.impl;
 
 import com.tobeyond.blog.dao.domain.Message;
-import com.tobeyond.blog.dao.domain.ReturnJson;
+import com.tobeyond.blog.model.Dto.ReturnJson;
 import com.tobeyond.blog.dao.mapper.MessageMapper;
 import com.tobeyond.blog.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;

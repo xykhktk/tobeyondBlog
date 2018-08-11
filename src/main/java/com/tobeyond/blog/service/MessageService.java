@@ -1,7 +1,7 @@
 package com.tobeyond.blog.service;
 
 
-import com.tobeyond.blog.dao.domain.ReturnJson;
+import com.tobeyond.blog.model.Dto.ReturnJson;
 
 public interface MessageService {
 

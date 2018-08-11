@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="admin/public/header"></head>
+<body>
+    <!-- 顶部开始 -->
+    <div th:replace="admin/public/topBanner"></div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+
+     <!-- 左侧菜单开始 -->
+    <div th:replace="admin/public/leftMenu"></div>
+    <!-- 左侧菜单结束 -->
+
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+          <ul class="layui-tab-title">
+            <li class="home"><i class="layui-icon">&#xe68e;</i>我的桌面</li>
+          </ul>
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe src='/admin/index/welcome' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="page-content-bg"></div>
+    <!-- 右侧主体结束 -->
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div class="footer">
+        <div class="copyright">Copyright ©2018 Tobeyond All Rights Reserved</div>
+    </div>
+    <!-- 底部结束 -->
+</body>
+</html>
