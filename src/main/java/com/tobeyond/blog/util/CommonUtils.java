@@ -1,7 +1,7 @@
 package com.tobeyond.blog.util;
 
 import com.tobeyond.blog.Constant.WebConst;
-import com.tobeyond.blog.dao.domain.UserCustom;
+import com.tobeyond.blog.model.Bo.UserCustom;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.renderer.html.HtmlRenderer;

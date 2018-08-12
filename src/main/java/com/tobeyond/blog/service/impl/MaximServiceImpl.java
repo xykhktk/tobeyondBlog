@@ -1,6 +1,6 @@
 package com.tobeyond.blog.service.impl;
 
-import com.tobeyond.blog.dao.domain.Maxim;
+import com.tobeyond.blog.model.po.Maxim;
 import com.tobeyond.blog.dao.mapper.MaximMapper;
 import com.tobeyond.blog.service.MaximsService;
 import org.springframework.beans.factory.annotation.Autowired;

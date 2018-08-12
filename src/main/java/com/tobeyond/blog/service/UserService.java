@@ -2,9 +2,7 @@ package com.tobeyond.blog.service;
 
 
 
-import com.tobeyond.blog.dao.domain.UserCustom;
-
-import java.util.List;
+import com.tobeyond.blog.model.Bo.UserCustom;
 
 public interface UserService {
 

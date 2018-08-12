@@ -1,7 +1,7 @@
 package com.tobeyond.blog.controller;
 
-import com.tobeyond.blog.dao.domain.Article;
-import com.tobeyond.blog.dao.domain.Maxim;
+import com.tobeyond.blog.model.po.Article;
+import com.tobeyond.blog.model.po.Maxim;
 import com.tobeyond.blog.model.Dto.ReturnJson;
 import com.tobeyond.blog.service.ArticleService;
 import com.tobeyond.blog.service.MaximsService;

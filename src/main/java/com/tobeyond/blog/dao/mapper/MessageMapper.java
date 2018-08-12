@@ -1,6 +1,6 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.dao.domain.Message;
+import com.tobeyond.blog.model.po.Message;
 import org.apache.ibatis.annotations.Insert;
 
 public interface MessageMapper {

@@ -1,15 +1,12 @@
 package com.tobeyond.blog.service.impl;
 
-import com.tobeyond.blog.dao.domain.User;
-import com.tobeyond.blog.dao.domain.UserCustom;
+import com.tobeyond.blog.model.Bo.UserCustom;
 import com.tobeyond.blog.dao.mapper.UserMapper;
 import com.tobeyond.blog.exception.TobeyondException;
 import com.tobeyond.blog.service.UserService;
 import com.tobeyond.blog.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {

@@ -1,6 +1,6 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.dao.domain.Maxim;
+import com.tobeyond.blog.model.po.Maxim;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;

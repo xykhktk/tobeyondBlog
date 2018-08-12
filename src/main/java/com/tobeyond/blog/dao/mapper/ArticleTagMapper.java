@@ -1,6 +1,6 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.dao.domain.ArticleTag;
+import com.tobeyond.blog.model.po.ArticleTag;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;

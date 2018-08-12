@@ -1,6 +1,6 @@
 package com.tobeyond.blog.interceptor;
 
-import com.tobeyond.blog.dao.domain.UserCustom;
+import com.tobeyond.blog.model.Bo.UserCustom;
 import com.tobeyond.blog.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

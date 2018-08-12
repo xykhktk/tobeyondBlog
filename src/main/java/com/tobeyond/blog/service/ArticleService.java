@@ -1,8 +1,8 @@
 package com.tobeyond.blog.service;
 
 
-import com.tobeyond.blog.dao.domain.Article;
-import com.tobeyond.blog.dao.domain.ArticleTag;
+import com.tobeyond.blog.model.po.Article;
+import com.tobeyond.blog.model.po.ArticleTag;
 
 import java.util.List;
 

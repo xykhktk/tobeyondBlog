@@ -1,4 +1,4 @@
-package com.tobeyond.blog.dao.domain;
+package com.tobeyond.blog.model.po;
 
 public class User extends CommField {
 

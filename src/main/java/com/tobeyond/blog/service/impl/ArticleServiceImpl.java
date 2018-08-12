@@ -2,8 +2,8 @@ package com.tobeyond.blog.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.tobeyond.blog.dao.domain.Article;
-import com.tobeyond.blog.dao.domain.ArticleTag;
+import com.tobeyond.blog.model.po.Article;
+import com.tobeyond.blog.model.po.ArticleTag;
 import com.tobeyond.blog.dao.mapper.ArticleMapper;
 import com.tobeyond.blog.dao.mapper.ArticleTagMapper;
 import com.tobeyond.blog.service.ArticleService;

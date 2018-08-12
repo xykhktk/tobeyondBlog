@@ -1,6 +1,6 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.dao.domain.Tag;
+import com.tobeyond.blog.model.po.Tag;
 import org.apache.ibatis.annotations.Select;
 
 public interface TagMapper {
