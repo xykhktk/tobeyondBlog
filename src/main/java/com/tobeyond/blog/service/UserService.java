@@ -2,11 +2,13 @@ package com.tobeyond.blog.service;
 
 
 
+import com.tobeyond.blog.dao.domain.User;
+
 import java.util.List;
 
 public interface UserService {
 
 
-    boolean userLogin(String name,String password);
+    User userLogin(String name, String password);
 
 }

@@ -70,9 +70,9 @@ public class CommonUtils {
      * @return 加密字符串
      */
     public static String MD5encode(String source) {
-//        if (StringUtils.isBlank(source)) {
-//            return null;
-//        }
+        if (StringUtils.isBlank(source)) {
+            return null;
+        }
         MessageDigest messageDigest = null;
         try {
             messageDigest = MessageDigest.getInstance("MD5");

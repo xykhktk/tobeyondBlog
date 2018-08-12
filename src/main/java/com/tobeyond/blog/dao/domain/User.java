@@ -2,6 +2,7 @@ package com.tobeyond.blog.dao.domain;
 
 public class User extends CommField {
 
+    private Integer id;
     private String name;
     private String password;
     private String salt;
@@ -28,5 +29,13 @@ public class User extends CommField {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

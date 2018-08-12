@@ -15,6 +15,7 @@
     <script src="/admin/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/admin/js/xadmin.js"></script>
     <script type="text/javascript" src="/admin/js/tobeyond.js"></script>
+    <script type="text/javascript" src="/admin/js/md5.js"></script>
 </head>
 <body class="login-bg">
     
@@ -39,7 +40,7 @@
                 var form = layui.form;
                 //监听提交
                 form.on('submit(login)', function (data) {
-
+                    data.field.password = hex_md5(data.field.password);
                     T_POST('/admin/login',data.field,
                         function (data) {
                         console.log(data);
@@ -53,36 +54,6 @@
                         }
                     );
 
-
-                    /**
-                     $.ajax({
-                      url: '/admin/login',
-                      type: 'post',
-                      dataType: 'json',
-                      data: data.field,
-                      error: function(error) {
-                          let msg = error.status;
-                          if(error.responseJSON.message){
-                              msg += " " + error.responseJSON.message;
-                          }
-                          layer.msg(msg, {icon: 2});
-                      },
-                      success : function (data) {
-                          if (data.success == true) {
-                              layer.msg(data.msg,function(){
-                                    location.href='/admin'
-                              });
-                          } else {
-                              layer.msg(data.msg, {icon: 2});
-                          }
-                      }
-                  })
-                     //                      .done(function (data) {
-//
-//                   })
-                     ;
-                     *
-                     */
                     return false;
                 });
             });
