@@ -15,9 +15,7 @@
     </sql>
 
     <select id="selectByName" parameterType="String" resultType="com.tobeyond.blog.dao.domain.UserCustom">
-        select
-        <include refid="Base_Column" />
-        from users WHERE name = #{VALUE}
+        select  <include refid="Base_Column" />  from users WHERE name = #{VALUE}
     </select>
 
 

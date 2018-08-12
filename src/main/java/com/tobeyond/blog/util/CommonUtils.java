@@ -1,5 +1,7 @@
 package com.tobeyond.blog.util;
 
+import com.tobeyond.blog.Constant.WebConst;
+import com.tobeyond.blog.dao.domain.UserCustom;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -13,6 +15,7 @@ import javax.imageio.ImageIO;
 import com.vdurmont.emoji.EmojiParser;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.awt.*;
 import java.io.*;
@@ -96,13 +99,13 @@ public class CommonUtils {
      *
      * @return
      */
-//    public static UserVo getLoginUser(HttpServletRequest request) {
-//        HttpSession session = request.getSession();
-//        if (null == session) {
-//            return null;
-//        }
-//        return (UserVo) session.getAttribute(WebConst.LOGIN_SESSION_KEY);
-//    }
+    public static UserCustom getLoginUser(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (null == session) {
+            return null;
+        }
+        return (UserCustom) session.getAttribute(WebConst.ADMIN_SESSION_KEY);
+    }
 
 
     /**

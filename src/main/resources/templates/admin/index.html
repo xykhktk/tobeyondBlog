@@ -33,4 +33,26 @@
     </div>
     <!-- 底部结束 -->
 </body>
+<script type="text/javascript" src="/adminResource/js/tobeyond.js"></script>
+<script>
+    function logout() {
+        var _csrf = $("#_csrf").val();
+        if(null == _csrf) return false;
+
+        T_POST('/admin/logout',
+            {
+                _csrf : _csrf
+            },
+            function (data) {
+                if (data.success == true) {
+                    layer.msg(data.message,function(){
+                        location.href='/admin/login'
+                    });
+                } else {
+                    layer.msg(data.message, {icon: 2});
+                }
+            }
+        );
+    }
+</script>
 </html>
