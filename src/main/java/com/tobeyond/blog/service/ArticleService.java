@@ -1,6 +1,7 @@
 package com.tobeyond.blog.service;
 
 
+import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.po.Article;
 import com.tobeyond.blog.model.po.ArticleTag;
 
@@ -16,4 +17,5 @@ public interface ArticleService {
 
     List<ArticleTag> getTagListByTagId(Long tag_id);
 
+    PageInfo<Article> articleListBaseInfo(Integer page, Integer limit);
 }

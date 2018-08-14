@@ -4,8 +4,11 @@ import java.util.List;
 
 public class Article extends CommField {
 
+    private Integer id;
     private Integer article_id;
     private Integer category_id;
+    private Integer view_count;
+    private Integer user_id;
     private String title;
     private String page_image;
     private String subtitle;
@@ -75,6 +78,30 @@ public class Article extends CommField {
 
     public void setArticleTag(List<ArticleTag> articleTag) {
         this.articleTag = articleTag;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getView_count() {
+        return view_count;
+    }
+
+    public void setView_count(Integer view_count) {
+        this.view_count = view_count;
     }
 
     @Override

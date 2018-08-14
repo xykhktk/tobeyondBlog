@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tobeyond.blog.dao.mapper.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.tobeyond.blog.model.po.Article">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="category_id" jdbcType="INTEGER" property="category_id" />
+        <result column="user_id" jdbcType="INTEGER" property="user_id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="subtitle" jdbcType="VARCHAR" property="subtitle" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="page_image" jdbcType="VARCHAR" property="page_image" />
+        <result column="view_count" jdbcType="INTEGER" property="view_count" />
+        <result column="created_at" jdbcType="VARCHAR" property="created_at" />
+        <result column="updated_at" jdbcType="VARCHAR" property="updated_at" />
+    </resultMap>
+
+    <sql id="Base_Column">
+        id, category_id,user_id, title, subtitle, content, page_image, view_count, created_at, updated_at
+    </sql>
+
+    <select id="articleListBaseInfo" resultMap="BaseResultMap">
+        select  <include refid="Base_Column" />  from articles order by id desc
+    </select>
+
+</mapper>

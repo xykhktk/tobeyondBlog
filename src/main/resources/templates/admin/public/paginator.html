@@ -1,0 +1,11 @@
+<div class="page" th:fragment="layuiPageNav(pageInfo)">
+    <div>
+
+        <a th:if="${pageInfo.hasPreviousPage}" class="prev" th:href="@{'?page='+${pageInfo.prePage}}">&lt;&lt;</a>
+
+        <a th:each="nav : ${pageInfo.navigatepageNums}" th:class="${nav==pageInfo.pageNum}?'current':'num'" th:href="@{'?page='+${nav}}" href="" th:text="${nav}">?</a>
+
+        <a th:if="${pageInfo.hasNextPage}" class="next" th:href="@{'?page='+${pageInfo.nextPage}}" >&gt;&gt;</a>
+
+    </div>
+</div>

@@ -2,6 +2,8 @@ package com.tobeyond.blog.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.po.Article;
 import com.tobeyond.blog.model.po.ArticleTag;
 import com.tobeyond.blog.dao.mapper.ArticleMapper;
@@ -11,6 +13,7 @@ import org.markdownj.MarkdownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -62,4 +65,16 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleTag> getTagListByTagId(Long tag_id) {
         return articleTagMapper.getTagsListByTagId(tag_id);
     }
+
+    @Override
+    public PageInfo<Article> articleListBaseInfo(Integer page, Integer limit) {
+        PageHelper.startPage(page, limit);
+//        HashMap<String,Object> paramMap = new HashMap<>();
+//        paramMap.put("page",page);
+//        paramMap.put("limit",limit);
+        List<Article> articleList = articleMapper.articleListBaseInfo();
+        return new PageInfo<>(articleList);
+    }
+
+
 }

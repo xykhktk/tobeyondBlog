@@ -18,5 +18,8 @@
         select  <include refid="Base_Column" />  from users WHERE name = #{VALUE}
     </select>
 
+    <select id="articleListWithXml" resultType="com.tobeyond.blog.model.Bo.UserCustom">
+        select  <include refid="Base_Column" />  from users WHERE name = #{VALUE}
+    </select>
 
 </mapper>

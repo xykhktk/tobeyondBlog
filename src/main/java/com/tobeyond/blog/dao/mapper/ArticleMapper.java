@@ -3,6 +3,7 @@ package com.tobeyond.blog.dao.mapper;
 import com.tobeyond.blog.model.po.Article;
 import org.apache.ibatis.annotations.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ArticleMapper {
@@ -45,4 +46,6 @@ public interface ArticleMapper {
     })
     List<Article> articleListForIndex();
 
+    //单表查询article
+    List<Article> articleListBaseInfo();
 }
