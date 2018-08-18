@@ -4,17 +4,19 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.tobeyond.blog.model.po.Article;
-import com.tobeyond.blog.model.po.ArticleTag;
+import com.tobeyond.blog.model.Bo.ArticleBo;
+import com.tobeyond.blog.model.po.ArticlePo;
+import com.tobeyond.blog.model.po.ArticleTagPo;
 import com.tobeyond.blog.dao.mapper.ArticleMapper;
 import com.tobeyond.blog.dao.mapper.ArticleTagMapper;
 import com.tobeyond.blog.service.ArticleService;
+import com.tobeyond.blog.util.DateKit;
 import org.markdownj.MarkdownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -25,14 +27,14 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleTagMapper articleTagMapper;
 
     @Override
-    public List<Article> articleList(Long tag_id) {
+    public List<ArticlePo> articleList(Long tag_id) {
 
         StringBuffer in_ids = new StringBuffer("");
         if(null != tag_id){
-            List<ArticleTag> articleTags = getTagListByTagId(tag_id);
+            List<ArticleTagPo> articleTags = getTagListByTagId(tag_id);
             if(articleTags.size() > 0){
                 in_ids.append("(");
-                for(ArticleTag articleTag : articleTags){
+                for(ArticleTagPo articleTag : articleTags){
                     in_ids.append(articleTag.getArticle_id());
                     in_ids.append(",");
                 }
@@ -47,13 +49,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> articleListForIndex() {
+    public List<ArticlePo> articleListForIndex() {
         return articleMapper.articleListForIndex();
     }
 
     @Override
-    public Article getArticleById(long id) {
-        Article article =  articleMapper.getArticleById(id);
+    public ArticlePo getArticleById(long id) {
+        ArticlePo article =  articleMapper.getArticleById(id);
         JSONObject jsonObject = JSON.parseObject(article.getContent());
         MarkdownProcessor markdownProcessor = new MarkdownProcessor();
         String html = markdownProcessor.markdown(jsonObject.getString("raw"));
@@ -62,18 +64,54 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleTag> getTagListByTagId(Long tag_id) {
+    public List<ArticleTagPo> getTagListByTagId(Long tag_id) {
         return articleTagMapper.getTagsListByTagId(tag_id);
     }
 
     @Override
-    public PageInfo<Article> articleListBaseInfo(Integer page, Integer limit) {
+    public PageInfo<ArticlePo> articleListBaseInfo(Integer page, Integer limit) {
+        if(page == null) page = 1;
         PageHelper.startPage(page, limit);
-//        HashMap<String,Object> paramMap = new HashMap<>();
-//        paramMap.put("page",page);
-//        paramMap.put("limit",limit);
-        List<Article> articleList = articleMapper.articleListBaseInfo();
+        List<ArticlePo> articleList = articleMapper.articleListBaseInfo();
         return new PageInfo<>(articleList);
+    }
+
+    @Override
+    public ArticleBo articleFullInfo(Long id) {
+        HashMap<String,Object> paramMap = new HashMap<>();
+        paramMap.put("id",id);
+        ArticleBo articleCustom = articleMapper.articleFullInfo(paramMap);
+        return articleCustom;
+    }
+
+    @Override
+    @Transactional
+    public Boolean articleAdd(ArticlePo article,String tagIds) {
+        String now = DateKit.dateFormat(new Date());
+        try {
+            article.setCreated_at(now);
+            article.setUpdated_at(now);
+            articleMapper.articleAdd(article);
+
+            //批量插入
+            String[] tagArray =  tagIds.split(",");
+            List<ArticleTagPo> articleTagPoList = new ArrayList<>();
+            for(String tagId : tagArray){
+                ArticleTagPo articleTagPo = new ArticleTagPo();
+                articleTagPo.setArticle_id(article.getId());
+                articleTagPo.setTag_id(Integer.valueOf(tagId));
+                articleTagPo.setCreated_at(now);
+                articleTagPo.setUpdated_at(now);
+                articleTagPoList.add(articleTagPo);
+            }
+            articleTagMapper.insertBatch(articleTagPoList);
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 
 

@@ -28,9 +28,9 @@ public class BaseInterceptor implements HandlerInterceptor {
 
         //请求拦截处理
         UserCustom user = CommonUtils.getLoginUser(request);
-        System.out.print(uri);
-        System.out.print("---");
-        System.out.print(contextPath);
+//        System.out.print(uri);
+//        System.out.print("---");
+//        System.out.print(contextPath);
         if ( null == user &&
                 !uri.startsWith(contextPath + "/admin/login") &&
 //                !uri.startsWith(contextPath + "/admin/js") &&

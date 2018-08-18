@@ -1,9 +1,6 @@
-package com.tobeyond.blog.Constant;
+package com.tobeyond.blog.constant;
 
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by BlueT on 2017/3/3.

@@ -1,6 +1,9 @@
-package com.tobeyond.blog.model.po;
+package com.tobeyond.blog.model.Bo;
 
-public class ArticleTag extends CommField {
+import com.tobeyond.blog.model.po.ArticleTagPo;
+import com.tobeyond.blog.model.po.Tag;
+
+public class ArticleTagBo extends ArticleTagPo {
 
     private Integer id;
     private Integer tag_id;

@@ -1,6 +1,6 @@
 package com.tobeyond.blog.util;
 
-import com.tobeyond.blog.Constant.WebConst;
+import com.tobeyond.blog.constant.WebConst;
 import com.tobeyond.blog.model.Bo.UserCustom;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;

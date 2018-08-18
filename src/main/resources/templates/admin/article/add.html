@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tobeyond后台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/adminResource/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/adminResource/css/font.css">
+    <link rel="stylesheet" href="/adminResource/css/xadmin.css">
+    <script th:src="@{//cdn.bootcss.com/jquery/2.2.3/jquery.min.js}"></script>
+    <script src="/adminResource/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/adminResource/js/xadmin.js"></script>
+    <script type="text/javascript" src="/adminResource/js/tobeyond.js"></script>
+    <link th:href="@{/adminResource/lib/md/css/style.css}" rel="stylesheet"/>
+
+</head>
+
+<body>
+<div class="x-body">
+
+    <form class="layui-form" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="_csrf">
+        <div class="layui-form-item">
+            <label for="title" class="layui-form-label">
+                <span class="x-red">*</span>标题
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="title" name="title" lay-verify="required"
+                       autocomplete="off" value="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="subtitle" class="layui-form-label">
+                <span class="x-red">*</span>副标题
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" value="" id="subtitle" name="subtitle" lay-verify="required" autocomplete="off"
+                       class="layui-input">
+
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>显示在标题下的一段话,可以作为摘要
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="page_image" class="layui-form-label">
+                <span class="x-red">*</span>主图
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" value="" id="page_image" name="page_image" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>填写外链
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="page_image" class="layui-form-label">
+                <span class="x-red">*</span>slug
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" value="" id="slug" name="slug" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>类似/article/yilaizhuru 这样的效果
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否显示</label>
+            <div class="layui-input-block">
+                <input type="checkbox" lay-skin="switch" value="1" name="is_show">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">标签</label>
+            <div class="layui-input-block">
+                <input th:each="tag : ${tagList}" th:title="${tag.title}" th:value="${tag.id}"  type="checkbox" name="tagId[]">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">请填写描述</label>
+            <div class="layui-input-block">
+                    <textarea style="height: 450px" autocomplete="off" id="text" name="text"
+                              class="markdown-textarea"
+                    ></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="commit" lay-submit="">
+                增加
+            </button>
+        </div>
+
+    </form>
+</div>
+
+  </body>
+    <script th:src="@{/adminResource/lib/md/js/jquery.scrollto.js}"></script>
+    <script th:src="@{/adminResource/lib//md/js/pagedown.js}"></script>
+    <script th:src="@{/adminResource/lib//md/js/pagedown-extra.js}"></script>
+    <script th:src="@{/adminResource/lib//md/js/diff.js}"></script>
+    <script th:src="@{/adminResource/lib//md/js/md.js}"></script>
+    <script th:src="@{/adminResource/js/article/article_add.js}"></script>
+</html>

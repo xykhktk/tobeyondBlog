@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tobeyond.blog.dao.mapper.TagMapper">
+    <resultMap id="BaseResultMap" type="com.tobeyond.blog.model.po.Tag">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="tag" jdbcType="VARCHAR" property="tag" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+    </resultMap>
+
+    <sql id="Base_Column">
+        tags.id,tags.tag,tags.title
+    </sql>
+
+    <select id="tagsList" resultMap="BaseResultMap">
+        select  <include refid="Base_Column" />  from tags order by id desc
+    </select>
+
+</mapper>

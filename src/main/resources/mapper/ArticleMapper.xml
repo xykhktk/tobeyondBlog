@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tobeyond.blog.dao.mapper.ArticleMapper">
-    <resultMap id="BaseResultMap" type="com.tobeyond.blog.model.po.Article">
+    <resultMap id="BaseResultMap" type="com.tobeyond.blog.model.po.ArticlePo">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="category_id" jdbcType="INTEGER" property="category_id" />
         <result column="user_id" jdbcType="INTEGER" property="user_id" />
@@ -14,12 +14,58 @@
         <result column="updated_at" jdbcType="VARCHAR" property="updated_at" />
     </resultMap>
 
+    <resultMap id="ArticleTags" type="com.tobeyond.blog.model.Bo.ArticleTagBo">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="article_id" jdbcType="INTEGER" property="article_id" />
+        <result column="tag_id" jdbcType="INTEGER" property="tag_id" />
+    </resultMap>
+
+    <resultMap extends="BaseResultMap" id="FullResultMap" type="com.tobeyond.blog.model.Bo.ArticleBo">
+        <collection property="tagList" ofType="com.tobeyond.blog.model.Bo.ArticleTagBo" column="id" select="getArticleTags">
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column">
-        id, category_id,user_id, title, subtitle, content, page_image, view_count, created_at, updated_at
+        articles.id, articles.category_id,articles.user_id, articles.title, articles.subtitle, articles.content,
+        articles.page_image, articles.view_count, articles.created_at, articles.updated_at
     </sql>
 
     <select id="articleListBaseInfo" resultMap="BaseResultMap">
         select  <include refid="Base_Column" />  from articles order by id desc
     </select>
+
+    <select id="articleFullInfo" resultMap="FullResultMap" parameterType="Map">
+        SELECT   <include refid="Base_Column" />
+        ,article_tags.tag_id
+        FROM articles
+        LEFT JOIN article_tags ON articles.id = article_tags.article_id
+        WHERE articles.id = #{id}
+    </select>
+
+    <select id="getArticleTags" parameterType="int" resultMap="ArticleTags">
+        select
+        article_tags.tag_id
+        from article_tags
+        where article_tags.article_id = #{id}
+    </select>
+
+    <!--<insert id="articleAdd" parameterType="com.tobeyond.blog.model.po.ArticlePo">-->
+    <!--keyProperty="id"会使得insert后返回id，id赋值在传入的对象里-->
+    <insert id="articleAdd" useGeneratedKeys="true" keyProperty="id" parameterType="com.tobeyond.blog.model.po.ArticlePo">
+        insert into articles(user_id,slug,title,subtitle,content,page_image,is_show,created_at)
+        values(#{user_id,jdbcType=INTEGER},
+        #{slug,jdbcType=VARCHAR},
+        #{title,jdbcType=VARCHAR},
+        #{subtitle,jdbcType=VARCHAR},
+        #{content,jdbcType=VARCHAR},
+        #{page_image,jdbcType=VARCHAR},
+        #{is_show,jdbcType=INTEGER},
+        #{created_at,jdbcType=VARCHAR})
+    </insert>
+
+    <!--insert into articles(user_id,slug,title,subtitle,content,page_image,is_show) values('100','aabbcc','111','222','333','444','1')-->
+
+
+
 
 </mapper>

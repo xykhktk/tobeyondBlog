@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tobeyond.blog.dao.mapper.ArticleTagMapper">
+    <resultMap id="BaseResultMap" type="com.tobeyond.blog.model.po.ArticleTagPo">
+        <id column="id" jdbcType="INTEGER" property="id" />
+    </resultMap>
+
+    <sql id="Base_Column">
+    </sql>
+
+    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article_tags (tag_id,article_id,created_at)  values
+        <foreach collection="list" item="articleTag" index="index" separator=",">
+            (#{articleTag.tag_id},#{articleTag.article_id},#{articleTag.created_at})
+        </foreach>
+    </insert>
+
+</mapper>

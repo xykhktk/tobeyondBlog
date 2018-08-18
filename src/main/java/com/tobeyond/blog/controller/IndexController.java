@@ -1,6 +1,6 @@
 package com.tobeyond.blog.controller;
 
-import com.tobeyond.blog.model.po.Article;
+import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.Maxim;
 import com.tobeyond.blog.model.Dto.ReturnJson;
 import com.tobeyond.blog.service.ArticleService;
@@ -34,7 +34,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public ModelAndView index(){
-        List<Article> articleList = articleService.articleListForIndex();
+        List<ArticlePo> articleList = articleService.articleListForIndex();
         List<Maxim> maximList = maximsService.maximList();
         ModelAndView modelAndView = new ModelAndView("/index");
         modelAndView.addObject("articleList",articleList);

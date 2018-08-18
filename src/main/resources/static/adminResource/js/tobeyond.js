@@ -17,6 +17,7 @@ function T_POST(url,data,success) {
         data: data,
         success : success,
         error: function(error) {
+            console.log(error);
             let msg = error.status;
             // console.log(error.responseJSON);
             if(error.responseJSON.message != null){

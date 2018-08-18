@@ -2,20 +2,26 @@ package com.tobeyond.blog.service;
 
 
 import com.github.pagehelper.PageInfo;
-import com.tobeyond.blog.model.po.Article;
-import com.tobeyond.blog.model.po.ArticleTag;
+import com.tobeyond.blog.model.Bo.ArticleBo;
+import com.tobeyond.blog.model.po.ArticlePo;
+import com.tobeyond.blog.model.po.ArticleTagPo;
 
 import java.util.List;
 
 public interface ArticleService {
 
-    List<Article> articleList(Long tag_id);
+    List<ArticlePo> articleList(Long tag_id);
 
-    List<Article> articleListForIndex();
+    List<ArticlePo> articleListForIndex();
 
-    Article getArticleById(long id);
+    ArticlePo getArticleById(long id);
 
-    List<ArticleTag> getTagListByTagId(Long tag_id);
+    List<ArticleTagPo> getTagListByTagId(Long tag_id);
 
-    PageInfo<Article> articleListBaseInfo(Integer page, Integer limit);
+    PageInfo<ArticlePo> articleListBaseInfo(Integer page, Integer limit);
+
+    ArticleBo articleFullInfo(Long id);
+
+    Boolean articleAdd(ArticlePo article,String tagIds);
+
 }

@@ -179,7 +179,7 @@ function x_admin_show(title,url,w,h){
     if (h == null || h == '') {
         h=($(window).height() - 50);
     };
-    layer.open({
+    perContent = layer.open({
         type: 2,
         area: [w+'px', h +'px'],
         fix: false, //不固定
@@ -189,6 +189,11 @@ function x_admin_show(title,url,w,h){
         title: title,
         content: url
     });
+
+    if ((w == null || w == '') && (h == null || h == '')) {
+        layer.full(perContent);
+    }
+
 }
 
 /*关闭弹出框口*/

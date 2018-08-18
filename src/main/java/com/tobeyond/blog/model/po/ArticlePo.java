@@ -2,7 +2,7 @@ package com.tobeyond.blog.model.po;
 
 import java.util.List;
 
-public class Article extends CommField {
+public class ArticlePo extends CommField {
 
     private Integer id;
     private Integer article_id;
@@ -13,8 +13,18 @@ public class Article extends CommField {
     private String page_image;
     private String subtitle;
     private String content;
-    private Integer is_original;
-    private List<ArticleTag> articleTag;
+    private String slug;
+//    private Integer is_original;
+    private Integer is_show;
+    private List<ArticleTagPo> articleTag;
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 
     public Integer getArticle_id() {
         return article_id;
@@ -56,14 +66,6 @@ public class Article extends CommField {
         this.content = content;
     }
 
-    public Integer getIs_original() {
-        return is_original;
-    }
-
-    public void setIs_original(Integer is_original) {
-        this.is_original = is_original;
-    }
-
     public String getPage_image() {
         return page_image;
     }
@@ -72,11 +74,11 @@ public class Article extends CommField {
         this.page_image = page_image;
     }
 
-    public List<ArticleTag> getArticleTag() {
+    public List<ArticleTagPo> getArticleTag() {
         return articleTag;
     }
 
-    public void setArticleTag(List<ArticleTag> articleTag) {
+    public void setArticleTag(List<ArticleTagPo> articleTag) {
         this.articleTag = articleTag;
     }
 
@@ -102,6 +104,14 @@ public class Article extends CommField {
 
     public void setView_count(Integer view_count) {
         this.view_count = view_count;
+    }
+
+    public Integer getIs_show() {
+        return is_show;
+    }
+
+    public void setIs_show(Integer is_show) {
+        this.is_show = is_show;
     }
 
     @Override

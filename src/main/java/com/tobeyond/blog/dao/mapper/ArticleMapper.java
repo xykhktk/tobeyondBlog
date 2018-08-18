@@ -1,11 +1,14 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.model.po.Article;
+import com.tobeyond.blog.model.Bo.ArticleBo;
+import com.tobeyond.blog.model.po.ArticlePo;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
 
+@Component
 public interface ArticleMapper {
 
     @SelectProvider(type = com.tobeyond.blog.dao.provider.ArticleProvider.class,method = "articleList")
@@ -25,7 +28,7 @@ public interface ArticleMapper {
                     )
             )
     })
-    List<Article> articleList(@Param("in_ids") String in_ids);
+    List<ArticlePo> articleList(@Param("in_ids") String in_ids);
 
     @Select("select * from articles where id = #{id}")
     @Results({
@@ -33,7 +36,7 @@ public interface ArticleMapper {
             @Result(column = "id", property = "articleTag",
                     many = @Many(select = "com.tobeyond.blog.dao.mapper.ArticleTagMapper.findTagsByArticle")
             )})
-    Article getArticleById(Long id);
+    ArticlePo getArticleById(Long id);
 
     @Select("select * from articles order by created_at limit 4")
     @Results({
@@ -44,8 +47,13 @@ public interface ArticleMapper {
                     )
             )
     })
-    List<Article> articleListForIndex();
+    List<ArticlePo> articleListForIndex();
 
     //单表查询article
-    List<Article> articleListBaseInfo();
+    List<ArticlePo> articleListBaseInfo();
+
+    ArticleBo articleFullInfo(HashMap<String,Object> params);
+
+    int articleAdd(ArticlePo article);
+
 }
