@@ -3,9 +3,9 @@ package com.tobeyond.blog.controller;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.Maxim;
 import com.tobeyond.blog.model.Dto.ReturnJson;
-import com.tobeyond.blog.service.ArticleService;
-import com.tobeyond.blog.service.MaximsService;
-import com.tobeyond.blog.service.MessageService;
+import com.tobeyond.blog.service.IArticleService;
+import com.tobeyond.blog.service.IMaximsService;
+import com.tobeyond.blog.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +17,13 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    ArticleService articleService;
+    IArticleService articleService;
 
     @Autowired
-    MaximsService maximsService;
+    IMaximsService maximsService;
 
     @Autowired
-    MessageService messageService;
+    IMessageService messageService;
 
     private ModelAndView modelAndView;
 

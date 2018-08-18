@@ -9,7 +9,7 @@ import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.ArticleTagPo;
 import com.tobeyond.blog.dao.mapper.ArticleMapper;
 import com.tobeyond.blog.dao.mapper.ArticleTagMapper;
-import com.tobeyond.blog.service.ArticleService;
+import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.util.DateKit;
 import org.markdownj.MarkdownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-public class ArticleServiceImpl implements ArticleService {
+public class ArticleServiceImpl implements IArticleService {
 
     @Autowired
     ArticleMapper articleMapper;
@@ -111,6 +111,31 @@ public class ArticleServiceImpl implements ArticleService {
             return false;
         }
 
+        return true;
+    }
+
+    @Override
+    public Boolean articleDel(Integer id) {
+        try {
+            articleMapper.articleDel(id);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean changeShow(Integer id, Integer is_show) {
+        try {
+            HashMap<String,Object> params = new HashMap<>();
+            params.put("id",id);
+            params.put("is_show",is_show);
+            articleMapper.changeShow(params);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
         return true;
     }
 

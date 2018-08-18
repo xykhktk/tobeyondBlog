@@ -8,7 +8,7 @@ import com.tobeyond.blog.model.po.ArticleTagPo;
 
 import java.util.List;
 
-public interface ArticleService {
+public interface IArticleService {
 
     List<ArticlePo> articleList(Long tag_id);
 
@@ -23,5 +23,9 @@ public interface ArticleService {
     ArticleBo articleFullInfo(Long id);
 
     Boolean articleAdd(ArticlePo article,String tagIds);
+
+    Boolean articleDel(Integer id);
+
+    Boolean changeShow(Integer id,Integer is_show);
 
 }

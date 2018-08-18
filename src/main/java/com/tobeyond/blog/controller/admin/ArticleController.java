@@ -7,8 +7,8 @@ import com.tobeyond.blog.model.Bo.UserCustom;
 import com.tobeyond.blog.model.Dto.ReturnJson;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.Tag;
-import com.tobeyond.blog.service.ArticleService;
-import com.tobeyond.blog.service.TagService;
+import com.tobeyond.blog.service.IArticleService;
+import com.tobeyond.blog.service.ITagService;
 import com.tobeyond.blog.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,10 +25,10 @@ public class ArticleController {
     private ModelAndView modelAndView;
 
     @Autowired
-    ArticleService articleService;
+    IArticleService articleService;
 
     @Autowired
-    TagService tagService;
+    ITagService tagService;
 
 //    @GetMapping(value = "/list/page/{page}")
 //    public ModelAndView articleList(@PathVariable int page){
@@ -41,6 +41,7 @@ public class ArticleController {
     @GetMapping(value = "/list")
     public ModelAndView articleList(@RequestParam(value = "page",required = false) Integer page){
         PageInfo<ArticlePo> articlesPaginator =  articleService.articleListBaseInfo(page,10);
+        System.out.print(JSON.toJSONString(articlesPaginator.getList()));
         ModelAndView modelAndView = new ModelAndView("/admin/article/list");
         modelAndView.addObject("articleList",articlesPaginator);
         return  modelAndView;
@@ -95,6 +96,37 @@ public class ArticleController {
         ModelAndView modelAndView = new ModelAndView("/admin/article/edit");
         modelAndView.addObject("article",article);
         return  modelAndView;
+    }
+
+    @PostMapping(value = "/del")
+    @ResponseBody
+    public ReturnJson articleDel(@RequestParam(value = "id",required = true) Integer id,
+                                     HttpServletRequest request){
+        ReturnJson returnJson;
+        try {
+            articleService.articleDel(id);
+            returnJson = ReturnJson.success("删除成功");
+        } catch (Exception e) {
+            returnJson = ReturnJson.error(e.getMessage());
+        }
+
+        return returnJson;
+    }
+
+    @PostMapping(value = "/changeShow")
+    @ResponseBody
+    public ReturnJson changeShow(@RequestParam(value = "id",required = true) Integer id,
+                                 @RequestParam(value = "is_show",required = true) Integer is_show,
+                                 HttpServletRequest request){
+        ReturnJson returnJson;
+        try {
+            articleService.changeShow(id,is_show);
+            returnJson = ReturnJson.success("设置成功");
+        } catch (Exception e) {
+            returnJson = ReturnJson.error(e.getMessage());
+        }
+
+        return returnJson;
     }
 
 //    @GetMapping(valu/e = "/test")

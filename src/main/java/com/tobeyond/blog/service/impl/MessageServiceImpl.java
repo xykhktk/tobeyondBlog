@@ -3,7 +3,7 @@ package com.tobeyond.blog.service.impl;
 import com.tobeyond.blog.model.po.Message;
 import com.tobeyond.blog.model.Dto.ReturnJson;
 import com.tobeyond.blog.dao.mapper.MessageMapper;
-import com.tobeyond.blog.service.MessageService;
+import com.tobeyond.blog.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
-public class MessageServiceImpl extends BaseServiceImpl implements MessageService {
+public class MessageServiceImpl extends BaseServiceImpl implements IMessageService {
 
     @Autowired
     MessageMapper messageMapper;

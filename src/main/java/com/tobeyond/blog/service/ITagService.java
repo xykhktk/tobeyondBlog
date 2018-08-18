@@ -5,7 +5,7 @@ import com.tobeyond.blog.model.po.Tag;
 
 import java.util.List;
 
-public interface TagService {
+public interface ITagService {
 
     List<Tag> tagList();
 

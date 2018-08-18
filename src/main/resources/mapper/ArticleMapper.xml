@@ -5,9 +5,9 @@
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="category_id" jdbcType="INTEGER" property="category_id" />
         <result column="user_id" jdbcType="INTEGER" property="user_id" />
+        <result column="is_show" jdbcType="INTEGER" property="is_show" />
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="subtitle" jdbcType="VARCHAR" property="subtitle" />
-        <result column="content" jdbcType="VARCHAR" property="content" />
         <result column="page_image" jdbcType="VARCHAR" property="page_image" />
         <result column="view_count" jdbcType="INTEGER" property="view_count" />
         <result column="created_at" jdbcType="VARCHAR" property="created_at" />
@@ -20,18 +20,19 @@
         <result column="tag_id" jdbcType="INTEGER" property="tag_id" />
     </resultMap>
 
-    <resultMap extends="BaseResultMap" id="FullResultMap" type="com.tobeyond.blog.model.Bo.ArticleBo">
+    <resultMap id="FullResultMap" extends="BaseResultMap" type="com.tobeyond.blog.model.Bo.ArticleBo">
+        <result column="content" jdbcType="VARCHAR" property="content" />
         <collection property="tagList" ofType="com.tobeyond.blog.model.Bo.ArticleTagBo" column="id" select="getArticleTags">
         </collection>
     </resultMap>
 
     <sql id="Base_Column">
-        articles.id, articles.category_id,articles.user_id, articles.title, articles.subtitle, articles.content,
+        articles.id, articles.category_id,articles.user_id, articles.title, articles.subtitle, articles.content,articles.is_show,
         articles.page_image, articles.view_count, articles.created_at, articles.updated_at
     </sql>
 
     <select id="articleListBaseInfo" resultMap="BaseResultMap">
-        select  <include refid="Base_Column" />  from articles order by id desc
+        select  <include refid="Base_Column" />  from articles where is_del = '0' order by id desc
     </select>
 
     <select id="articleFullInfo" resultMap="FullResultMap" parameterType="Map">
@@ -63,8 +64,13 @@
         #{created_at,jdbcType=VARCHAR})
     </insert>
 
-    <!--insert into articles(user_id,slug,title,subtitle,content,page_image,is_show) values('100','aabbcc','111','222','333','444','1')-->
+    <update id="articleDel" parameterType="Integer">
+        UPDATE articles SET is_del = '1' where id = #{value}
+    </update>
 
+    <update id="changeShow" parameterType="Map">
+        UPDATE articles SET is_show = #{is_show} where id = #{id}
+    </update>
 
 
 

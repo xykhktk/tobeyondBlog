@@ -2,7 +2,7 @@ package com.tobeyond.blog.controller;
 
 
 import com.tobeyond.blog.model.po.ArticlePo;
-import com.tobeyond.blog.service.ArticleService;
+import com.tobeyond.blog.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.List;
 public class ArticleController {
 
     @Autowired
-    ArticleService articleService;
+    IArticleService articleService;
 
 
     @RequestMapping(value = "/articleList" , method = RequestMethod.GET)

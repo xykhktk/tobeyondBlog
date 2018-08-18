@@ -3,7 +3,7 @@ package com.tobeyond.blog.controller.admin;
 import com.tobeyond.blog.constant.WebConst;
 import com.tobeyond.blog.model.Bo.UserCustom;
 import com.tobeyond.blog.model.Dto.ReturnJson;
-import com.tobeyond.blog.service.UserService;
+import com.tobeyond.blog.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class IndexController {
     private ModelAndView modelAndView;
 
     @Autowired
-    UserService userService;
+    IUserService userService;
 
     @GetMapping(value = {"","/","/index"})
     public ModelAndView index(){

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public interface ArticleMapper {
@@ -56,4 +57,7 @@ public interface ArticleMapper {
 
     int articleAdd(ArticlePo article);
 
+    int articleDel(Integer id);
+
+    int changeShow(HashMap<String,Object> param);
 }
