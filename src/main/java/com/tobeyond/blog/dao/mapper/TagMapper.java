@@ -1,6 +1,7 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.model.po.Tag;
+import com.tobeyond.blog.model.Bo.TagBo;
+import com.tobeyond.blog.model.po.TagPo;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -8,8 +9,8 @@ import java.util.List;
 public interface TagMapper {
 
     @Select("select * from tags where id = #{id}")
-    Tag findTagById(long id);
+    TagPo findTagById(long id);
 
 
-    List<Tag> tagsList();
+    List<TagBo> tagsList();
 }

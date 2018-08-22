@@ -3,10 +3,12 @@ package com.tobeyond.blog.controller.admin;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.Bo.ArticleBo;
+import com.tobeyond.blog.model.Bo.ArticleTagBo;
+import com.tobeyond.blog.model.Bo.TagBo;
 import com.tobeyond.blog.model.Bo.UserCustom;
 import com.tobeyond.blog.model.Dto.ReturnJson;
 import com.tobeyond.blog.model.po.ArticlePo;
-import com.tobeyond.blog.model.po.Tag;
+import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.service.ITagService;
 import com.tobeyond.blog.util.CommonUtils;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 
 @Controller("adminArticleController")
 @RequestMapping(value = "/admin/article")
@@ -49,7 +52,7 @@ public class ArticleController {
 
     @GetMapping(value = "/add")
     public ModelAndView articleAdd(){
-        List<Tag> tagList = tagService.tagList();
+        List<TagBo> tagList = tagService.tagList();
         System.out.print(JSON.toJSONString(tagList));
         ModelAndView modelAndView = new ModelAndView("/admin/article/add");
         modelAndView.addObject("tagList",tagList);
@@ -59,13 +62,13 @@ public class ArticleController {
     @PostMapping(value = "/add")
     @ResponseBody
     public ReturnJson articleAddSave(@RequestParam(value = "title",required = true) String title,
-                                       @RequestParam(value = "subtitle",required = true) String subtitle,
-                                       @RequestParam(value = "slug",required = true) String slug,
-                                       @RequestParam(value = "text",required = true) String content,
-                                       @RequestParam(value = "is_show") Integer is_show,
-                                       @RequestParam(value = "page_image",required = true) String page_image,
-                                       @RequestParam(value = "tagIds")String tagIds,
-                                       HttpServletRequest request){
+                                     @RequestParam(value = "subtitle",required = true) String subtitle,
+                                     @RequestParam(value = "slug",required = true) String slug,
+                                     @RequestParam(value = "text",required = true) String content,
+                                     @RequestParam(value = "is_show") Integer is_show,
+                                     @RequestParam(value = "page_image",required = true) String page_image,
+                                     @RequestParam(value = "tagIds")String tagIds,
+                                     HttpServletRequest request){
 
         UserCustom user = CommonUtils.getLoginUser(request);
         ArticlePo article = new ArticlePo();
@@ -93,9 +96,50 @@ public class ArticleController {
     @GetMapping(value = "/edit/{id}")
     public ModelAndView articleEdit(@PathVariable Long id){
         ArticleBo article = articleService.articleFullInfo(id);
+        List<TagBo> tagList = tagService.tagList();
+        for(TagBo tagBo : tagList){
+            tagBo.setIs_selected(false);
+            for (ArticleTagBo articleTagBo :article.getTagList()){
+                if(Objects.equals(articleTagBo.getTag_id(), tagBo.getId())){
+                    tagBo.setIs_selected(true);
+                }
+            }
+        }
         ModelAndView modelAndView = new ModelAndView("/admin/article/edit");
+        System.out.print(JSON.toJSONString(tagList));
         modelAndView.addObject("article",article);
+        modelAndView.addObject("tagList",tagList);
         return  modelAndView;
+    }
+
+    @PostMapping(value = "/edit")
+    @ResponseBody
+    public ReturnJson articleEditSave(@RequestParam(value = "id",required = true) Integer id,
+                                      @RequestParam(value = "title",required = true) String title,
+                                      @RequestParam(value = "subtitle",required = true) String subtitle,
+                                      @RequestParam(value = "slug",required = true) String slug,
+                                      @RequestParam(value = "text",required = true) String content,
+                                      @RequestParam(value = "is_show") Integer is_show,
+                                      @RequestParam(value = "page_image",required = true) String page_image,
+                                      @RequestParam(value = "tagIds")String tagIds,
+                                      HttpServletRequest request){
+
+        ArticlePo article = new ArticlePo();
+        article.setContent(content);
+        article.setTitle(title);
+        article.setSubtitle(subtitle);
+        article.setPage_image(page_image);
+        article.setSlug(slug);
+
+        ReturnJson returnJson = new ReturnJson();
+        try {
+            articleService.articleEditSave(id,article,tagIds);
+            returnJson = ReturnJson.success("添加成功");
+        } catch (Exception e) {
+            returnJson = ReturnJson.error(e.getMessage());
+        }
+
+        return returnJson;
     }
 
     @PostMapping(value = "/del")

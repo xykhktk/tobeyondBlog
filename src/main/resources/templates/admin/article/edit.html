@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -39,7 +39,7 @@
                 </label>
                 <div class="layui-input-inline">
                     <input type="text" id="title" name="title" lay-verify="required"
-                           autocomplete="off" value="" class="layui-input">
+                           th:value="${article.title}"  autocomplete="off" value="" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -48,8 +48,7 @@
                 </label>
                 <div class="layui-input-inline">
                     <input type="text" value="" id="subtitle" name="subtitle" lay-verify="required" autocomplete="off"
-                           class="layui-input">
-
+                           th:value="${article.subtitle}"  class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
                     <span class="x-red">*</span>显示在标题下的一段话,可以作为摘要
@@ -62,8 +61,7 @@
                 </label>
                 <div class="layui-input-inline">
                     <input type="text" value="" id="page_image" name="page_image" lay-verify="required"
-                           autocomplete="off" class="layui-input">
-
+                           th:value="${article.page_image}" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
                     <span class="x-red">*</span>外链
@@ -73,7 +71,16 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">是否显示</label>
                 <div class="layui-input-block">
-                    <input type="checkbox" lay-skin="switch" value="1">
+                    <input type="checkbox" lay-skin="switch" value="1" checked th:if="${article.is_show}eq '1'">
+                    <input type="checkbox" lay-skin="switch" value="1" th:if="${article.is_show} eq '0'">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签</label>
+                <div class="layui-input-block">
+                    <input th:each="tag : ${tagList}" th:if="${tag.is_selected}" checked th:title="${tag.title}" th:value="${tag.id}" type="checkbox" name="tagId[]">
+                    <input th:each="tag : ${tagList}" th:if="!${tag.is_selected}" th:title="${tag.title}" th:value="${tag.id}" type="checkbox" name="tagId[]">
                 </div>
             </div>
 
@@ -81,8 +88,8 @@
                 <label class="layui-form-label">请填写描述</label>
                 <div class="layui-input-block">
                     <textarea style="height: 450px" autocomplete="off" id="text" name="text"
-                              class="markdown-textarea"
-                    ></textarea>
+                              class="markdown-textarea" th:inline="text"
+                    >[[${article.content}]]</textarea>
                 </div>
             </div>
 

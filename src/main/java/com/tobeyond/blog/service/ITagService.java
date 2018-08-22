@@ -1,12 +1,12 @@
 package com.tobeyond.blog.service;
 
 
-import com.tobeyond.blog.model.po.Tag;
+import com.tobeyond.blog.model.Bo.TagBo;
 
 import java.util.List;
 
 public interface ITagService {
 
-    List<Tag> tagList();
+    List<TagBo> tagList();
 
 }

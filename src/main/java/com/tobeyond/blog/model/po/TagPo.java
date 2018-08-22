@@ -1,6 +1,6 @@
 package com.tobeyond.blog.model.po;
 
-public class Tag {
+public class TagPo {
 
     private Integer id;
     private String tag;

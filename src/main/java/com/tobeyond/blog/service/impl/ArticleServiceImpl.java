@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.Bo.ArticleBo;
+import com.tobeyond.blog.model.Bo.ArticleTagBo;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.ArticleTagPo;
 import com.tobeyond.blog.dao.mapper.ArticleMapper;
@@ -80,8 +81,7 @@ public class ArticleServiceImpl implements IArticleService {
     public ArticleBo articleFullInfo(Long id) {
         HashMap<String,Object> paramMap = new HashMap<>();
         paramMap.put("id",id);
-        ArticleBo articleCustom = articleMapper.articleFullInfo(paramMap);
-        return articleCustom;
+        return articleMapper.articleFullInfo(paramMap);
     }
 
     @Override
@@ -136,6 +136,36 @@ public class ArticleServiceImpl implements IArticleService {
             System.out.println(e.getMessage());
             return false;
         }
+        return true;
+    }
+
+    @Override
+    public Boolean articleEditSave(Integer id, ArticlePo article, String tagIds) {
+        String now = DateKit.dateFormat(new Date());
+        try {
+            article.setUpdated_at(now);
+            articleMapper.articleUpdate(article);
+
+            ArrayList<ArticleTagBo> articleTagBo =  articleMapper.getArticleTags(id);
+
+            //批量插入
+            String[] tagArray =  tagIds.split(",");
+            List<ArticleTagPo> articleTagPoList = new ArrayList<>();
+            for(String tagId : tagArray){
+                ArticleTagPo articleTagPo = new ArticleTagPo();
+                articleTagPo.setArticle_id(article.getId());
+                articleTagPo.setTag_id(Integer.valueOf(tagId));
+                articleTagPo.setCreated_at(now);
+                articleTagPo.setUpdated_at(now);
+                articleTagPoList.add(articleTagPo);
+            }
+            articleTagMapper.insertBatch(articleTagPoList);
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+
         return true;
     }
 

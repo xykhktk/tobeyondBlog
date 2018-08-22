@@ -1,14 +1,13 @@
 package com.tobeyond.blog.model.Bo;
 
 import com.tobeyond.blog.model.po.ArticlePo;
-import com.tobeyond.blog.model.po.Tag;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ArticleBo extends ArticlePo {
 
     private ArticlePo article;
-    private List<Tag> tagList;
+    private ArrayList<ArticleTagBo> tagList;
 
     public ArticlePo getArticle() {
         return article;
@@ -18,11 +17,11 @@ public class ArticleBo extends ArticlePo {
         this.article = article;
     }
 
-    public List<Tag> getTagList() {
+    public ArrayList<ArticleTagBo> getTagList() {
         return tagList;
     }
 
-    public void setTagList(List<Tag> tagList) {
+    public void setTagList(ArrayList<ArticleTagBo> tagList) {
         this.tagList = tagList;
     }
 }
