@@ -15,4 +15,10 @@
         </foreach>
     </insert>
 
+    <update id="delArticleTags" parameterType="Map">
+        UPDATE article_tags SET is_del = '1',deleted_at = #{deleted_at} WHERE article_id = #{article_id} AND
+            article_tags.tag_id IN
+            <foreach item="delTagId" index="index" collection="whereInTagIds"
+                     open="(" separator="," close=")"> #{delTagId}</foreach>
+    </update>
 </mapper>

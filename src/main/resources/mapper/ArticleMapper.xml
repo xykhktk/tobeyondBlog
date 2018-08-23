@@ -37,7 +37,7 @@
 
     <sql id="Base_Column">
         articles.id, articles.category_id,articles.user_id, articles.title, articles.subtitle, articles.content,articles.is_show,
-        articles.page_image, articles.view_count, articles.created_at, articles.updated_at
+        articles.page_image, articles.view_count, articles.created_at, articles.updated_at,articles.slug
     </sql>
 
     <select id="articleListBaseInfo" resultMap="BaseResultMap">
@@ -55,7 +55,7 @@
         article_tags.id,article_tags.tag_id,tags.title
         from article_tags
         LEFT JOIN tags on article_tags.tag_id = tags.id
-        where article_tags.article_id = #{id}
+        where article_tags.article_id = #{id} AND article_tags.is_del = '0'
     </select>
 
     <!--<select id="getTags" parameterType="int" resultMap="Tags">-->
@@ -82,6 +82,37 @@
 
     <update id="changeShow" parameterType="Map">
         UPDATE articles SET is_show = #{is_show} where id = #{id}
+    </update>
+
+    <update id="articleUpdate" parameterType="com.tobeyond.blog.model.po.ArticlePo">
+        update articles
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subtitle != null">
+                subtitle = #{subtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="slug != null">
+                slug = #{slug,jdbcType=VARCHAR},
+            </if>
+            <if test="updated_at != null">
+                updated_at = #{updated_at,jdbcType=VARCHAR},
+            </if>
+            <if test="is_show != null">
+                is_show = #{is_show,jdbcType=INTEGER},
+            </if>
+            <if test="page_image != null">
+                page_image = #{page_image,jdbcType=VARCHAR},
+            </if>
+            <if test="category_id != null">
+                category_id = #{category_id,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
 </mapper>

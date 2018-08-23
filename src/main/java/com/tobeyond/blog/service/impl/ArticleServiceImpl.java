@@ -140,26 +140,45 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public Boolean articleEditSave(Integer id, ArticlePo article, String tagIds) {
+    public Boolean articleEditSave(ArticlePo article, String tagIds) {
         String now = DateKit.dateFormat(new Date());
         try {
             article.setUpdated_at(now);
             articleMapper.articleUpdate(article);
+            ArrayList<ArticleTagBo> articleTagBo =  articleMapper.getArticleTags(article.getId());
 
-            ArrayList<ArticleTagBo> articleTagBo =  articleMapper.getArticleTags(id);
+            //求并集 交集 差级 https://blog.csdn.net/u011595939/article/details/74348216/
+            List<String> selectedTag = new ArrayList<>();   //页面上选择的tag
+            List<String> dbTag = new ArrayList<>(); //数据库里记录的tag
+//            for(String selectTag : selectTags){ newTag.add(selectTag); }
+            selectedTag.addAll(Arrays.asList(tagIds.split(",")));
+            for(ArticleTagBo tag : articleTagBo){ dbTag.add(String.valueOf(tag.getTag_id())); }
 
-            //批量插入
-            String[] tagArray =  tagIds.split(",");
-            List<ArticleTagPo> articleTagPoList = new ArrayList<>();
-            for(String tagId : tagArray){
-                ArticleTagPo articleTagPo = new ArticleTagPo();
-                articleTagPo.setArticle_id(article.getId());
-                articleTagPo.setTag_id(Integer.valueOf(tagId));
-                articleTagPo.setCreated_at(now);
-                articleTagPo.setUpdated_at(now);
-                articleTagPoList.add(articleTagPo);
+            List<String> insertTag = new ArrayList<>(selectedTag);   //要新增的tag
+            insertTag.removeAll(dbTag);
+            List<String> delTag = new ArrayList<>(dbTag);   //要删除的tag
+            delTag.removeAll(selectedTag);
+
+            if(insertTag.size() > 0){
+                List<ArticleTagPo> articleTagPoList = new ArrayList<>();
+                for(String insertTagId : insertTag){
+                    ArticleTagPo articleTagPo = new ArticleTagPo();
+                    articleTagPo.setArticle_id(article.getId());
+                    articleTagPo.setTag_id(Integer.valueOf(insertTagId));
+                    articleTagPo.setCreated_at(now);
+                    articleTagPo.setUpdated_at(now);
+                    articleTagPoList.add(articleTagPo);
+                }
+                articleTagMapper.insertBatch(articleTagPoList);
             }
-            articleTagMapper.insertBatch(articleTagPoList);
+
+            if(delTag.size() > 0){
+                HashMap<String,Object> params = new HashMap<>();
+                params.put("article_id",article.getId());
+                params.put("whereInTagIds",delTag);
+                params.put("deleted_at",now);
+                articleTagMapper.delArticleTags(params);
+            }
 
         }catch (Exception e){
             System.out.println(e.getMessage());

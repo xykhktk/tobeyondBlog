@@ -15,6 +15,7 @@
     <script th:src="@{//cdn.bootcss.com/jquery/2.2.3/jquery.min.js}"></script>
     <script src="/adminResource/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/adminResource/js/xadmin.js"></script>
+    <script type="text/javascript" src="/adminResource/js/tobeyond.js"></script>
     <link th:href="@{/adminResource/lib/md/css/style.css}" rel="stylesheet"/>
 
 </head>
@@ -22,17 +23,9 @@
   <body>
     <div class="x-body">
 
-        <!--`slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,-->
-        <!--`` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,-->
-        <!--`` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,-->
-        <!--`content` text COLLATE utf8mb4_unicode_ci NOT NULL,-->
-        <!--`` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,-->
-        <!--`meta_description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,-->
-        <!--`is_show` tinyint-->
-
-
         <form class="layui-form" method="post">
             <input type="hidden"  th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="_csrf">
+            <input type="hidden"  name="id" th:value="${article.id}">
             <div class="layui-form-item">
                 <label for="title" class="layui-form-label">
                     <span class="x-red">*</span>标题
@@ -69,10 +62,23 @@
             </div>
 
             <div class="layui-form-item">
+                <label for="page_image" class="layui-form-label">
+                    <span class="x-red">*</span>slug
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" id="slug" name="slug" lay-verify="required"
+                           th:value="${article.slug}" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>类似/article/yilaizhuru 这样的效果
+                </div>
+            </div>
+
+            <div class="layui-form-item">
                 <label class="layui-form-label">是否显示</label>
                 <div class="layui-input-block">
-                    <input type="checkbox" lay-skin="switch" value="1" checked th:if="${article.is_show}eq '1'">
-                    <input type="checkbox" lay-skin="switch" value="1" th:if="${article.is_show} eq '0'">
+                    <input type="checkbox" lay-skin="switch" value="1" name="is_show" checked th:if="${article.is_show}eq '1'">
+                    <input type="checkbox" lay-skin="switch" value="1" name="is_show" th:if="${article.is_show} eq '0'">
                 </div>
             </div>
 

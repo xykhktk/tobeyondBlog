@@ -28,6 +28,6 @@ public interface IArticleService {
 
     Boolean changeShow(Integer id,Integer is_show);
 
-    Boolean articleEditSave(Integer id,ArticlePo articlePo,String ids);
+    Boolean articleEditSave(ArticlePo articlePo,String ids);
 
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface ArticleTagMapper {
@@ -22,5 +23,7 @@ public interface ArticleTagMapper {
     List<ArticleTagPo> getTagsListByTagId(Long tag_id);
 
     int insertBatch(List<ArticleTagPo> list);
+
+    int delArticleTags(HashMap<String,Object> params);
 
 }

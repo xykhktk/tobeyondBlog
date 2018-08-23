@@ -44,7 +44,7 @@ public class ArticleController {
     @GetMapping(value = "/list")
     public ModelAndView articleList(@RequestParam(value = "page",required = false) Integer page){
         PageInfo<ArticlePo> articlesPaginator =  articleService.articleListBaseInfo(page,10);
-        System.out.print(JSON.toJSONString(articlesPaginator.getList()));
+//        System.out.print(JSON.toJSONString(articlesPaginator.getList()));
         ModelAndView modelAndView = new ModelAndView("/admin/article/list");
         modelAndView.addObject("articleList",articlesPaginator);
         return  modelAndView;
@@ -53,7 +53,7 @@ public class ArticleController {
     @GetMapping(value = "/add")
     public ModelAndView articleAdd(){
         List<TagBo> tagList = tagService.tagList();
-        System.out.print(JSON.toJSONString(tagList));
+//        System.out.print(JSON.toJSONString(tagList));
         ModelAndView modelAndView = new ModelAndView("/admin/article/add");
         modelAndView.addObject("tagList",tagList);
         return  modelAndView;
@@ -84,8 +84,12 @@ public class ArticleController {
 
         ReturnJson returnJson;
         try {
-            articleService.articleAdd(article,tagIds);
-            returnJson = ReturnJson.success("添加成功");
+            Boolean res = articleService.articleAdd(article,tagIds);
+            if(res){
+                returnJson = ReturnJson.success("添加成功");
+            }else{
+                returnJson = ReturnJson.error("添加失败");
+            }
         } catch (Exception e) {
             returnJson = ReturnJson.error(e.getMessage());
         }
@@ -125,16 +129,20 @@ public class ArticleController {
                                       HttpServletRequest request){
 
         ArticlePo article = new ArticlePo();
+        article.setId(id);
         article.setContent(content);
         article.setTitle(title);
         article.setSubtitle(subtitle);
         article.setPage_image(page_image);
         article.setSlug(slug);
 
-        ReturnJson returnJson = new ReturnJson();
+        ReturnJson returnJson;
         try {
-            articleService.articleEditSave(id,article,tagIds);
-            returnJson = ReturnJson.success("添加成功");
+            if(articleService.articleEditSave(article,tagIds)){
+                returnJson = ReturnJson.success("添加成功");
+            }else{
+                returnJson = ReturnJson.error("添加失败");
+            }
         } catch (Exception e) {
             returnJson = ReturnJson.error(e.getMessage());
         }

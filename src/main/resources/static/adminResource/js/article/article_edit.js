@@ -10,11 +10,25 @@ $(function () {
         var form = layui.form;
         //监听提交
         form.on('submit(commit)', function (data) {
-            T_POST('/admin/article/edit',data.field,
+            var new_data = data.field;
+            var tagIds = '';
+            for (var key in data.field){
+                if(key.indexOf("tagId") != -1){
+                    console.log(data.field[key]);
+                    tagIds += data.field[key] + ','
+                }
+            }
+            if(tagIds.length > 0) tagIds = tagIds.slice(0 ,tagIds.length -1);
+            new_data.tagIds = tagIds;
+
+
+            T_POST('/admin/article/edit',new_data,
                 function (data) {
                     if (data.success == true) {
                         layer.msg(data.message,function(){
-                            location.href='/admin'
+                            window.parent.location.reload();
+                            var index=parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
                         });
                     } else {
                         layer.msg(data.message, {icon: 2});

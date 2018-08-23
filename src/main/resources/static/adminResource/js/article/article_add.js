@@ -20,7 +20,6 @@ $(function () {
             }
             if(tagIds.length > 0) tagIds = tagIds.slice(0 ,tagIds.length -1);
             new_data.tagIds = tagIds;
-            console.log(new_data);
 
             T_POST('/admin/article/add',new_data,
                 function (data) {
