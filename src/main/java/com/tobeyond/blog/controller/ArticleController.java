@@ -42,7 +42,7 @@ public class ArticleController {
         Parser parser = Parser.builder().build();
         Node node = parser.parse(article.getContent());
         HtmlRenderer renderer = HtmlRenderer.builder().build();
-        System.out.print( renderer.render(node));
+//        System.out.print( renderer.render(node));
         article.setContent( renderer.render(node));
         ModelAndView modelAndView = new ModelAndView("/articleDetail");
         modelAndView.addObject("article",article);

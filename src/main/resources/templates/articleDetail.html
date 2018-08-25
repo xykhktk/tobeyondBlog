@@ -5,6 +5,8 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js" xmlns:th="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
 <head th:replace="public/header"></head>
+<!--<link th:href="@{//cdn.bootcss.com/highlight.js/9.9.0/styles/xcode.min.css}" rel="stylesheet"/>-->
+<link rel="stylesheet" href="/frontend/lib/highlightjs/darcula.css">
 <body>
 <div id="fh5co-page">
     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
@@ -14,8 +16,9 @@
     <div id="fh5co-main">
 
         <div class="fh5co-narrow-content animate-box fh5co-border-bottom" data-animate-effect="fadeInLeft">
-            <h2 class="fh5co-heading" th:text="${article.title}">Nature</span></h2>
-            <div th:utext=${article.content}></div>
+            <h2 class="fh5co-heading" th:text="${article.title}" style="font-size: 36px">Nature</span></h2>
+            <!--<div th:utext=${article.content}></div>-->
+            <block th:utext=${article.content} />
 
             <div class="row">
                 <div class="col-md-12">
@@ -36,7 +39,10 @@
 <script src="/frontend/js/jquery.waypoints.min.js"></script>
 <!-- Flexslider -->
 <script src="/frontend/js/jquery.flexslider-min.js"></script>
-
+<script th:src="@{//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js}"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
 
 <!-- MAIN JS -->
 <script src="/frontend/js/main.js"></script>
