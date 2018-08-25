@@ -70,10 +70,24 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public PageInfo<ArticlePo> articleListBaseInfo(Integer page, Integer limit) {
+    public PageInfo<ArticleBo> articleListBaseInfo(Integer page, Integer limit, Long tag_id) {
         if(page == null) page = 1;
+
+        List<String> inIds = null;
+        if(tag_id != null){
+            List<ArticleTagPo> articleTags = getTagListByTagId(tag_id);
+            if(articleTags.size() > 0){
+                inIds = new ArrayList<>();
+                for(ArticleTagPo articleTag : articleTags){
+                    inIds.add(String.valueOf(articleTag.getArticle_id()));
+                }
+            }
+        }
+        HashMap<String,Object> params= new HashMap<>();
+        params.put("inIds",inIds);
+
         PageHelper.startPage(page, limit);
-        List<ArticlePo> articleList = articleMapper.articleListBaseInfo();
+        List<ArticleBo> articleList = articleMapper.articleListBaseInfo(params);
         return new PageInfo<>(articleList);
     }
 
@@ -175,7 +189,7 @@ public class ArticleServiceImpl implements IArticleService {
             if(delTag.size() > 0){
                 HashMap<String,Object> params = new HashMap<>();
                 params.put("article_id",article.getId());
-                params.put("whereInTagIds",delTag);
+                params.put("whereInTagIds",delTag); //在mapper试使用where in，collection="whereInTagIds"要与这里对应
                 params.put("deleted_at",now);
                 articleTagMapper.delArticleTags(params);
             }

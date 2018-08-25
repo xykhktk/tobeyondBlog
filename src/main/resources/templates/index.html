@@ -44,7 +44,7 @@
                             <span><small>by Admin </small> / <small th:text="${article.updated_at}"> Web Design </small></span>
                             <p th:text="${article.subtitle}"></p>
                             <div>
-                                <a class="tag" th:each="article_tag : ${article.articleTag}" th:text="${article_tag.tag.title}"></a>
+                                <a class="tag" th:each="article_tag : ${article.tagList}" th:text="${article_tag.title}" th:href="'/articleList?tag_id=' + ${article_tag.tag_id}"></a>
                             </div>
                             <a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>
                         </div>

@@ -25,11 +25,15 @@ $(function () {
             T_POST('/admin/article/edit',new_data,
                 function (data) {
                     if (data.success == true) {
-                        layer.msg(data.message,function(){
-                            window.parent.location.reload();
-                            var index=parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);
-                        });
+                        T_Msg(data.message,T_MSG_ACTION.closeMeAndRefreshParent)
+                        // layer.msg(data.message,{
+                        //     time : 1000,
+                        //     end : function(){
+                        //         window.parent.location.reload();
+                        //         var index=parent.layer.getFrameIndex(window.name);
+                        //         parent.layer.close(index);
+                        //     }
+                        // });
                     } else {
                         layer.msg(data.message, {icon: 2});
                     }

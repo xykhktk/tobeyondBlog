@@ -91,9 +91,7 @@
                 },
                 function (data) {
                     if (data.success == true) {
-                        layer.msg(data.message, function () {
-                            window.location.reload();
-                        });
+                        T_Msg(data.message,T_MSG_ACTION.refreshMe)
                     } else {
                         layer.msg(data.message, {icon: 2});
                     }
@@ -115,9 +113,7 @@
             },
             function (data) {
                 if (data.success == true) {
-                    layer.msg(data.message, function () {
-                        window.location.reload();
-                    });
+                    T_Msg(data.message,T_MSG_ACTION.refreshMe)
                 } else {
                     layer.msg(data.message, {icon: 2});
                 }

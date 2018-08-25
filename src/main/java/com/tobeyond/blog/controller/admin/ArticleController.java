@@ -43,7 +43,7 @@ public class ArticleController {
 
     @GetMapping(value = "/list")
     public ModelAndView articleList(@RequestParam(value = "page",required = false) Integer page){
-        PageInfo<ArticlePo> articlesPaginator =  articleService.articleListBaseInfo(page,10);
+        PageInfo<ArticleBo> articlesPaginator =  articleService.articleListBaseInfo(page,10,null);
 //        System.out.print(JSON.toJSONString(articlesPaginator.getList()));
         ModelAndView modelAndView = new ModelAndView("/admin/article/list");
         modelAndView.addObject("articleList",articlesPaginator);

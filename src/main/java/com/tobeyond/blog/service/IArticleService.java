@@ -18,7 +18,7 @@ public interface IArticleService {
 
     List<ArticleTagPo> getTagListByTagId(Long tag_id);
 
-    PageInfo<ArticlePo> articleListBaseInfo(Integer page, Integer limit);
+    PageInfo<ArticleBo> articleListBaseInfo(Integer page, Integer limit, Long tag_id);
 
     ArticleBo articleFullInfo(Long id);
 

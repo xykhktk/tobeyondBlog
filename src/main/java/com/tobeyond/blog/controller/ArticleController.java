@@ -1,6 +1,9 @@
 package com.tobeyond.blog.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageInfo;
+import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +23,10 @@ public class ArticleController {
     @RequestMapping(value = "/articleList" , method = RequestMethod.GET)
     public ModelAndView articleList(@RequestParam(value = "tag_id",required = false) Long tag_id){
 
-        List<ArticlePo> articleList = articleService.articleList(tag_id);
+        PageInfo<ArticleBo> articlesPaginator = articleService.articleListBaseInfo(1,100,tag_id);
+//        System.out.print(JSON.toJSONString(articlesPaginator.getList()));
         ModelAndView modelAndView = new ModelAndView("/articleList");
-        modelAndView.addObject("articleList",articleList);
+        modelAndView.addObject("articlesPaginator",articlesPaginator);
         return modelAndView;
     }
 

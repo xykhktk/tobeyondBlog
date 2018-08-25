@@ -45,8 +45,11 @@
             },
             function (data) {
                 if (data.success == true) {
-                    layer.msg(data.message,function(){
-                        location.href='/admin/login'
+                    layer.msg(data.message,{
+                        time : 1000,
+                        end : function(){
+                            location.href='/admin/login'
+                        }
                     });
                 } else {
                     layer.msg(data.message, {icon: 2});

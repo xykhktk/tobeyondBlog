@@ -14,6 +14,7 @@ import java.util.Map;
 @Component
 public interface ArticleMapper {
 
+
     @SelectProvider(type = com.tobeyond.blog.dao.provider.ArticleProvider.class,method = "articleList")
     @Results({
             @Result(id = true, column = "id", property = "article_id"), //在数据库字段名是id,希望取出来是article_id.注意bean里面也要对应有article_id
@@ -52,8 +53,7 @@ public interface ArticleMapper {
     })
     List<ArticlePo> articleListForIndex();
 
-    //单表查询article
-    List<ArticlePo> articleListBaseInfo();
+    List<ArticleBo> articleListBaseInfo(HashMap<String,Object> params);
 
     ArticleBo articleFullInfo(HashMap<String,Object> params);
 

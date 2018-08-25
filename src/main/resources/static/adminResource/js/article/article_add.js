@@ -24,12 +24,8 @@ $(function () {
             T_POST('/admin/article/add',new_data,
                 function (data) {
                     if (data.success == true) {
-                        layer.msg(data.message,function(){
-                            window.parent.location.reload();
-                            var index=parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);
-                        });
-                    } else {
+                        T_Msg(data.message,T_MSG_ACTION.closeMeAndRefreshParent)
+                    }else {
                         layer.msg(data.message, {icon: 2});
                     }
                 }
