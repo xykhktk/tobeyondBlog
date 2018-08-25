@@ -17,7 +17,7 @@
 
 					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft" th:each="article : ${articlesPaginator.list}">
 						<div class="blog-entry">
-							<a href="#" class="blog-img"><img src="/frontend/images/default_article_img.jpg"  th:src="${article.page_image}" class="img-responsive"></a>
+							<a href="#" th:href="'/articleDetail/' + ${article.id}" class="blog-img"><img src="/frontend/images/default_article_img.jpg"  th:src="${article.page_image}" class="img-responsive"></a>
 							<div class="desc">
 								<h3><a th:text="${article.title}" th:href="'/articleDetail/' + ${article.id}">Inspirational Website</a></h3>
 								<span><small>by Admin </small> / <small th:text="${article.updated_at}"> Web Design </small></span>
@@ -25,45 +25,45 @@
 								<div>
 									<a class="tag" th:each="article_tag : ${article.tagList}" th:text="${article_tag.title}" th:href="'/articleList?tag_id=' + ${article_tag.tag_id}"></a>
 								</div>
-								<a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+								<a href="#" class="lead" th:href="'/articleDetail/' + ${article.id}">Read More <i class="icon-arrow-right3"></i></a>
 							</div>
 						</div>
 					</div>
 
-
-
-					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
-						<div class="blog-entry">
-							<a href="#" class="blog-img"><img src="/frontend/images/default_article_img.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>
-							<div class="desc">
-								<h3><a href="#">Inspirational Website</a></h3>
-								<span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
-								<p>Design must be functional and functionality must be translated into visual aesthetics</p>
-								<a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>
-							</div>
-						</div>
-					</div>
-
+					<!--<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">-->
+						<!--<div class="blog-entry">-->
+							<!--<a href="#" class="blog-img"><img src="/frontend/images/default_article_img.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>-->
+							<!--<div class="desc">-->
+								<!--<h3><a href="#">Inspirational Website</a></h3>-->
+								<!--<span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>-->
+								<!--<p>Design must be functional and functionality must be translated into visual aesthetics</p>-->
+								<!--<a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
 
 				</div>
 			</div>
-		
-			<!--<div id="get-in-touch">-->
-				<!--<div class="fh5co-narrow-content">-->
-					<!--<div class="row">-->
-						<!--<div class="col-md-4 animate-box" data-animate-effect="fadeInLeft">-->
-							<!--<h1 class="fh5co-heading-colored">Get in touch</h1>-->
-						<!--</div>-->
-					<!--</div>-->
-					<!--<div class="row">-->
-						<!--<div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">-->
-							<!--<p class="fh5co-lead">Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>-->
-							<!--<p><a href="#" class="btn btn-primary">Learn More</a></p>-->
-						<!--</div>-->
-						<!---->
-					<!--</div>-->
-				<!--</div>-->
-			<!--</div>-->
+
+			<div class="lists-navigator clearfix">
+			<ol class="page-navigator">
+				<th:block th:if="${articlesPaginator.hasPreviousPage}">
+					<li class="prev"><a th:href="@{'?page='+${articlesPaginator.prePage}}" th:text="'←'"></a></li>
+				</th:block>
+
+				<th:block th:each="navIndex :${ articlesPaginator.navigatepageNums}">
+					<li th:class="${articlesPaginator.pageNum==navIndex}?'current':''">
+						<a th:href="@{'?page='+${navIndex}}" th:text="${navIndex}"></a>
+					</li>
+				</th:block>
+
+
+				<th:block th:if="${articlesPaginator.hasNextPage}">
+					<li class="next"><a th:href="@{'?page='+${articlesPaginator.nextPage}}" th:text="'→'"></a></li>
+				</th:block>
+			</ol>
+		</div>
+
 		</div>
 	</div>
 

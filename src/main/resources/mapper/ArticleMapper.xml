@@ -58,6 +58,9 @@
             <foreach item="articleId" index="index" collection="inIds"
                      open="(" separator="," close=")"> #{articleId}</foreach>
         </if>
+        <if test="is_show != null">
+            AND is_show = '1'
+        </if>
         order by id desc
     </select>
 

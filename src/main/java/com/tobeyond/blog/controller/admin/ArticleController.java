@@ -43,7 +43,7 @@ public class ArticleController {
 
     @GetMapping(value = "/list")
     public ModelAndView articleList(@RequestParam(value = "page",required = false) Integer page){
-        PageInfo<ArticleBo> articlesPaginator =  articleService.articleListBaseInfo(page,10,null);
+        PageInfo<ArticleBo> articlesPaginator =  articleService.articleListBaseInfo(page,10,null,false);
 //        System.out.print(JSON.toJSONString(articlesPaginator.getList()));
         ModelAndView modelAndView = new ModelAndView("/admin/article/list");
         modelAndView.addObject("articleList",articlesPaginator);
@@ -118,13 +118,13 @@ public class ArticleController {
 
     @PostMapping(value = "/edit")
     @ResponseBody
-    public ReturnJson articleEditSave(@RequestParam(value = "id",required = true) Integer id,
-                                      @RequestParam(value = "title",required = true) String title,
-                                      @RequestParam(value = "subtitle",required = true) String subtitle,
-                                      @RequestParam(value = "slug",required = true) String slug,
-                                      @RequestParam(value = "text",required = true) String content,
-                                      @RequestParam(value = "is_show") Integer is_show,
-                                      @RequestParam(value = "page_image",required = true) String page_image,
+    public ReturnJson articleEditSave(@RequestParam(value = "id") Integer id,
+                                      @RequestParam(value = "title") String title,
+                                      @RequestParam(value = "subtitle") String subtitle,
+                                      @RequestParam(value = "slug") String slug,
+                                      @RequestParam(value = "text") String content,
+                                      @RequestParam(value = "is_show",required = false) Integer is_show,
+                                      @RequestParam(value = "page_image") String page_image,
                                       @RequestParam(value = "tagIds")String tagIds,
                                       HttpServletRequest request){
 
@@ -135,13 +135,14 @@ public class ArticleController {
         article.setSubtitle(subtitle);
         article.setPage_image(page_image);
         article.setSlug(slug);
+        article.setIs_show(is_show);
 
         ReturnJson returnJson;
         try {
             if(articleService.articleEditSave(article,tagIds)){
-                returnJson = ReturnJson.success("添加成功");
+                returnJson = ReturnJson.success("修改成功");
             }else{
-                returnJson = ReturnJson.error("添加失败");
+                returnJson = ReturnJson.error("修改失败");
             }
         } catch (Exception e) {
             returnJson = ReturnJson.error(e.getMessage());
@@ -180,13 +181,5 @@ public class ArticleController {
 
         return returnJson;
     }
-
-//    @GetMapping(valu/e = "/test")
-//    public ModelAndView articleTest(){
-//        ArticlePo a = new ArticlePo();
-//        articleService.articleAdd(a);
-//        ModelAndView modelAndView = new ModelAndView("/admin/article/add");
-//        return  modelAndView;
-//    }
 
 }

@@ -36,7 +36,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public ModelAndView index(){
-        PageInfo<ArticleBo> articlesPaginator = articleService.articleListBaseInfo(1,4,null);
+        PageInfo<ArticleBo> articlesPaginator = articleService.articleListBaseInfo(1,4,null,true);
         List<ArticleBo> articleList = articlesPaginator.getList();
         List<Maxim> maximList = maximsService.maximList();
         ModelAndView modelAndView = new ModelAndView("/index");

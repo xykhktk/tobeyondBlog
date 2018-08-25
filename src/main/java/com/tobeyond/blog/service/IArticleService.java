@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface IArticleService {
 
-    List<ArticlePo> articleList(Long tag_id);
+//    List<ArticlePo> articleList(Long tag_id);
 
-    List<ArticlePo> articleListForIndex();
+//    List<ArticlePo> articleListForIndex();
 
-    ArticlePo getArticleById(long id);
+//    ArticlePo getArticleById(long id);
 
     List<ArticleTagPo> getTagListByTagId(Long tag_id);
 
-    PageInfo<ArticleBo> articleListBaseInfo(Integer page, Integer limit, Long tag_id);
+    PageInfo<ArticleBo> articleListBaseInfo(Integer page, Integer limit, Long tag_id,Boolean is_show);
 
     ArticleBo articleFullInfo(Long id);
 

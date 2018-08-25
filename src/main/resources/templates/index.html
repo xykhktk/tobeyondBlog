@@ -38,7 +38,7 @@
             <div class="row row-bottom-padded-md">
                 <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft" th:each="article : ${articleList}">
                     <div class="blog-entry">
-                        <a href="#" class="blog-img"><img src="/frontend/images/default_article_img.jpg" class="img-responsive" th:src="${article.page_image}"></a>
+                        <a href="#" th:href="'/articleDetail/' + ${article.id}" class="blog-img"><img src="/frontend/images/default_article_img.jpg" class="img-responsive" th:src="${article.page_image}"></a>
                         <div class="desc">
                             <h3><a href="#" th:text="${article.title}"></a></h3>
                             <span><small>by Admin </small> / <small th:text="${article.updated_at}"> Web Design </small></span>
@@ -46,7 +46,7 @@
                             <div>
                                 <a class="tag" th:each="article_tag : ${article.tagList}" th:text="${article_tag.title}" th:href="'/articleList?tag_id=' + ${article_tag.tag_id}"></a>
                             </div>
-                            <a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+                            <a href="#" class="lead" th:href="'/articleDetail/' + ${article.id}">Read More <i class="icon-arrow-right3"></i></a>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,6 @@
 <script src="/frontend/js/jquery.waypoints.min.js"></script>
 <!-- Flexslider -->
 <script src="/frontend/js/jquery.flexslider-min.js"></script>
-
 
 <!-- MAIN JS -->
 <script src="/frontend/js/main.js"></script>

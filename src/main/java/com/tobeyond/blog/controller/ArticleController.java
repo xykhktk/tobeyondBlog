@@ -6,6 +6,9 @@ import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.service.IArticleService;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,31 +23,30 @@ public class ArticleController {
     IArticleService articleService;
 
 
-    @RequestMapping(value = "/articleList" , method = RequestMethod.GET)
-    public ModelAndView articleList(@RequestParam(value = "tag_id",required = false) Long tag_id){
+    @RequestMapping(value = "/articleList", method = RequestMethod.GET)
+    public ModelAndView articleList(
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "tag_id", required = false) Long tag_id
+    ) {
 
-        PageInfo<ArticleBo> articlesPaginator = articleService.articleListBaseInfo(1,100,tag_id);
+        PageInfo<ArticleBo> articlesPaginator = articleService.articleListBaseInfo(page, 12, tag_id,true);
 //        System.out.print(JSON.toJSONString(articlesPaginator.getList()));
         ModelAndView modelAndView = new ModelAndView("/articleList");
-        modelAndView.addObject("articlesPaginator",articlesPaginator);
+        modelAndView.addObject("articlesPaginator", articlesPaginator);
         return modelAndView;
     }
 
     @RequestMapping("/articleDetail/{id}")
     public ModelAndView articleDetail(@PathVariable Long id){
-        ArticlePo article = articleService.getArticleById(id);
+        ArticleBo article = articleService.articleFullInfo(id);
+        Parser parser = Parser.builder().build();
+        Node node = parser.parse(article.getContent());
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        System.out.print( renderer.render(node));
+        article.setContent( renderer.render(node));
         ModelAndView modelAndView = new ModelAndView("/articleDetail");
         modelAndView.addObject("article",article);
         return modelAndView;
-    }
-
-
-    @ResponseBody
-    @RequestMapping("/test")
-    private  List<ArticlePo> text(){
-        Long test0 = new Long(0);
-        List<ArticlePo> articleList = articleService.articleList(test0);
-        return articleList;
     }
 
 }
