@@ -5,6 +5,8 @@ import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.Maxim;
 import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.po.MaximExample;
+import com.tobeyond.blog.model.po.MaximPo;
 import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.service.IMaximsService;
 import com.tobeyond.blog.service.IMessageService;
@@ -38,7 +40,12 @@ public class IndexController {
     public ModelAndView index(){
         PageInfo<ArticleBo> articlesPaginator = articleService.articleListBaseInfo(1,4,null,true);
         List<ArticleBo> articleList = articlesPaginator.getList();
-        List<Maxim> maximList = maximsService.maximList();
+
+//        List<Maxim> maximList = maximsService.maximList();
+        MaximExample maximExample = new MaximExample();
+        maximExample.createCriteria().andIsShowEqualTo(true);
+        List<MaximPo> maximList = maximsService.selectByExample(maximExample);
+
         ModelAndView modelAndView = new ModelAndView("/index");
         modelAndView.addObject("articleList",articleList);
         modelAndView.addObject("maximList",maximList);
