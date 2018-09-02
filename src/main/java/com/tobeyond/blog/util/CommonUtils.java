@@ -1,5 +1,6 @@
 package com.tobeyond.blog.util;
 
+import com.alibaba.fastjson.JSON;
 import com.tobeyond.blog.constant.WebConst;
 import com.tobeyond.blog.model.Bo.UserCustom;
 import org.commonmark.ext.gfm.tables.TablesExtension;
@@ -65,6 +66,10 @@ public class CommonUtils {
         return matcher.find();
     }
 
+
+    public static void outputObject(Object object){
+        System.out.print(JSON.toJSONString(object));
+    }
 
     /**
      * md5加密

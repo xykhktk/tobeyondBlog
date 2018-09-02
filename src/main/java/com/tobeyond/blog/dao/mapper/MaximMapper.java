@@ -1,6 +1,5 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.model.po.Maxim;
 import com.tobeyond.blog.model.po.MaximExample;
 import com.tobeyond.blog.model.po.MaximPo;
 import org.apache.ibatis.annotations.Param;
@@ -11,11 +10,11 @@ import java.util.List;
 public interface MaximMapper {
 
     @Select("SELECT * FROM maxims WHERE is_show = 1 AND deleted_at IS NULL")
-    List<Maxim> maximList();
+    List<MaximPo> maximList();
 
     long countByExample(MaximExample example);
 
-    int deleteByExample(MaximExample example);
+//    int deleteByExample(MaximExample example);
 
     int insert(MaximPo record);
 

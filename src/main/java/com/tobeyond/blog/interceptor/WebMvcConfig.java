@@ -21,7 +21,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         ///admin/**,一个*不行，要2个 -_-!
-        registry.addInterceptor(baseInterceptor).addPathPatterns("/admin/**").addPathPatterns("/admin");
+//        registry.addInterceptor(baseInterceptor).addPathPatterns("/admin/**").addPathPatterns("/admin");
     }
 
     /**

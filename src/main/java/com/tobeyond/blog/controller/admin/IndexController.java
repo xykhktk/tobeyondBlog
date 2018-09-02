@@ -27,6 +27,12 @@ public class IndexController {
         return  modelAndView;
     }
 
+    @GetMapping(value = "/welcome")
+    public ModelAndView welcome(){
+        ModelAndView modelAndView = new ModelAndView("/admin/welcome");
+        return  modelAndView;
+    }
+
     @GetMapping(value = "/login")
     public ModelAndView login(){
         ModelAndView modelAndView = new ModelAndView("/admin/login");
