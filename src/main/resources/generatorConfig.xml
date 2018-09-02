@@ -62,11 +62,11 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="maxims"
-               domainObjectName="Maxim"
+        <table tableName="tags"
+               domainObjectName="Tag"
                enableCountByExample="true"
                enableUpdateByExample="true"
-               enableDeleteByExample="true"
+               enableDeleteByExample="false"
                enableSelectByExample="true"
                selectByExampleQueryId="true">
         </table>

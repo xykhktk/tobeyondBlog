@@ -19,8 +19,6 @@ public interface IMaximsService {
 
     Boolean update(MaximPo maximPo);
 
-//    Boolean changeShow(MaximPo maximPo);
-
     Boolean del(MaximPo maximPo);
 
 }

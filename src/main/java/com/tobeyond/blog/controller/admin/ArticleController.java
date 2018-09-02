@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,7 +54,7 @@ public class ArticleController {
 
     @GetMapping(value = "/add")
     public ModelAndView articleAdd(){
-        List<TagBo> tagList = tagService.tagList();
+        List<TagPo> tagList = tagService.selectByExample(null);
 //        System.out.print(JSON.toJSONString(tagList));
         ModelAndView modelAndView = new ModelAndView("/admin/article/add");
         modelAndView.addObject("tagList",tagList);
@@ -100,8 +102,30 @@ public class ArticleController {
     @GetMapping(value = "/edit/{id}")
     public ModelAndView articleEdit(@PathVariable Long id){
         ArticleBo article = articleService.articleFullInfo(id);
-        List<TagBo> tagList = tagService.tagList();
-        for(TagBo tagBo : tagList){
+        List<TagPo> tagPoList = tagService.selectByExample(null);
+
+
+//        Object[] object = tagPoList.toArray();
+        //使用Arrays工具类，将数组转换成list
+//        List<Object> objects = Arrays.asList(object);
+        //将objects强转成childlist；这里强转时，不能定义后面括号内的List类型，如果定义会报编译错误
+        //及时child没有继承Parent，这里也不会报编译错误，但是按照Child对象循环输出时会报错
+//        List<TagBo> tagBoList = (List)objects;
+
+//需要优化
+        List<TagBo> tagBoList = new ArrayList<>();
+        for(TagPo tagPo : tagPoList){
+            TagBo tagBo = new TagBo();
+            tagBo.setIs_selected(false);
+            tagBo.setId(tagPo.getId());
+            tagBo.setUpdatedAt(tagPo.getUpdatedAt());
+            tagBo.setTitle(tagPo.getTitle());
+            tagBo.setTag(tagPo.getTag());
+            tagBo.setCreatedAt(tagPo.getCreatedAt());
+            tagBoList.add(tagBo);
+        }
+
+        for(TagBo tagBo : tagBoList){
             tagBo.setIs_selected(false);
             for (ArticleTagBo articleTagBo :article.getTagList()){
                 if(Objects.equals(articleTagBo.getTag_id(), tagBo.getId())){
@@ -110,9 +134,8 @@ public class ArticleController {
             }
         }
         ModelAndView modelAndView = new ModelAndView("/admin/article/edit");
-        System.out.print(JSON.toJSONString(tagList));
         modelAndView.addObject("article",article);
-        modelAndView.addObject("tagList",tagList);
+        modelAndView.addObject("tagList",tagBoList);
         return  modelAndView;
     }
 

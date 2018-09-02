@@ -1,10 +1,8 @@
 package com.tobeyond.blog.interceptor;
 
 
-import com.tobeyond.blog.util.CommonUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.annotation.Resource;
@@ -21,7 +19,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         ///admin/**,一个*不行，要2个 -_-!
-//        registry.addInterceptor(baseInterceptor).addPathPatterns("/admin/**").addPathPatterns("/admin");
+        registry.addInterceptor(baseInterceptor).addPathPatterns("/admin/**").addPathPatterns("/admin");
     }
 
     /**

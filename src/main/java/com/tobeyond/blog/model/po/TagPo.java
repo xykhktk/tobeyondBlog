@@ -1,11 +1,38 @@
 package com.tobeyond.blog.model.po;
 
-public class TagPo {
+import java.util.Date;
 
+public class TagPo {
     private Integer id;
+
     private String tag;
+
     private String title;
-    private String meta_description;
+
+    private Boolean isDel;
+
+    private String metaDescription;
+
+    private Date createdAt;
+
+    private Date updatedAt;
+
+    private Date deletedAt;
+
+    public TagPo(Integer id, String tag, String title, Boolean isDel, String metaDescription, Date createdAt, Date updatedAt, Date deletedAt) {
+        this.id = id;
+        this.tag = tag;
+        this.title = title;
+        this.isDel = isDel;
+        this.metaDescription = metaDescription;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+    }
+
+    public TagPo() {
+        super();
+    }
 
     public Integer getId() {
         return id;
@@ -20,7 +47,7 @@ public class TagPo {
     }
 
     public void setTag(String tag) {
-        this.tag = tag;
+        this.tag = tag == null ? null : tag.trim();
     }
 
     public String getTitle() {
@@ -28,19 +55,46 @@ public class TagPo {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title == null ? null : title.trim();
     }
 
-    public String getMeta_description() {
-        return meta_description;
+    public Boolean getIsDel() {
+        return isDel;
     }
 
-    public void setMeta_description(String meta_description) {
-        this.meta_description = meta_description;
+    public void setIsDel(Boolean isDel) {
+        this.isDel = isDel;
     }
 
-    @Override
-    public String toString() {
-        return "id:" + id + ",title:" + title;
+    public String getMetaDescription() {
+        return metaDescription;
+    }
+
+    public void setMetaDescription(String metaDescription) {
+        this.metaDescription = metaDescription == null ? null : metaDescription.trim();
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }
