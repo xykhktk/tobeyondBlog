@@ -10,7 +10,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span class="x-red">*</span>作者</label>
             <div class="layui-input-block">
-                <input type="text" name="author" required  lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" name="author" required lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -25,6 +25,7 @@
             <label class="layui-form-label">内容</label>
             <div class="layui-input-block">
                 <textarea name="content" class="layui-textarea"></textarea>
+            </div>
         </div>
 
         <div class="layui-form-item">
@@ -37,24 +38,24 @@
     </form>
 </div>
 
-  </body>
-    <script>
-        layui.use('form', function () {
-            var form = layui.form;
-            //监听提交
-            form.on('submit(commit)', function (data) {
-                T_POST('/admin/maxim/add',data.field,
-                    function (data) {
-                        if (data.success == true) {
-                            T_Msg(data.message,T_MSG_ACTION.closeMeAndRefreshParent)
-                        }else {
-                            layer.msg(data.message, {icon: 2});
-                        }
+</body>
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+        //监听提交
+        form.on('submit(commit)', function (data) {
+            T_POST('maxim/add', data.field,
+                function (data) {
+                    if (data.success == true) {
+                        T_Msg(data.message, T_MSG_ACTION.closeMeAndRefreshParent)
+                    } else {
+                        layer.msg(data.message, {icon: 2});
                     }
-                );
-                return false;
-            });
+                }
+            );
+            return false;
         });
+    });
 
-    </script>
+</script>
 </html>

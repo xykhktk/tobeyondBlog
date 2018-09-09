@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="/adminResource/css/font.css">
-	<link rel="stylesheet" href="/adminResource/css/xadmin.css">
+    <link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon" />
+    <link rel="stylesheet" th:href="@{/adminResource/css/font.css}">
+	<link rel="stylesheet" th:href="@{/adminResource/css/xadmin.css}">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="/adminResource/lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="/adminResource/js/xadmin.js"></script>
-    <script type="text/javascript" src="/adminResource/js/tobeyond.js"></script>
-    <script type="text/javascript" src="/adminResource/js/md5.js"></script>
+    <script th:src="@{/adminResource/lib/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/adminResource/js/xadmin.js}"></script>
+    <script type="text/javascript" th:src="@{/adminResource/js/tobeyond.js}"></script>
+    <script type="text/javascript" th:src="@{/adminResource/js/md5.js}"></script>
 </head>
 <body class="login-bg">
     
@@ -40,10 +40,10 @@
             //监听提交
             form.on('submit(login)', function (data) {
                 data.field.password = hex_md5(data.field.password);
-                T_POST('/admin/login', data.field,
+                T_POST('login', data.field,
                     function (data) {
                         if (data.success == true) {
-                            T_Msg(data.message, T_MSG_ACTION.goto, '/admin');
+                            T_Msg(data.message, T_MSG_ACTION.goto, 'index');
                         } else {
                             layer.msg(data.message, {icon: 2});
                         }

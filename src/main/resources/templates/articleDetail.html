@@ -6,7 +6,7 @@
 <html class="no-js" xmlns:th="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
 <head th:replace="public/header"></head>
 <!--代码高亮,highlightjs-->
-<link rel="stylesheet" href="/frontend/lib/highlightjs/darcula.css">
+<link rel="stylesheet" th:href="@{/frontend/lib/highlightjs/darcula.css}">
 <style>
     pre{
         padding: 0;
@@ -35,15 +35,15 @@
 </div>
 
 <!-- jQuery -->
-<script src="/frontend/js/jquery.min.js"></script>
+<script th:src="@{/frontend/js/jquery.min.js}" src=""></script>
 <!-- jQuery Easing -->
-<script src="/frontend/js/jquery.easing.1.3.js"></script>
+<script th:src="@{/frontend/js/jquery.easing.1.3.js}" src=""></script>
 <!-- Bootstrap -->
-<script src="/frontend/js/bootstrap.min.js"></script>
+<script th:src="@{/frontend/js/bootstrap.min.js}" src=""></script>
 <!-- Waypoints -->
-<script src="/frontend/js/jquery.waypoints.min.js"></script>
+<script th:src="@{/frontend/js/jquery.waypoints.min.js}" src=""></script>
 <!-- Flexslider -->
-<script src="/frontend/js/jquery.flexslider-min.js"></script>
+<script th:src="@{/frontend/js/jquery.flexslider-min.js}" src=""></script>
 <script th:src="@{//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js}"></script>
 <script>
 //    代码高亮,highlightjs
@@ -51,7 +51,7 @@
 </script>
 
 <!-- MAIN JS -->
-<script src="/frontend/js/main.js"></script>
+<script th:src="@{/frontend/js/main.js}"></script>
 
 </body>
 </html>

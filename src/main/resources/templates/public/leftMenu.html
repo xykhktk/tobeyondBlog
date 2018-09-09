@@ -3,10 +3,10 @@
     <h1 id="fh5co-logo"><a href="index.html">Tobeyond</a></h1>
     <nav id="fh5co-main-menu" role="navigation">
         <ul>
-            <li th:class="(${#request.getRequestURI()}=='/')?'fh5co-active':''"><a href="/">首页</a></li>
-            <li th:class="(${#request.getRequestURI()}=='/articleList')?'fh5co-active':''"><a href="/articleList">文章列表</a></li>
-            <li th:class="(${#request.getRequestURI()}=='/about')?'fh5co-active':''"><a href="/about">关于</a></li>
-            <li th:class="(${#request.getRequestURI()}=='/contact')?'fh5co-active':''"><a href="/contact">留言</a></li>
+            <li th:class="(${#request.getRequestURI()}=='/')?'fh5co-active':''"><a th:href="@{/}">首页</a></li>
+            <li th:class="(${#request.getRequestURI()}=='/articleList')?'fh5co-active':''"><a th:href="@{/articleList}">文章列表</a></li>
+            <li th:class="(${#request.getRequestURI()}=='/about')?'fh5co-active':''"><a th:href="@{/about}">关于</a></li>
+            <li th:class="(${#request.getRequestURI()}=='/contact')?'fh5co-active':''"><a th:href="@{/contact}">留言</a></li>
         </ul>
     </nav>
 

@@ -22,6 +22,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+//        request.getSession().getAttribute("_csrf").toString();
         String contextPath = request.getContextPath();
         // System.out.println(contextPath);
         String uri = request.getRequestURI();
@@ -31,14 +32,16 @@ public class BaseInterceptor implements HandlerInterceptor {
 //        System.out.print(uri);
 //        System.out.print("---");
 //        System.out.print(contextPath);
-        if ( null == user &&
-                !uri.startsWith(contextPath + "/admin/login") &&
+        if (null == user &&
+//                !uri.startsWith(contextPath + "/admin/login") &&
+                !uri.contains("login") &&
 //                !uri.startsWith(contextPath + "/admin/js") &&
 //                !uri.startsWith(contextPath + "/admin/css") &&
 //                !uri.startsWith(contextPath + "/admin/fonts") &&
 //                !uri.startsWith(contextPath + "/admin/images") &&
 //                !uri.startsWith(contextPath + "/admin/lib") &&
-                !uri.startsWith(contextPath + "/admin/logout")
+//                !uri.startsWith(contextPath + "/admin/logout")
+                !uri.contains("logout")
                 ) {
             response.sendRedirect(request.getContextPath() + "/admin/login");
             return false;
