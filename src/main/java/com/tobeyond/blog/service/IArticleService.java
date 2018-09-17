@@ -4,7 +4,8 @@ package com.tobeyond.blog.service;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.po.ArticlePo;
-import com.tobeyond.blog.model.po.ArticleTagPo;
+import com.tobeyond.blog.model.po.ArticleTagsPo;
+import com.tobeyond.blog.model.po.TagPo;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface IArticleService {
 
 //    ArticlePo getArticleById(long id);
 
-    List<ArticleTagPo> getTagListByTagId(Long tag_id);
+    List<ArticleTagsPo> getTagListByTagId(Long tag_id);
 
     PageInfo<ArticleBo> articleListBaseInfo(Integer page, Integer limit, Long tag_id,Boolean is_show);
 
@@ -29,5 +30,7 @@ public interface IArticleService {
     Boolean changeShow(Integer id,Integer is_show);
 
     Boolean articleEditSave(ArticlePo articlePo,String ids);
+
+    List<TagPo> getTagListByArticleId(Integer id);
 
 }

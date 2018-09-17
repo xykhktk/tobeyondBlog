@@ -44,7 +44,7 @@
         var form = layui.form;
         //监听提交
         form.on('submit(commit)', function (data) {
-            T_POST('maxim/add', data.field,
+            T_POST('add', data.field,
                 function (data) {
                     if (data.success == true) {
                         T_Msg(data.message, T_MSG_ACTION.closeMeAndRefreshParent)

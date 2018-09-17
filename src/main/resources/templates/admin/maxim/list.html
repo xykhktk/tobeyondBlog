@@ -46,7 +46,7 @@
                 <a th:if="${maxim.isShow} eq false" th:onclick="|changeShow('${maxim.id}','1')|"  href="javascript:;" title="显示">
                     <i class="layui-icon">&#xe62f;</i>
                 </a>
-                <a title="编辑" th:onclick="|x_admin_show('编辑','maxim/edit/${maxim.id}')|" href="javascript:;">
+                <a title="编辑" th:onclick="|x_admin_show('编辑','edit/${maxim.id}')|" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
                 <a title="删除" th:onclick="|del('${maxim.id}')|" href="javascript:;">

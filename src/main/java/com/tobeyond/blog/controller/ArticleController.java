@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.po.ArticlePo;
+import com.tobeyond.blog.model.po.TagExample;
+import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.IArticleService;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -42,10 +44,13 @@ public class ArticleController {
         Parser parser = Parser.builder().build();
         Node node = parser.parse(article.getContent());
         HtmlRenderer renderer = HtmlRenderer.builder().build();
-//        System.out.print( renderer.render(node));
         article.setContent( renderer.render(node));
+
+        List<TagPo> tagPoList =  articleService.getTagListByArticleId(id.intValue());
+
         ModelAndView modelAndView = new ModelAndView("/articleDetail");
         modelAndView.addObject("article",article);
+        modelAndView.addObject("tagList",tagPoList);
         return modelAndView;
     }
 

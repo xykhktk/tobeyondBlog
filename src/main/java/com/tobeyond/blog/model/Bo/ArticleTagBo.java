@@ -1,9 +1,9 @@
 package com.tobeyond.blog.model.Bo;
 
-import com.tobeyond.blog.model.po.ArticleTagPo;
+import com.tobeyond.blog.model.po.ArticleTagsPo;
 import com.tobeyond.blog.model.po.TagPo;
 
-public class ArticleTagBo extends ArticleTagPo {
+public class ArticleTagBo extends ArticleTagsPo {
 
     private Integer id;
     private Integer tag_id;

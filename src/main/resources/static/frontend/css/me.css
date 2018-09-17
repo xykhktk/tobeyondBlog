@@ -55,3 +55,14 @@
 #comments .lists-navigator ol li.current a {
     color: #6fa3ef
 }
+
+.article-detail-title{
+    font-size: 36px;
+    margin-bottom: 0.5em;
+}
+
+.article-detail-title-tags{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2em;
+    padding-bottom: 0.5em;
+}

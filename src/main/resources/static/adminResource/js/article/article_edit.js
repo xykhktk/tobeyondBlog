@@ -22,7 +22,7 @@ $(function () {
             new_data.tagIds = tagIds;
 
 
-            T_POST('/admin/article/edit',new_data,
+            T_POST('',new_data,
                 function (data) {
                     if (data.success == true) {
                         T_Msg(data.message,T_MSG_ACTION.closeMeAndRefreshParent)

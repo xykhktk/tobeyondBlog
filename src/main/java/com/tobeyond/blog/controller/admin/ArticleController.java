@@ -139,7 +139,7 @@ public class ArticleController {
         return  modelAndView;
     }
 
-    @PostMapping(value = "/edit")
+    @PostMapping(value = "/edit/{id}")
     @ResponseBody
     public ReturnJson articleEditSave(@RequestParam(value = "id") Integer id,
                                       @RequestParam(value = "title") String title,

@@ -1,15 +1,13 @@
 package com.tobeyond.blog.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tobeyond.blog.dao.mapper.TagMapper;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.Bo.ArticleTagBo;
-import com.tobeyond.blog.model.po.ArticlePo;
-import com.tobeyond.blog.model.po.ArticleTagPo;
+import com.tobeyond.blog.model.po.*;
 import com.tobeyond.blog.dao.mapper.ArticleMapper;
-import com.tobeyond.blog.dao.mapper.ArticleTagMapper;
+import com.tobeyond.blog.dao.mapper.ArticleTagsMapper;
 import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.util.DateKit;
 //import org.markdownj.MarkdownProcessor;
@@ -25,11 +23,13 @@ public class ArticleServiceImpl implements IArticleService {
     @Autowired
     ArticleMapper articleMapper;
     @Autowired
-    ArticleTagMapper articleTagMapper;
+    ArticleTagsMapper articleTagsMapper;
+    @Autowired
+    TagMapper tagMapper;
 
     @Override
-    public List<ArticleTagPo> getTagListByTagId(Long tag_id) {
-        return articleTagMapper.getTagsListByTagId(tag_id);
+    public List<ArticleTagsPo> getTagListByTagId(Long tag_id) {
+        return articleTagsMapper.getTagsListByTagId(tag_id);
     }
 
     @Override
@@ -38,11 +38,11 @@ public class ArticleServiceImpl implements IArticleService {
 
         List<String> inIds = null;
         if(tag_id != null){
-            List<ArticleTagPo> articleTags = getTagListByTagId(tag_id);
+            List<ArticleTagsPo> articleTags = getTagListByTagId(tag_id);
             if(articleTags.size() > 0){
                 inIds = new ArrayList<>();
-                for(ArticleTagPo articleTag : articleTags){
-                    inIds.add(String.valueOf(articleTag.getArticle_id()));
+                for(ArticleTagsPo articleTag : articleTags){
+                    inIds.add(String.valueOf(articleTag.getArticleId()));
                 }
             }
         }
@@ -67,23 +67,24 @@ public class ArticleServiceImpl implements IArticleService {
     @Transactional
     public Boolean articleAdd(ArticlePo article,String tagIds) {
         String now = DateKit.dateFormat(new Date());
+        Date dateNow = DateKit.getNow();
         try {
-            article.setCreated_at(now);
+            article.setCreated_at(now); //article的bean是自己写的,date字段设置为String了。有点不规范。
             article.setUpdated_at(now);
             articleMapper.articleAdd(article);
 
             //批量插入
             String[] tagArray =  tagIds.split(",");
-            List<ArticleTagPo> articleTagPoList = new ArrayList<>();
+            List<ArticleTagsPo> articleTagPoList = new ArrayList<>();
             for(String tagId : tagArray){
-                ArticleTagPo articleTagPo = new ArticleTagPo();
-                articleTagPo.setArticle_id(article.getId());
-                articleTagPo.setTag_id(Integer.valueOf(tagId));
-                articleTagPo.setCreated_at(now);
-                articleTagPo.setUpdated_at(now);
+                ArticleTagsPo articleTagPo = new ArticleTagsPo();
+                articleTagPo.setArticleId(article.getId());
+                articleTagPo.setTagId(Integer.valueOf(tagId));
+                articleTagPo.setCreatedAt(dateNow); //代码生成器生成的代码是Date类型
+                articleTagPo.setUpdatedAt(dateNow);
                 articleTagPoList.add(articleTagPo);
             }
-            articleTagMapper.insertBatch(articleTagPoList);
+            articleTagsMapper.insertBatch(articleTagPoList);
 
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -121,6 +122,8 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public Boolean articleEditSave(ArticlePo article, String tagIds) {
         String now = DateKit.dateFormat(new Date());
+        Date dateNow = DateKit.getNow();
+
         try {
             article.setUpdated_at(now);
             articleMapper.articleUpdate(article);
@@ -139,16 +142,16 @@ public class ArticleServiceImpl implements IArticleService {
             delTag.removeAll(selectedTag);
 
             if(insertTag.size() > 0){
-                List<ArticleTagPo> articleTagPoList = new ArrayList<>();
+                List<ArticleTagsPo> articleTagPoList = new ArrayList<>();
                 for(String insertTagId : insertTag){
-                    ArticleTagPo articleTagPo = new ArticleTagPo();
-                    articleTagPo.setArticle_id(article.getId());
-                    articleTagPo.setTag_id(Integer.valueOf(insertTagId));
-                    articleTagPo.setCreated_at(now);
-                    articleTagPo.setUpdated_at(now);
+                    ArticleTagsPo articleTagPo = new ArticleTagsPo();
+                    articleTagPo.setArticleId(article.getId());
+                    articleTagPo.setTagId(Integer.valueOf(insertTagId));
+                    articleTagPo.setCreatedAt(dateNow);
+                    articleTagPo.setUpdatedAt(dateNow);
                     articleTagPoList.add(articleTagPo);
                 }
-                articleTagMapper.insertBatch(articleTagPoList);
+                articleTagsMapper.insertBatch(articleTagPoList);
             }
 
             if(delTag.size() > 0){
@@ -156,7 +159,7 @@ public class ArticleServiceImpl implements IArticleService {
                 params.put("article_id",article.getId());
                 params.put("whereInTagIds",delTag); //在mapper试使用where in，collection="whereInTagIds"要与这里对应
                 params.put("deleted_at",now);
-                articleTagMapper.delArticleTags(params);
+                articleTagsMapper.delArticleTags(params);
             }
 
         }catch (Exception e){
@@ -165,6 +168,23 @@ public class ArticleServiceImpl implements IArticleService {
         }
 
         return true;
+    }
+
+    // 其实是  select * from tags as t left join article_tags as at on t.id = at.tagId
+    // where at.article_id = XXX and at.deleteAt is not null and ...
+    @Override
+    public List<TagPo> getTagListByArticleId(Integer id) {
+        ArticleTagsExample articleTagsExample = new ArticleTagsExample();
+        articleTagsExample.createCriteria().andArticleIdEqualTo(id).andDeletedAtIsNull();
+        List<ArticleTagsPo> articleTagsPos = articleTagsMapper.selectByExample(articleTagsExample);
+
+        TagExample tagExample = new TagExample();
+        List<Integer> inIds = new ArrayList<>();
+        for(ArticleTagsPo articleTagsPo : articleTagsPos){
+            inIds.add(articleTagsPo.getTagId());
+        }
+        tagExample.createCriteria().andDeletedAtIsNull().andIdIn(inIds);
+        return tagMapper.selectByExample(tagExample);
     }
 
 

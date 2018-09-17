@@ -57,7 +57,7 @@
         if (null == _csrf) return false;
 
         layer.confirm('确认要删除吗', function (index) {
-            T_POST('/admin/tag/del',
+            T_POST('del',
                 {
                     id: id,
                     _csrf: _csrf
@@ -78,7 +78,7 @@
         var _csrf = $("#_csrf").val();
         if (null == _csrf) return false;
 
-        T_POST('/admin/tag/changeShow',
+        T_POST('changeShow',
             {
                 id: id,
                 isShow :isShow,

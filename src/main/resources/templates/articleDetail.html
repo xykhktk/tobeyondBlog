@@ -21,7 +21,12 @@
     <div id="fh5co-main">
 
         <div class="fh5co-narrow-content animate-box fh5co-border-bottom" data-animate-effect="fadeInLeft">
-            <h2 class="fh5co-heading" th:text="${article.title}" style="font-size: 36px">Nature</span></h2>
+            <h2 class="fh5co-heading article-detail-title" th:text="${article.title}">Nature</span></h2>
+
+            <div class="article-detail-title-tags">
+                <a class="tag" th:each="tag : ${tagList}" th:text="${tag.title}" th:href="'/articleList?tag_id=' + ${tag.id}"></a>
+            </div>
+
             <!--<div th:utext=${article.content}></div>-->
             <block th:utext=${article.content} />
 

@@ -19,7 +19,7 @@
 
     <xblock>
         <!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
-        <button class="layui-btn" th:onclick="|x_admin_show('编辑','/admin/article/add')|"><i class="layui-icon"></i>添加
+        <button class="layui-btn" th:onclick="|x_admin_show('编辑','add')|"><i class="layui-icon"></i>添加
         </button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
     </xblock>
@@ -56,7 +56,7 @@
                 <a th:if="${article.is_show} eq 0" th:onclick="|changeShow('${article.id}','1')|"  href="javascript:;" title="显示">
                     <i class="layui-icon">&#xe62f;</i>
                 </a>
-                <a title="编辑" th:onclick="|x_admin_show('编辑','/admin/article/edit/${article.id}')|" href="javascript:;">
+                <a title="编辑" th:onclick="|x_admin_show('编辑','edit/${article.id}')|" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
                 <a title="删除" th:onclick="|articleDel('${article.id}')|" href="javascript:;">
@@ -84,7 +84,7 @@
         if (null == _csrf) return false;
 
         layer.confirm('确认要删除吗', function (index) {
-            T_POST('/admin/article/del',
+            T_POST('del',
                 {
                     id: id,
                     _csrf: _csrf
@@ -105,7 +105,7 @@
         var _csrf = $("#_csrf").val();
         if (null == _csrf) return false;
 
-        T_POST('/admin/article/changeShow',
+        T_POST('changeShow',
             {
                 id: id,
                 is_show :is_show,

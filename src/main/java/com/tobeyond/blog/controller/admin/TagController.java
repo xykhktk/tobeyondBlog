@@ -64,9 +64,9 @@ public class TagController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/edit")
+    @PostMapping(value = "/edit/{id}")
     @ResponseBody
-    public ReturnJson editSave(TagPo po){
+    public ReturnJson editSave(TagPo po,@PathVariable Long id){
         if(po.getId() == null) return  ReturnJson.error("id不能为空");
         if(po.getTitle() == null || po.getTitle().equals("")) return  ReturnJson.error("中文标签不能为空");
         if(po.getTag() == null || po.getTag().equals("")) return  ReturnJson.error("英文标签不能为空");

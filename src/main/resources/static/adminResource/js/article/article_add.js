@@ -21,7 +21,7 @@ $(function () {
             if(tagIds.length > 0) tagIds = tagIds.slice(0 ,tagIds.length -1);
             new_data.tagIds = tagIds;
 
-            T_POST('/admin/article/add',new_data,
+            T_POST('add',new_data,
                 function (data) {
                     if (data.success == true) {
                         T_Msg(data.message,T_MSG_ACTION.closeMeAndRefreshParent)

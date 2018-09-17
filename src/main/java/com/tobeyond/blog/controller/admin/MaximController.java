@@ -65,9 +65,9 @@ public class MaximController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/edit")
+    @PostMapping(value = "/edit/{id}")
     @ResponseBody
-    public ReturnJson editSave(MaximPo maximPo){
+    public ReturnJson editSave(MaximPo maximPo,@PathVariable Long id){
         if(maximPo.getIsShow() == null) maximPo.setIsShow(false);
         if(maximPo.getId() == null) return  ReturnJson.error("id不能为空");
         if(maximPo.getAuthor() == null || maximPo.getAuthor().equals("")) return  ReturnJson.error("作者不能为空");

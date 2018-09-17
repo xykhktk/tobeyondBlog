@@ -62,8 +62,8 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="tags"
-               domainObjectName="Tag"
+        <table tableName="article_tags"
+               domainObjectName="ArticleTags"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="false"
@@ -71,6 +71,5 @@
                selectByExampleQueryId="true">
         </table>
 
-        <!-- geelynote mybatis插件的搭建 -->
     </context>
 </generatorConfiguration>

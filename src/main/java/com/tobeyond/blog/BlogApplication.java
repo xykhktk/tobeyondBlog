@@ -25,13 +25,13 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @MapperScan("com.tobeyond.blog.dao.mapper")	//No MyBatis mapper was found in '[com.tobeyond.blog]' package. Please check your configuration.
 @EnableTransactionManagement // 坑:关于事务
-//public class BlogApplication {
-public class BlogApplication extends SpringBootServletInitializer {
+public class BlogApplication {
+//public class BlogApplication extends SpringBootServletInitializer {
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(BlogApplication.class);
-	}
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//		return builder.sources(BlogApplication.class);
+//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(BlogApplication.class, args);

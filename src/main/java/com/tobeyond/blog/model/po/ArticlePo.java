@@ -16,7 +16,7 @@ public class ArticlePo extends CommField {
     private String slug;
 //    private Integer is_original;
     private Integer is_show;
-    private List<ArticleTagPo> articleTag;
+    private List<ArticleTagsPo> articleTag;
 
     public String getSlug() {
         return slug;
@@ -74,11 +74,11 @@ public class ArticlePo extends CommField {
         this.page_image = page_image;
     }
 
-    public List<ArticleTagPo> getArticleTag() {
+    public List<ArticleTagsPo> getArticleTag() {
         return articleTag;
     }
 
-    public void setArticleTag(List<ArticleTagPo> articleTag) {
+    public void setArticleTag(List<ArticleTagsPo> articleTag) {
         this.articleTag = articleTag;
     }
 
