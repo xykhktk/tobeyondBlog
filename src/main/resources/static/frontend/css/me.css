@@ -1,3 +1,8 @@
+body{
+    background-color: white;
+}
+
+/*标签相关*/
 .tag{
     font-size: 85%;
     display: inline-block;
@@ -15,6 +20,7 @@
     color: rgba(0, 0, 0, 0.5);
 }
 
+/*貌似是分页的css*/
 .lists-navigator {
     margin: 30px 0 35px
 }
@@ -56,6 +62,7 @@
     color: #6fa3ef
 }
 
+/*详情页css调整*/
 .article-detail-title{
     font-size: 36px;
     margin-bottom: 0.5em;
@@ -65,4 +72,11 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 2em;
     padding-bottom: 0.5em;
+}
+
+/*markdown页面目录*/
+#directory{
+    position: fixed;
+    top: 4em;
+    right: 4em;
 }
