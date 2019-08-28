@@ -14,7 +14,11 @@ import java.util.Map;
 @Component
 public interface ArticleMapper {
 
-
+    /**
+     * 注解的方式进行数据库操作,不推荐.
+     * @param in_ids
+     * @return
+     */
     @SelectProvider(type = com.tobeyond.blog.dao.provider.ArticleProvider.class,method = "articleList")
     @Results({
             @Result(id = true, column = "id", property = "article_id"), //在数据库字段名是id,希望取出来是article_id.注意bean里面也要对应有article_id

@@ -24,14 +24,10 @@ public class BaseInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
 //        request.getSession().getAttribute("_csrf").toString();
         String contextPath = request.getContextPath();
-        // System.out.println(contextPath);
         String uri = request.getRequestURI();
 
         //请求拦截处理
         UserCustom user = CommonUtils.getLoginUser(request);
-//        System.out.print(uri);
-//        System.out.print("---");
-//        System.out.print(contextPath);
         if (null == user &&
 //                !uri.startsWith(contextPath + "/admin/login") &&
                 !uri.contains("login") &&

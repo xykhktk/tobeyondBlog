@@ -1,6 +1,5 @@
 package com.tobeyond.blog.controller.admin;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.Bo.ArticleTagBo;
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,7 +44,6 @@ public class ArticleController {
     @GetMapping(value = "/list")
     public ModelAndView articleList(@RequestParam(value = "page",required = false) Integer page){
         PageInfo<ArticleBo> articlesPaginator =  articleService.articleListBaseInfo(page,10,null,false);
-//        System.out.print(JSON.toJSONString(articlesPaginator.getList()));
         ModelAndView modelAndView = new ModelAndView("/admin/article/list");
         modelAndView.addObject("articleList",articlesPaginator);
         return  modelAndView;
@@ -55,7 +52,6 @@ public class ArticleController {
     @GetMapping(value = "/add")
     public ModelAndView articleAdd(){
         List<TagPo> tagList = tagService.selectByExample(null);
-//        System.out.print(JSON.toJSONString(tagList));
         ModelAndView modelAndView = new ModelAndView("/admin/article/add");
         modelAndView.addObject("tagList",tagList);
         return  modelAndView;
