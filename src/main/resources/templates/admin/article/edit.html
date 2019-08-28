@@ -62,19 +62,6 @@
             </div>
 
             <div class="layui-form-item">
-                <label for="page_image" class="layui-form-label">
-                    <span class="x-red">*</span>slug
-                </label>
-                <div class="layui-input-inline">
-                    <input type="text" value="" id="slug" name="slug" lay-verify="required"
-                           th:value="${article.slug}" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">
-                    <span class="x-red">*</span>类似/article/yilaizhuru 这样的效果
-                </div>
-            </div>
-
-            <div class="layui-form-item">
                 <label class="layui-form-label">是否显示</label>
                 <div class="layui-input-block">
                     <input type="checkbox" lay-skin="switch" value="1" name="is_show" checked th:if="${article.is_show}eq '1'">

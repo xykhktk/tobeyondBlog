@@ -42,12 +42,12 @@
 
     <sql id="Base_Column">
         articles.id, articles.category_id,articles.user_id, articles.title, articles.subtitle, articles.is_show,
-        articles.page_image, articles.view_count, articles.created_at, articles.updated_at,articles.slug
+        articles.page_image, articles.view_count, articles.created_at, articles.updated_at
     </sql>
 
     <sql id="with_content_Column">
         articles.id, articles.category_id,articles.user_id, articles.title, articles.subtitle, articles.content,articles.is_show,
-        articles.page_image, articles.view_count, articles.created_at, articles.updated_at,articles.slug
+        articles.page_image, articles.view_count, articles.created_at, articles.updated_at
     </sql>
 
     <!--if 判断map传来的参数，并且使用where in-->
@@ -85,9 +85,8 @@
     <!--<insert id="articleAdd" parameterType="com.tobeyond.blog.model.po.ArticlePo">-->
     <!--keyProperty="id"会使得insert后返回id，id赋值在传入的对象里-->
     <insert id="articleAdd" useGeneratedKeys="true" keyProperty="id" parameterType="com.tobeyond.blog.model.po.ArticlePo">
-        insert into articles(user_id,slug,title,subtitle,content,page_image,is_show,created_at)
+        insert into articles(user_id,title,subtitle,content,page_image,is_show,created_at)
         values(#{user_id,jdbcType=INTEGER},
-        #{slug,jdbcType=VARCHAR},
         #{title,jdbcType=VARCHAR},
         #{subtitle,jdbcType=VARCHAR},
         #{content,jdbcType=VARCHAR},
@@ -112,9 +111,6 @@
             </if>
             <if test="subtitle != null">
                 subtitle = #{subtitle,jdbcType=VARCHAR},
-            </if>
-            <if test="slug != null">
-                slug = #{slug,jdbcType=VARCHAR},
             </if>
             <if test="updated_at != null">
                 updated_at = #{updated_at,jdbcType=VARCHAR},

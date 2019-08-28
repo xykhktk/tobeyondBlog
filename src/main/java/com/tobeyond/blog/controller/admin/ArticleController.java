@@ -1,6 +1,15 @@
 package com.tobeyond.blog.controller.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.qiniu.common.QiniuException;
+import com.qiniu.http.Response;
+import com.qiniu.storage.Configuration;
+import com.qiniu.storage.Region;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.DefaultPutRet;
+import com.qiniu.util.Auth;
+import com.tobeyond.blog.constant.QiniuConfig;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.Bo.ArticleTagBo;
 import com.tobeyond.blog.model.Bo.TagBo;
@@ -11,15 +20,17 @@ import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.service.ITagService;
 import com.tobeyond.blog.util.CommonUtils;
+import com.tobeyond.blog.util.DateKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
 
 @Controller("adminArticleController")
 @RequestMapping(value = "/admin/article")
@@ -61,7 +72,6 @@ public class ArticleController {
     @ResponseBody
     public ReturnJson articleAddSave(@RequestParam(value = "title",required = true) String title,
                                      @RequestParam(value = "subtitle",required = true) String subtitle,
-                                     @RequestParam(value = "slug",required = true) String slug,
                                      @RequestParam(value = "text",required = true) String content,
                                      @RequestParam(value = "is_show") Integer is_show,
                                      @RequestParam(value = "page_image",required = true) String page_image,
@@ -75,7 +85,6 @@ public class ArticleController {
         article.setTitle(title);
         article.setSubtitle(subtitle);
         article.setPage_image(page_image);
-        article.setSlug(slug);
 
         if(is_show == null) is_show = 0;
         article.setIs_show(is_show);
@@ -140,7 +149,6 @@ public class ArticleController {
     public ReturnJson articleEditSave(@RequestParam(value = "id") Integer id,
                                       @RequestParam(value = "title") String title,
                                       @RequestParam(value = "subtitle") String subtitle,
-                                      @RequestParam(value = "slug") String slug,
                                       @RequestParam(value = "text") String content,
                                       @RequestParam(value = "is_show",required = false) Integer is_show,
                                       @RequestParam(value = "page_image") String page_image,
@@ -153,7 +161,6 @@ public class ArticleController {
         article.setTitle(title);
         article.setSubtitle(subtitle);
         article.setPage_image(page_image);
-        article.setSlug(slug);
         article.setIs_show(is_show);
 
         ReturnJson returnJson;

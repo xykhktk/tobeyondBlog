@@ -13,18 +13,9 @@ public class ArticlePo extends CommField {
     private String page_image;
     private String subtitle;
     private String content;
-    private String slug;
 //    private Integer is_original;
     private Integer is_show;
     private List<ArticleTagsPo> articleTag;
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
 
     public Integer getArticle_id() {
         return article_id;

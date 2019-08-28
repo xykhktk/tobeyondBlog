@@ -16,14 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 @Controller("uploadController")
 @RequestMapping(value = "/admin/upload")
@@ -33,6 +32,7 @@ public class UploadController {
     QiniuConfig qiniuConfig;
 
     @PostMapping(value = "/uploadFile")
+    @ResponseBody
     public ReturnJson uploadFile(@RequestParam(value = "file") MultipartFile multipartFile) throws IOException {
         ReturnJson returnJson;
         FileInputStream fileInputStream = (FileInputStream) multipartFile.getInputStream();
@@ -41,13 +41,12 @@ public class UploadController {
         int begin = originalFilename.indexOf(".");
         int end = originalFilename.length();
         StringBuilder fileName = new StringBuilder(String.valueOf(DateKit.getCurrentUnixTime()));
-        fileName.append(".");
         fileName.append(originalFilename.substring(begin,end));
 
 
         Auth auth = Auth.create(qiniuConfig.getAccessKey(), qiniuConfig.getSecretKey());
         String upToken = auth.uploadToken(qiniuConfig.getBucket());
-        Configuration cfg = new Configuration(Region.region0());
+        Configuration cfg = new Configuration(Region.huanan());
         UploadManager uploadManager = new UploadManager(cfg);
         try {
             Response response = uploadManager.put(fileInputStream,fileName.toString(),upToken,null, null);
