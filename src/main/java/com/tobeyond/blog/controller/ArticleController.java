@@ -1,11 +1,8 @@
 package com.tobeyond.blog.controller;
 
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.Bo.ArticleBo;
-import com.tobeyond.blog.model.po.ArticlePo;
-import com.tobeyond.blog.model.po.TagExample;
 import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.IArticleService;
 import org.commonmark.node.Node;
@@ -32,7 +29,6 @@ public class ArticleController {
     ) {
 
         PageInfo<ArticleBo> articlesPaginator = articleService.articleListBaseInfo(page, 12, tag_id,true);
-//        System.out.print(JSON.toJSONString(articlesPaginator.getList()));
         ModelAndView modelAndView = new ModelAndView("/articleList");
         modelAndView.addObject("articlesPaginator", articlesPaginator);
         return modelAndView;

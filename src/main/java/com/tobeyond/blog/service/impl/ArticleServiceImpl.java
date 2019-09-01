@@ -2,6 +2,7 @@ package com.tobeyond.blog.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tobeyond.blog.constant.QiniuConfig;
 import com.tobeyond.blog.dao.mapper.TagMapper;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.Bo.ArticleTagBo;
@@ -19,6 +20,9 @@ import java.util.*;
 
 @Service
 public class ArticleServiceImpl implements IArticleService {
+
+    @Autowired
+    QiniuConfig qiniuConfig;
 
     @Autowired
     ArticleMapper articleMapper;
@@ -53,6 +57,10 @@ public class ArticleServiceImpl implements IArticleService {
 
         PageHelper.startPage(page, limit);
         List<ArticleBo> articleList = articleMapper.articleListBaseInfo(params);
+        for(ArticleBo bo :articleList){
+            bo.setPage_image(qiniuConfig.getPath() +  bo.getPage_image());
+        }
+
         return new PageInfo<>(articleList);
     }
 
