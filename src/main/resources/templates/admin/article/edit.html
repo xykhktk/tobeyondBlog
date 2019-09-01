@@ -12,7 +12,8 @@
     <link rel="shortcut icon" th:href="@{/adminResource/favicon.ico}" type="image/x-icon" />
     <link rel="stylesheet" th:href="@{/adminResource/css/font.css}">
     <link rel="stylesheet" th:href="@{/adminResource/css/xadmin.css}">
-    <script th:src="@{//cdn.bootcss.com/jquery/2.2.3/jquery.min.js}"></script>
+    <!--<script th:src="@{//cdn.bootcss.com/jquery/2.2.3/jquery.min.js}"></script>-->
+    <script th:src="@{/adminResource/js/jquery2.2.3.js}" src=""></script>
     <script th:src="@{/adminResource/lib/layui/layui.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{/adminResource/js/xadmin.js}" src=""></script>
     <script type="text/javascript" th:src="@{/adminResource/js/tobeyond.js}" src=""></script>
@@ -52,12 +53,16 @@
                 <label for="page_image" class="layui-form-label">
                     <span class="x-red">*</span>主图
                 </label>
+                <button type="button" class="layui-btn" id="upload_file">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
                 <div class="layui-input-inline">
-                    <input type="text" value="" id="page_image" name="page_image" lay-verify="required"
-                           th:value="${article.page_image}" autocomplete="off" class="layui-input">
+                    <input type="hidden" th:value="${article.page_image}" id="page_image" name="page_image" lay-verify="required"
+                           autocomplete="off" class="layui-input">
+                    <img id="upload_image_show" height="100" th:src="${article.pageImgFull}">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
-                    <span class="x-red">*</span>外链
+                    <span class="x-red">*</span>必须有一张图
                 </div>
             </div>
 

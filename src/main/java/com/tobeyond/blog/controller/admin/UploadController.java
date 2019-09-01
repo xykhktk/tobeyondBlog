@@ -33,7 +33,8 @@ public class UploadController {
 
     @PostMapping(value = "/uploadFile")
     @ResponseBody
-    public ReturnJson uploadFile(@RequestParam(value = "file") MultipartFile multipartFile) throws IOException {
+    public ReturnJson uploadFile(@RequestParam(value = "file") MultipartFile multipartFile
+    ) throws IOException {
         ReturnJson returnJson;
         FileInputStream fileInputStream = (FileInputStream) multipartFile.getInputStream();
 
@@ -41,7 +42,7 @@ public class UploadController {
         int begin = originalFilename.indexOf(".");
         int end = originalFilename.length();
         StringBuilder fileName = new StringBuilder(String.valueOf(DateKit.getCurrentUnixTime()));
-        fileName.append(originalFilename.substring(begin,end));
+        fileName.append(originalFilename.substring(begin, end));
 
 
         Auth auth = Auth.create(qiniuConfig.getAccessKey(), qiniuConfig.getSecretKey());
@@ -49,14 +50,14 @@ public class UploadController {
         Configuration cfg = new Configuration(Region.huanan());
         UploadManager uploadManager = new UploadManager(cfg);
         try {
-            Response response = uploadManager.put(fileInputStream,fileName.toString(),upToken,null, null);
+            Response response = uploadManager.put(fileInputStream, fileName.toString(), upToken, null, null);
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             System.out.println(putRet.key);
             System.out.println(putRet.hash);
             Map data = new HashMap();
-            data.put("key",putRet.key);
-            data.put("hash",putRet.hash);
+            data.put("key", putRet.key);
+            data.put("hash", putRet.hash);
 
             returnJson = ReturnJson.success("上传成功");
             returnJson.setData(data);
@@ -65,7 +66,7 @@ public class UploadController {
             returnJson = ReturnJson.error(r.toString());
         }
 
-        return  returnJson;
+        return returnJson;
     }
 
 }

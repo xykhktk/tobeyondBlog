@@ -1,42 +1,37 @@
 package com.tobeyond.blog.controller.admin;
 
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
-import com.qiniu.common.QiniuException;
-import com.qiniu.http.Response;
-import com.qiniu.storage.Configuration;
-import com.qiniu.storage.Region;
-import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.DefaultPutRet;
-import com.qiniu.util.Auth;
 import com.tobeyond.blog.constant.QiniuConfig;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.Bo.ArticleTagBo;
 import com.tobeyond.blog.model.Bo.TagBo;
 import com.tobeyond.blog.model.Bo.UserCustom;
 import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.Vo.ArticleVo;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.service.ITagService;
 import com.tobeyond.blog.util.CommonUtils;
-import com.tobeyond.blog.util.DateKit;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Controller("adminArticleController")
 @RequestMapping(value = "/admin/article")
 public class ArticleController {
 
     private ModelAndView modelAndView;
+
+    @Autowired
+    QiniuConfig qiniuConfig;
 
     @Autowired
     IArticleService articleService;
@@ -106,7 +101,11 @@ public class ArticleController {
 
     @GetMapping(value = "/edit/{id}")
     public ModelAndView articleEdit(@PathVariable Long id){
-        ArticleBo article = articleService.articleFullInfo(id);
+        ArticleBo articleBo = articleService.articleFullInfo(id);
+        ArticleVo articleVo = new ArticleVo();
+        BeanUtils.copyProperties(articleBo,articleVo);
+        articleVo.setPageImgFull(qiniuConfig.getPath() +articleVo.getPage_image());
+
         List<TagPo> tagPoList = tagService.selectByExample(null);
 
 
@@ -132,14 +131,14 @@ public class ArticleController {
 
         for(TagBo tagBo : tagBoList){
             tagBo.setIs_selected(false);
-            for (ArticleTagBo articleTagBo :article.getTagList()){
+            for (ArticleTagBo articleTagBo :articleBo.getTagList()){
                 if(Objects.equals(articleTagBo.getTag_id(), tagBo.getId())){
                     tagBo.setIs_selected(true);
                 }
             }
         }
         ModelAndView modelAndView = new ModelAndView("/admin/article/edit");
-        modelAndView.addObject("article",article);
+        modelAndView.addObject("article",articleVo);
         modelAndView.addObject("tagList",tagBoList);
         return  modelAndView;
     }
