@@ -1,7 +1,7 @@
 package com.tobeyond.blog.controller.admin;
 
 import com.github.pagehelper.PageInfo;
-import com.tobeyond.blog.constant.QiniuConfig;
+import com.tobeyond.blog.config.QiniuConfig;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.Bo.ArticleTagBo;
 import com.tobeyond.blog.model.Bo.TagBo;

@@ -10,5 +10,4 @@ public class WebConst {
 
     public static String ADMIN_SESSION_KEY = "tobeyond_admin";
 
-
 }

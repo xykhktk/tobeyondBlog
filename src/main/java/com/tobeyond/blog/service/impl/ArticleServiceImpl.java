@@ -2,7 +2,7 @@ package com.tobeyond.blog.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.tobeyond.blog.constant.QiniuConfig;
+import com.tobeyond.blog.config.QiniuConfig;
 import com.tobeyond.blog.dao.mapper.TagMapper;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.Bo.ArticleTagBo;

@@ -12,6 +12,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -25,6 +26,7 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @MapperScan("com.tobeyond.blog.dao.mapper")	//No MyBatis mapper was found in '[com.tobeyond.blog]' package. Please check your configuration.
 @EnableTransactionManagement // 坑:关于事务
+@EnableScheduling
 public class BlogApplication {
 //public class BlogApplication extends SpringBootServletInitializer {
 
