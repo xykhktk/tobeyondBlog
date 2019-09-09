@@ -18,7 +18,7 @@ public class QuartzConfig {
     public Trigger testQuartzTrigger1() {
         //5秒执行一次
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-                .withIntervalInSeconds(5)
+                .withIntervalInSeconds(10)
                 .repeatForever();
         return TriggerBuilder.newTrigger().forJob(testQuartz1())
                 .withIdentity("testTask1")
@@ -36,7 +36,7 @@ public class QuartzConfig {
         //cron方式，每隔5秒执行一次
         return TriggerBuilder.newTrigger().forJob(testQuartz2())
                 .withIdentity("testTask2")
-                .withSchedule(CronScheduleBuilder.cronSchedule("*/5 * * * * ?"))
+                .withSchedule(CronScheduleBuilder.cronSchedule("*/15 * * * * ?"))
                 .build();
     }
 
