@@ -19,12 +19,11 @@ public class Scheduler {
      * 入口类添加  @EnableScheduling ,定时任务类添加@Component , 定时类内部的方法添加 @Scheduled ,就可以实现定时任务
      *
      */
-
-    @Scheduled(fixedRate = 2000)
-    public void task1(){
-        System.out.println("task1");
-        mqSender.send();
-    }
+//    @Scheduled(fixedRate = 2000)
+//    public void task1(){
+//        System.out.println("task1");
+//        mqSender.send();
+//    }
 
 //    @Scheduled(cron = "05")
 //    public void task2(){
