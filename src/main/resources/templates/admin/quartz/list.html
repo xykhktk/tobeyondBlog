@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="admin/public/header"></head>
+<body class="layui-anim">
+<div class="x-nav">
+</div>
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so">
+            <input class="layui-input" placeholder="开始日" name="start" id="start">
+            <input class="layui-input" placeholder="截止日" name="end" id="end">
+            <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn" lay-submit="" onclick="javascript:location.replace(location.href);"><i class="layui-icon">&#xe669;</i></button>
+        </form>
+    </div>
+
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="resumeAll()"><i class="layui-icon"></i>全部重启</button>
+        </button>
+        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+    </xblock>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>
+                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i
+                        class="layui-icon">&#xe605;</i></div>
+            </th>
+            <th>ID</th>
+            <th>任务组名</th>
+            <th>任务名</th>
+            <th>下次任务时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="article : ${list}">
+            <td>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i>
+                </div>
+            </td>
+            <td th:text="${article.id}"></td>
+            <td th:text="${article.title}"></td>
+            <td th:text="${article.subtitle}"></td>
+            <td th:text="(${article.is_show} eq 1)?'是':'否'"></td>
+            <td th:text="${article.created_at}"></td>
+            <td>
+                <a th:if="${article.is_show} eq 1" th:onclick="|changeShow('${article.id}','0')|" href="javascript:;" title="停止">
+                    <i class="layui-icon">&#xe601;</i>
+                </a>
+                <a th:if="${article.is_show} eq 0" th:onclick="|changeShow('${article.id}','1')|"  href="javascript:;" title="启动">
+                    <i class="layui-icon">&#xe62f;</i>
+                </a>
+                <a title="编辑" th:onclick="|x_admin_show('编辑','edit/${article.id}')|" href="javascript:;">
+                    <i class="layui-icon">&#xe642;</i>
+                </a>
+                <a title="删除" th:onclick="|articleDel('${article.id}')|" href="javascript:;">
+                    <i class="layui-icon">&#xe640;</i>
+                </a>
+        </tr>
+        </tbody>
+    </table>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="_csrf">
+</div>
+<script>
+    function delAll(argument) {
+        var data = tableCheck.getData();
+        layer.confirm('确认要删除吗？' + data, function (index) {
+            //捉到所有被选中的，发异步进行删除
+            layer.msg('删除成功', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+    }
+
+</script>
+</body>
+
+</html>

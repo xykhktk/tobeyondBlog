@@ -3,104 +3,49 @@ package com.tobeyond.blog.model.Vo;
 
 public class TaskInformationsVo {
 
-	private Long id;
-	private String taskNo;
-	private String taskName;
-	private String schedulerRule;
-	private String frozenStatus;
-	private String executorNo;
-	private String sendType;
-	private String url;
-	private String executeParamter;
-	private String lastModifyTime;
-	private String timeKey;
+	private String jobName;
+	private String groupName;
+	private String nextFireTime;
+	private String triggerState;
+	private String cronExpression;
 
-	public Long getId() {
-		return id;
+	public String getJobName() {
+		return jobName;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
 	}
 
-	public String getTaskNo() {
-		return taskNo;
+	public String getGroupName() {
+		return groupName;
 	}
 
-	public void setTaskNo(String taskNo) {
-		this.taskNo = taskNo;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
-	public String getTaskName() {
-		return taskName;
+	public String getNextFireTime() {
+		return nextFireTime;
 	}
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
+	public void setNextFireTime(String nextFireTime) {
+		this.nextFireTime = nextFireTime;
 	}
 
-	public String getSchedulerRule() {
-		return schedulerRule;
+	public String getTriggerState() {
+		return triggerState;
 	}
 
-	public void setSchedulerRule(String schedulerRule) {
-		this.schedulerRule = schedulerRule;
+	public void setTriggerState(String triggerState) {
+		this.triggerState = triggerState;
 	}
 
-	public String getFrozenStatus() {
-		return frozenStatus;
+	public String getCronExpression() {
+		return cronExpression;
 	}
 
-	public void setFrozenStatus(String frozenStatus) {
-		this.frozenStatus = frozenStatus;
+	public void setCronExpression(String cronExpression) {
+		this.cronExpression = cronExpression;
 	}
-
-	public String getExecutorNo() {
-		return executorNo;
-	}
-
-	public void setExecutorNo(String executorNo) {
-		this.executorNo = executorNo;
-	}
-
-	public String getSendType() {
-		return sendType;
-	}
-
-	public void setSendType(String sendType) {
-		this.sendType = sendType;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getExecuteParamter() {
-		return executeParamter;
-	}
-
-	public void setExecuteParamter(String executeParamter) {
-		this.executeParamter = executeParamter;
-	}
-
-	public String getLastModifyTime() {
-		return lastModifyTime;
-	}
-
-	public void setLastModifyTime(String lastModifyTime) {
-		this.lastModifyTime = lastModifyTime;
-	}
-
-	public String getTimeKey() {
-		return timeKey;
-	}
-
-	public void setTimeKey(String timeKey) {
-		this.timeKey = timeKey;
-	}
-
 }

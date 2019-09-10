@@ -9,7 +9,7 @@ public class QuartzTask2 extends QuartzJobBean{
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        System.out.println("QuartzTask2" + DateKit.getStringNowTime());
+        System.out.println("QuartzTask2 " + DateKit.getStringNowTime());
     }
 
 }

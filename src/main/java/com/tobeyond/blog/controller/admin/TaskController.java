@@ -15,7 +15,7 @@ public class TaskController {
 
     @RequestMapping(value = "/stopAll")
     public ReturnJson stopAll(){
-        quartzService.getList(1);
+        quartzService.getList();
         return  ReturnJson.success("停止所有任务成功");
     }
 
