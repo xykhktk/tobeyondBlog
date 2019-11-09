@@ -23,6 +23,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import javax.sql.DataSource;
 
+/**
+ *  版本2.0
+ */
 @SpringBootApplication
 @MapperScan("com.tobeyond.blog.dao.mapper")	//No MyBatis mapper was found in '[com.tobeyond.blog]' package. Please check your configuration.
 @EnableTransactionManagement // 坑:关于事务
