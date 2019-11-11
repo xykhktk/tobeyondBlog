@@ -64,7 +64,6 @@
 			<artifactId>spring-security-web</artifactId>
 		</dependency>
 
-
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
@@ -137,6 +136,21 @@
 			<artifactId>druid</artifactId>
 			<version>1.0.18</version>
 		</dependency>
+
+		<!--jwt支持-->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<!--没有指明版本号的情况下，自己下载了2.85-->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
