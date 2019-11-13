@@ -13,13 +13,16 @@ import javax.annotation.Resource;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Resource
-    private BaseInterceptor baseInterceptor;
+    private AdminPcInterceptor adminPcInterceptor;
+
+    @Resource
+    private AdminApiInterceptor adminApiInterceptor; //@Resource和autoware区别
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         ///admin/**,一个*不行，要2个 -_-!
-        registry.addInterceptor(baseInterceptor).addPathPatterns("/admin/**").addPathPatterns("/admin");//pc后台的拦截器
-//        registry.addInterceptor(baseInterceptor).addPathPatterns("/api/admin/**").addPathPatterns("/admin"); //api后台的拦截器
+        registry.addInterceptor(adminPcInterceptor).addPathPatterns("/admin/**").addPathPatterns("/admin");//pc后台的拦截器
+        registry.addInterceptor(adminApiInterceptor).addPathPatterns("/api/admin/**").addPathPatterns("/admin"); //api后台的拦截器
     }
 
 }

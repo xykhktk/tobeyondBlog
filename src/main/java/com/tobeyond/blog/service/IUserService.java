@@ -9,4 +9,6 @@ public interface IUserService {
 
     UserCustom userLogin(String name, String password);
 
+    UserCustom findUserById(Integer id);
+
 }

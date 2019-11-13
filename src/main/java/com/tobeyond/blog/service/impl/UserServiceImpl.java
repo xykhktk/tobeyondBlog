@@ -28,4 +28,9 @@ public class UserServiceImpl implements IUserService {
         return user;
     }
 
+    @Override
+    public UserCustom findUserById(Integer id) {
+        return userMapper.selectById(id);
+    }
+
 }

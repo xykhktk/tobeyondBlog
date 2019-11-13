@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  * Created by BlueT on 2017/3/9.
  */
 @Component
-public class BaseInterceptor implements HandlerInterceptor {
-    private static final Logger LOGGE = LoggerFactory.getLogger(BaseInterceptor.class);
+public class AdminPcInterceptor implements HandlerInterceptor {
+    private static final Logger LOGGE = LoggerFactory.getLogger(AdminPcInterceptor.class);
     private static final String USER_AGENT = "user-agent";
 
     @Override

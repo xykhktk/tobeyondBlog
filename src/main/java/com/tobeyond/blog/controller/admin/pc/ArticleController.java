@@ -1,4 +1,4 @@
-package com.tobeyond.blog.controller.admin;
+package com.tobeyond.blog.controller.admin.pc;
 
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.config.QiniuConfig;

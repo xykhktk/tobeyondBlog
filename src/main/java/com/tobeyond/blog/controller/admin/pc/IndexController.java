@@ -1,4 +1,4 @@
-package com.tobeyond.blog.controller.admin;
+package com.tobeyond.blog.controller.admin.pc;
 
 import com.tobeyond.blog.constant.WebConst;
 import com.tobeyond.blog.model.Bo.UserCustom;
