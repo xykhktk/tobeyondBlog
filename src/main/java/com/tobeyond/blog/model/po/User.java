@@ -6,6 +6,7 @@ public class User extends CommField {
     private String name;
     private String password;
     private String salt;
+    private Integer token_time;
 
     public String getName() {
         return name;
@@ -37,5 +38,13 @@ public class User extends CommField {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getToken_time() {
+        return token_time;
+    }
+
+    public void setToken_time(Integer token_time) {
+        this.token_time = token_time;
     }
 }
