@@ -39,14 +39,6 @@ public class ArticleController {
     @Autowired
     ITagService tagService;
 
-//    @GetMapping(value = "/list/page/{page}")
-//    public ModelAndView articleList(@PathVariable int page){
-//        PageInfo<Article> articlesPaginator =  articleService.articleListBaseInfo(page,20);
-//        ModelAndView modelAndView = new ModelAndView("/admin/article/list");
-//        modelAndView.addObject("articleList",articlesPaginator);
-//        return  modelAndView;
-//    }
-
     @GetMapping(value = "/list")
     public ModelAndView articleList(@RequestParam(value = "page",required = false) Integer page){
         PageInfo<ArticleBo> articlesPaginator =  articleService.articleListBaseInfo(page,10,null,false);
@@ -107,14 +99,6 @@ public class ArticleController {
         articleVo.setPageImgFull(qiniuConfig.getPath() +articleVo.getPage_image());
 
         List<TagPo> tagPoList = tagService.selectByExample(null);
-
-
-//        Object[] object = tagPoList.toArray();
-        //使用Arrays工具类，将数组转换成list
-//        List<Object> objects = Arrays.asList(object);
-        //将objects强转成childlist；这里强转时，不能定义后面括号内的List类型，如果定义会报编译错误
-        //及时child没有继承Parent，这里也不会报编译错误，但是按照Child对象循环输出时会报错
-//        List<TagBo> tagBoList = (List)objects;
 
 //需要优化
         List<TagBo> tagBoList = new ArrayList<>();

@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/admin")
-public class Login {
+public class LoginController {
 
     @Autowired
     IUserService userService;
