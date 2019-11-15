@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.tobeyond.blog.annotation.AdminLoginToken;
 import com.tobeyond.blog.annotation.PassToken;
 import com.tobeyond.blog.model.Bo.UserCustom;
@@ -41,33 +42,36 @@ public class AdminApiInterceptor implements HandlerInterceptor {
             }
         }
         //检查有没有需要用户权限的注解
-        if (method.isAnnotationPresent(AdminLoginToken.class)) {
-            AdminLoginToken userLoginToken = method.getAnnotation(AdminLoginToken.class);
-            if (userLoginToken.required()) {
-                // 执行认证
-                if (token == null) {
-                    throw new RuntimeException("无token，请重新登录");
-                }
-                // 获取 token 中的 user id
-                String userId;
-                try {
-                    userId = JWT.decode(token).getAudience().get(0);
-                } catch (JWTDecodeException j) {
-                    throw new RuntimeException("401");
-                }
-                UserCustom user = userService.findUserById(Integer.valueOf(userId));
-                if (user == null) {
-                    throw new RuntimeException("用户不存在，请重新登录");
-                }
-                // 验证 token
-                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(String.valueOf(user.getId()) + String.valueOf(user.getToken_time()))).build();
-                try {
-                    jwtVerifier.verify(token);
-                } catch (JWTVerificationException e) {
-                    throw new RuntimeException("40001" + e.getMessage());
-                }
-                return true;
+        //method.getClass().isAnnotationPresent(AdminLoginToken.class)  //获取类的注解,用getClass获取不到。须用getDeclaringClass
+        AdminLoginToken userLoginToken = method.getAnnotation(AdminLoginToken.class);
+        if(userLoginToken == null){
+            userLoginToken = method.getDeclaringClass().getAnnotation(AdminLoginToken.class);
+        }
+
+        if (userLoginToken != null && userLoginToken.required()) {
+            // 执行认证
+            if (token == null) {
+                throw new RuntimeException("无token，请重新登录");
             }
+            // 获取 token 中的 user id
+            String userId;
+            try {
+                userId = JWT.decode(token).getAudience().get(0);
+            } catch (JWTDecodeException j) {
+                throw new RuntimeException("401");
+            }
+            UserCustom user = userService.findUserById(Integer.valueOf(userId));
+            if (user == null) {
+                throw new RuntimeException("用户不存在，请重新登录");
+            }
+            // 验证 token
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(String.valueOf(user.getId()) + String.valueOf(user.getToken_time()))).build();
+            try {
+                jwtVerifier.verify(token);
+            } catch (JWTVerificationException e) {
+                throw new RuntimeException("40001" + e.getMessage());
+            }
+            return true;
         }
         return true;
     }

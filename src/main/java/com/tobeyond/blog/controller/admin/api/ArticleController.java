@@ -7,23 +7,20 @@ import com.tobeyond.blog.config.QiniuConfig;
 import com.tobeyond.blog.model.Bo.ArticleBo;
 import com.tobeyond.blog.model.Bo.ArticleTagBo;
 import com.tobeyond.blog.model.Bo.TagBo;
-import com.tobeyond.blog.model.Bo.UserCustom;
 import com.tobeyond.blog.model.Dto.ReturnJson;
 import com.tobeyond.blog.model.Vo.ArticleVo;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.service.ITagService;
-import com.tobeyond.blog.util.CommonUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+@AdminLoginToken
 @RestController("apiAdminArticleController")
 @RequestMapping(value = "/api/admin/article")
 public class ArticleController extends BaseController{
@@ -37,7 +34,6 @@ public class ArticleController extends BaseController{
     @Autowired
     ITagService tagService;
 
-    @AdminLoginToken
     @PostMapping(value = "/list")
     public ReturnJson articleList(@RequestParam(value = "page",required = false) Integer page){
         PageInfo<ArticleBo> articlesPaginator =  articleService.articleListBaseInfo(page,10,null,false);
@@ -46,7 +42,6 @@ public class ArticleController extends BaseController{
         return  returnJson;
     }
 
-    @AdminLoginToken
     @PostMapping(value = "/addPage")
     public ReturnJson articleAdd(){
         List<TagPo> tagList = tagService.selectByExample(null);
@@ -55,7 +50,6 @@ public class ArticleController extends BaseController{
         return  returnJson;
     }
 
-    @AdminLoginToken
     @PostMapping(value = "/add")
     public ReturnJson articleAddSave(@RequestParam(value = "title",required = true) String title,
                                      @RequestParam(value = "subtitle",required = true) String subtitle,
@@ -91,9 +85,9 @@ public class ArticleController extends BaseController{
         return returnJson;
     }
 
-    @PostMapping(value = "/editPage/{id}")
-    public ReturnJson articleEdit(@PathVariable Long id){
-        ArticleBo articleBo = articleService.articleFullInfo(id);
+    @PostMapping(value = "/editPage")
+    public ReturnJson articleEditPage(@RequestParam(value = "id") Integer id){
+        ArticleBo articleBo = articleService.articleFullInfo(Long.valueOf(id));
         ArticleVo articleVo = new ArticleVo();
         BeanUtils.copyProperties(articleBo,articleVo);
         articleVo.setPageImgFull(qiniuConfig.getPath() +articleVo.getPage_image());
@@ -118,4 +112,64 @@ public class ArticleController extends BaseController{
         returnData.put("tagList",tagBoList);
         return  returnJson;
     }
+
+    @PostMapping(value = "/edit")
+    @ResponseBody
+    public ReturnJson articleEdit(@RequestParam(value = "id") Integer id,
+                                  @RequestParam(value = "title") String title,
+                                  @RequestParam(value = "subtitle") String subtitle,
+                                  @RequestParam(value = "text") String content,
+                                  @RequestParam(value = "is_show", required = false) Integer is_show,
+                                  @RequestParam(value = "page_image") String page_image,
+                                  @RequestParam(value = "tagIds") String tagIds) {
+
+        ArticlePo article = new ArticlePo();
+        article.setId(id);
+        article.setContent(content);
+        article.setTitle(title);
+        article.setSubtitle(subtitle);
+        article.setPage_image(page_image);
+        article.setIs_show(is_show);
+
+        try {
+            if(articleService.articleEditSave(article,tagIds)){
+                returnJson = ReturnJson.success("修改成功");
+            }else{
+                returnJson = ReturnJson.error("修改失败");
+            }
+        } catch (Exception e) {
+            returnJson = ReturnJson.error(e.getMessage());
+        }
+
+        return returnJson;
+    }
+
+    @PostMapping(value = "/del")
+    @ResponseBody
+    public ReturnJson articleDel(@RequestParam(value = "id",required = true) Integer id){
+        try {
+            articleService.articleDel(id);
+            returnJson = ReturnJson.success("删除成功");
+        } catch (Exception e) {
+            returnJson = ReturnJson.error(e.getMessage());
+        }
+
+        return returnJson;
+    }
+
+    @PostMapping(value = "/changeShow")
+    @ResponseBody
+    public ReturnJson changeShow(@RequestParam(value = "id",required = true) Integer id,
+                                 @RequestParam(value = "is_show",required = true) Integer is_show){
+        ReturnJson returnJson;
+        try {
+            articleService.changeShow(id,is_show);
+            returnJson = ReturnJson.success("设置成功");
+        } catch (Exception e) {
+            returnJson = ReturnJson.error(e.getMessage());
+        }
+
+        return returnJson;
+    }
+
 }
