@@ -1,4 +1,4 @@
-package com.tobeyond.blog.model.Dto;
+package com.tobeyond.blog.model.dto;
 
 public class UserToken {
 

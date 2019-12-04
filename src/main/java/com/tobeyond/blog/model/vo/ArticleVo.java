@@ -1,6 +1,6 @@
-package com.tobeyond.blog.model.Vo;
+package com.tobeyond.blog.model.vo;
 
-import com.tobeyond.blog.model.Bo.ArticleBo;
+import com.tobeyond.blog.model.bo.ArticleBo;
 
 public class ArticleVo extends ArticleBo {
 

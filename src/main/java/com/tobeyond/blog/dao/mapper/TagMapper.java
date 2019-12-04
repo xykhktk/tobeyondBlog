@@ -3,15 +3,12 @@ package com.tobeyond.blog.dao.mapper;
 import com.tobeyond.blog.model.po.TagExample;
 import com.tobeyond.blog.model.po.TagPo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface TagMapper {
-
-//    @Select("select * from tags where id = #{id}")
-//    TagPo findTagById(long id);
-
-//    List<TagBo> tagsList();
 
     long countByExample(TagExample example);
 

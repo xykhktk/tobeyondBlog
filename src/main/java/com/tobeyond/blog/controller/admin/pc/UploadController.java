@@ -9,7 +9,7 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.tobeyond.blog.config.QiniuConfig;
-import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.util.DateKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

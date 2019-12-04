@@ -1,7 +1,7 @@
 package com.tobeyond.blog.service.impl;
 
 import com.tobeyond.blog.model.po.Message;
-import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.dao.mapper.MessageMapper;
 import com.tobeyond.blog.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class MessageServiceImpl extends BaseServiceImpl implements IMessageServi
         messageObj.setContact(contact);
         messageObj.setMessage(message);
         messageObj.setName(name);
-        messageObj.setCreated_at(df.format(new Date()));
+        messageObj.setCreatedAt(df.format(new Date()));
 
         int res = messageMapper.insertMessage(messageObj);
         returnJson = setfail("400","留言失败","");

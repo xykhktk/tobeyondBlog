@@ -1,4 +1,4 @@
-package com.tobeyond.blog.model.Vo;
+package com.tobeyond.blog.model.vo;
 
 
 public class TaskInformationsVo {

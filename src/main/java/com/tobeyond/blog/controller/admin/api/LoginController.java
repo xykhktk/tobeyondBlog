@@ -1,7 +1,7 @@
 package com.tobeyond.blog.controller.admin.api;
 
-import com.tobeyond.blog.model.Bo.UserCustom;
-import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.bo.UserCustom;
+import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.service.ITokenService;
 import com.tobeyond.blog.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

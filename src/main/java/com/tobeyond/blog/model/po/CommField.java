@@ -2,31 +2,31 @@ package com.tobeyond.blog.model.po;
 
 public class CommField {
 
-    private String created_at;
-    private String updated_at;
-    private String deleted_at;
+    private String createdAt;
+    private String updatedAt;
+    private String deletedAt;
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public String getDeleted_at() {
-        return deleted_at;
+    public String getDeletedAt() {
+        return deletedAt;
     }
 
-    public void setDeleted_at(String deleted_at) {
-        this.deleted_at = deleted_at;
+    public void setDeletedAt(String deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

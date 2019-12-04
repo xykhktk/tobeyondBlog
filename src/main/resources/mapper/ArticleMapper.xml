@@ -3,31 +3,31 @@
 <mapper namespace="com.tobeyond.blog.dao.mapper.ArticleMapper">
     <resultMap id="BaseResultMap" type="com.tobeyond.blog.model.po.ArticlePo">
         <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="category_id" jdbcType="INTEGER" property="category_id" />
-        <result column="user_id" jdbcType="INTEGER" property="user_id" />
-        <result column="is_show" jdbcType="INTEGER" property="is_show" />
+        <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="is_show" jdbcType="INTEGER" property="isShow" />
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="subtitle" jdbcType="VARCHAR" property="subtitle" />
-        <result column="page_image" jdbcType="VARCHAR" property="page_image" />
-        <result column="view_count" jdbcType="INTEGER" property="view_count" />
-        <result column="created_at" jdbcType="VARCHAR" property="created_at" />
-        <result column="updated_at" jdbcType="VARCHAR" property="updated_at" />
+        <result column="page_image" jdbcType="VARCHAR" property="pageImage" />
+        <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+        <result column="created_at" jdbcType="VARCHAR" property="createdAt" />
+        <result column="updated_at" jdbcType="VARCHAR" property="updatedAt" />
     </resultMap>
 
-    <resultMap id="BaseInfoWithTagsMap" extends="BaseResultMap" type="com.tobeyond.blog.model.Bo.ArticleBo">
-        <collection property="tagList" ofType="com.tobeyond.blog.model.Bo.ArticleTagBo" javaType="java.util.ArrayList" column="id" select="getArticleTags">
+    <resultMap id="BaseInfoWithTagsMap" extends="BaseResultMap" type="com.tobeyond.blog.model.bo.ArticleBo">
+        <collection property="tagList" ofType="com.tobeyond.blog.model.bo.ArticleTagBo" javaType="java.util.ArrayList" column="id" select="getArticleTags">
         </collection>
     </resultMap>
 
-    <resultMap id="FullResultMap" extends="BaseResultMap" type="com.tobeyond.blog.model.Bo.ArticleBo">
+    <resultMap id="FullResultMap" extends="BaseResultMap" type="com.tobeyond.blog.model.bo.ArticleBo">
         <result column="content" jdbcType="VARCHAR" property="content" />
-        <collection property="tagList" ofType="com.tobeyond.blog.model.Bo.ArticleTagBo" javaType="java.util.ArrayList" column="id" select="getArticleTags">
+        <collection property="tagList" ofType="com.tobeyond.blog.model.bo.ArticleTagBo" javaType="java.util.ArrayList" column="id" select="getArticleTags">
         </collection>
     </resultMap>
 
-    <resultMap id="ArticleTags" type="com.tobeyond.blog.model.Bo.ArticleTagBo">
+    <resultMap id="ArticleTags" type="com.tobeyond.blog.model.bo.ArticleTagBo">
         <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="article_id" jdbcType="INTEGER" property="article_id" />
+        <result column="article_id" jdbcType="INTEGER" property="articleId" />
         <result column="tag_id" jdbcType="INTEGER" property="tag_id" />
         <result column="title" jdbcType="VARCHAR" property="title" />
         <!--<association property="tag" column="tag_id" select="getTags">-->
@@ -100,7 +100,7 @@
     </update>
 
     <update id="changeShow" parameterType="Map">
-        UPDATE articles SET is_show = #{is_show} where id = #{id}
+        UPDATE articles SET is_show = #{isShow} where id = #{id}
     </update>
 
     <update id="articleUpdate" parameterType="com.tobeyond.blog.model.po.ArticlePo">
@@ -113,16 +113,16 @@
                 subtitle = #{subtitle,jdbcType=VARCHAR},
             </if>
             <if test="updated_at != null">
-                updated_at = #{updated_at,jdbcType=VARCHAR},
+                updated_at = #{updatedAt,jdbcType=VARCHAR},
             </if>
             <if test="is_show != null">
-                is_show = #{is_show,jdbcType=INTEGER},
+                is_show = #{isShow,jdbcType=INTEGER},
             </if>
             <if test="page_image != null">
-                page_image = #{page_image,jdbcType=VARCHAR},
+                page_image = #{pageImage,jdbcType=VARCHAR},
             </if>
             <if test="category_id != null">
-                category_id = #{category_id,jdbcType=INTEGER},
+                category_id = #{categoryId,jdbcType=INTEGER},
             </if>
             <if test="content != null">
                 content = #{content,jdbcType=LONGVARCHAR},

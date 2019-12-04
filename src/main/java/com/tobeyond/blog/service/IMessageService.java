@@ -1,7 +1,7 @@
 package com.tobeyond.blog.service;
 
 
-import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.dto.ReturnJson;
 
 public interface IMessageService {
 

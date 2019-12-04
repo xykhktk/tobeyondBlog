@@ -1,6 +1,6 @@
 package com.tobeyond.blog.service.impl;
 
-import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.dto.ReturnJson;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -6,19 +6,19 @@
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="salt" jdbcType="VARCHAR" property="salt" />
-        <result column="created_at" jdbcType="VARCHAR" property="created_at" />
-        <result column="updated_at" jdbcType="VARCHAR" property="updated_at" />
+        <result column="created_at" jdbcType="VARCHAR" property="createdAt" />
+        <result column="updated_at" jdbcType="VARCHAR" property="updatedAt" />
     </resultMap>
 
     <sql id="Base_Column">
         id, name,salt, password, created_at, updated_at,token_time
     </sql>
 
-    <select id="selectByName" parameterType="String" resultType="com.tobeyond.blog.model.Bo.UserCustom">
+    <select id="selectByName" parameterType="String" resultType="com.tobeyond.blog.model.bo.UserCustom">
         select  <include refid="Base_Column" />  from users WHERE name = #{VALUE}
     </select>
 
-    <select id="selectById" parameterType="Integer" resultType="com.tobeyond.blog.model.Bo.UserCustom">
+    <select id="selectById" parameterType="Integer" resultType="com.tobeyond.blog.model.bo.UserCustom">
         select  <include refid="Base_Column" />  from users WHERE id = #{VALUE}
     </select>
 

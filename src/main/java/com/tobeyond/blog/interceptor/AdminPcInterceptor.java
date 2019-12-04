@@ -1,6 +1,6 @@
 package com.tobeyond.blog.interceptor;
 
-import com.tobeyond.blog.model.Bo.UserCustom;
+import com.tobeyond.blog.model.bo.UserCustom;
 import com.tobeyond.blog.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

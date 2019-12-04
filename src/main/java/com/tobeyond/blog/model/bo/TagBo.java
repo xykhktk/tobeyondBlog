@@ -1,4 +1,4 @@
-package com.tobeyond.blog.model.Bo;
+package com.tobeyond.blog.model.bo;
 
 import com.tobeyond.blog.model.po.TagPo;
 

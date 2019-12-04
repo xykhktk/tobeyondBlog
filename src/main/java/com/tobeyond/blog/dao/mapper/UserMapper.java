@@ -1,6 +1,6 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.model.Bo.UserCustom;
+import com.tobeyond.blog.model.bo.UserCustom;
 import com.tobeyond.blog.model.po.User;
 
 public interface UserMapper {

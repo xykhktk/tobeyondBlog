@@ -1,6 +1,6 @@
 package com.tobeyond.blog.controller.admin.api;
 
-import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.dto.ReturnJson;
 
 import java.util.HashMap;
 import java.util.Map;

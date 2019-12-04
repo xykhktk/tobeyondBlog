@@ -5,32 +5,31 @@ import java.util.List;
 public class ArticlePo extends CommField {
 
     private Integer id;
-    private Integer article_id;
-    private Integer category_id;
-    private Integer view_count;
-    private Integer user_id;
+    private Integer articleId;
+    private Integer categoryId;
+    private Integer viewCount;
+    private Integer userId;
     private String title;
-    private String page_image;
+    private String pageImage;
     private String subtitle;
     private String content;
-//    private Integer is_original;
-    private Integer is_show;
+    private Integer isShow;
     private List<ArticleTagsPo> articleTag;
 
-    public Integer getArticle_id() {
-        return article_id;
+    public Integer getArticleId() {
+        return articleId;
     }
 
-    public void setArticle_id(Integer article_id) {
-        this.article_id = article_id;
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
-    public Integer getCategory_id() {
-        return category_id;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory_id(Integer category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getTitle() {
@@ -57,12 +56,12 @@ public class ArticlePo extends CommField {
         this.content = content;
     }
 
-    public String getPage_image() {
-        return page_image;
+    public String getPageImage() {
+        return pageImage;
     }
 
-    public void setPage_image(String page_image) {
-        this.page_image = page_image;
+    public void setPageImage(String pageImage) {
+        this.pageImage = pageImage;
     }
 
     public List<ArticleTagsPo> getArticleTag() {
@@ -73,12 +72,12 @@ public class ArticlePo extends CommField {
         this.articleTag = articleTag;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getId() {
@@ -89,24 +88,20 @@ public class ArticlePo extends CommField {
         this.id = id;
     }
 
-    public Integer getView_count() {
-        return view_count;
+    public Integer getViewCount() {
+        return viewCount;
     }
 
-    public void setView_count(Integer view_count) {
-        this.view_count = view_count;
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
     }
 
-    public Integer getIs_show() {
-        return is_show;
+    public Integer getIsShow() {
+        return isShow;
     }
 
-    public void setIs_show(Integer is_show) {
-        this.is_show = is_show;
+    public void setIsShow(Integer isShow) {
+        this.isShow = isShow;
     }
 
-    @Override
-    public String toString() {
-        return "article_id:" + article_id + ",category_id:" + category_id + ",title:" + title + ",articleTag:";
-    }
 }

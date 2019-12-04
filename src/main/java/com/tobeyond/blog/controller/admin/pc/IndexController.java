@@ -1,8 +1,8 @@
 package com.tobeyond.blog.controller.admin.pc;
 
 import com.tobeyond.blog.constant.WebConst;
-import com.tobeyond.blog.model.Bo.UserCustom;
-import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.bo.UserCustom;
+import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

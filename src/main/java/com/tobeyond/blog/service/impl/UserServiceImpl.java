@@ -1,6 +1,6 @@
 package com.tobeyond.blog.service.impl;
 
-import com.tobeyond.blog.model.Bo.UserCustom;
+import com.tobeyond.blog.model.bo.UserCustom;
 import com.tobeyond.blog.dao.mapper.UserMapper;
 import com.tobeyond.blog.exception.TobeyondException;
 import com.tobeyond.blog.service.IUserService;

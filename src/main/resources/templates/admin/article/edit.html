@@ -38,7 +38,7 @@
             </div>
             <div class="layui-form-item">
                 <label for="subtitle" class="layui-form-label">
-                    <span class="x-red">*</span>page_image
+                    <span class="x-red">*</span>pageImage
                 </label>
                 <div class="layui-input-inline">
                     <input type="text" value="" id="subtitle" name="subtitle" lay-verify="required" autocomplete="off"
@@ -50,14 +50,14 @@
             </div>
 
             <div class="layui-form-item">
-                <label for="page_image" class="layui-form-label">
+                <label for="pageImage" class="layui-form-label">
                     <span class="x-red">*</span>主图
                 </label>
                 <button type="button" class="layui-btn" id="upload_file">
                     <i class="layui-icon">&#xe67c;</i>上传图片
                 </button>
                 <div class="layui-input-inline">
-                    <input type="hidden" th:value="${article.page_image}" id="page_image" name="page_image" lay-verify="required"
+                    <input type="hidden" th:value="${article.pageImage}" id="pageImage" name="pageImage" lay-verify="required"
                            autocomplete="off" class="layui-input">
                     <img id="upload_image_show" height="100" th:src="${article.pageImgFull}">
                 </div>
@@ -69,8 +69,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">是否显示</label>
                 <div class="layui-input-block">
-                    <input type="checkbox" lay-skin="switch" value="1" name="is_show" checked th:if="${article.is_show}eq '1'">
-                    <input type="checkbox" lay-skin="switch" value="1" name="is_show" th:if="${article.is_show} eq '0'">
+                    <input type="checkbox" lay-skin="switch" value="1" name="isShow" checked th:if="${article.isShow}eq '1'">
+                    <input type="checkbox" lay-skin="switch" value="1" name="isShow" th:if="${article.isShow} eq '0'">
                 </div>
             </div>
 

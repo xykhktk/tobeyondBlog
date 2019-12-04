@@ -2,7 +2,7 @@ package com.tobeyond.blog.service;
 
 
 
-import com.tobeyond.blog.model.Bo.UserCustom;
+import com.tobeyond.blog.model.bo.UserCustom;
 
 public interface IUserService {
 

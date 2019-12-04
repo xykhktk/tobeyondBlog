@@ -2,7 +2,7 @@ package com.tobeyond.blog.controller;
 
 
 import com.github.pagehelper.PageInfo;
-import com.tobeyond.blog.model.Bo.ArticleBo;
+import com.tobeyond.blog.model.bo.ArticleBo;
 import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.IArticleService;
 import org.commonmark.node.Node;

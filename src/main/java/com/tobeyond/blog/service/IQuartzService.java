@@ -1,6 +1,6 @@
 package com.tobeyond.blog.service;
 
-import com.tobeyond.blog.model.Vo.TaskInformationsVo;
+import com.tobeyond.blog.model.vo.TaskInformationsVo;
 import org.quartz.SchedulerException;
 
 import java.util.List;

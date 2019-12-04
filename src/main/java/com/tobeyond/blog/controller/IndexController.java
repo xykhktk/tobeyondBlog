@@ -1,8 +1,8 @@
 package com.tobeyond.blog.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.tobeyond.blog.model.Bo.ArticleBo;
-import com.tobeyond.blog.model.Dto.ReturnJson;
+import com.tobeyond.blog.model.bo.ArticleBo;
+import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.model.po.MaximExample;
 import com.tobeyond.blog.model.po.MaximPo;
 import com.tobeyond.blog.service.IArticleService;

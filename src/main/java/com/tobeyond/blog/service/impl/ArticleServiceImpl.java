@@ -4,8 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.config.QiniuConfig;
 import com.tobeyond.blog.dao.mapper.TagMapper;
-import com.tobeyond.blog.model.Bo.ArticleBo;
-import com.tobeyond.blog.model.Bo.ArticleTagBo;
+import com.tobeyond.blog.model.bo.ArticleBo;
+import com.tobeyond.blog.model.bo.ArticleTagBo;
 import com.tobeyond.blog.model.po.*;
 import com.tobeyond.blog.dao.mapper.ArticleMapper;
 import com.tobeyond.blog.dao.mapper.ArticleTagsMapper;
@@ -23,7 +23,6 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Autowired
     QiniuConfig qiniuConfig;
-
     @Autowired
     ArticleMapper articleMapper;
     @Autowired
@@ -58,7 +57,7 @@ public class ArticleServiceImpl implements IArticleService {
         PageHelper.startPage(page, limit);
         List<ArticleBo> articleList = articleMapper.articleListBaseInfo(params);
         for(ArticleBo bo :articleList){
-            bo.setPage_image(qiniuConfig.getPath() +  bo.getPage_image());
+            bo.setPageImage(qiniuConfig.getPath() +  bo.getPageImage());
         }
 
         return new PageInfo<>(articleList);
@@ -77,8 +76,8 @@ public class ArticleServiceImpl implements IArticleService {
         String now = DateKit.dateFormat(new Date());
         Date dateNow = DateKit.getNow();
         try {
-            article.setCreated_at(now); //article的bean是自己写的,date字段设置为String了。有点不规范。
-            article.setUpdated_at(now);
+            article.setCreatedAt(now); //article的bean是自己写的,date字段设置为String了。有点不规范。
+            article.setUpdatedAt(now);
             articleMapper.articleAdd(article);
 
             //批量插入
@@ -133,7 +132,7 @@ public class ArticleServiceImpl implements IArticleService {
         Date dateNow = DateKit.getNow();
 
         try {
-            article.setUpdated_at(now);
+            article.setUpdatedAt(now);
             articleMapper.articleUpdate(article);
             ArrayList<ArticleTagBo> articleTagBo =  articleMapper.getArticleTags(article.getId());
 
@@ -191,7 +190,8 @@ public class ArticleServiceImpl implements IArticleService {
         for(ArticleTagsPo articleTagsPo : articleTagsPos){
             inIds.add(articleTagsPo.getTagId());
         }
-        tagExample.createCriteria().andDeletedAtIsNull().andIdIn(inIds);
+        TagExample.Criteria criteria = tagExample.createCriteria().andDeletedAtIsNull();
+        if(inIds.size() > 0)  criteria.andIdIn(inIds);
         return tagMapper.selectByExample(tagExample);
     }
 

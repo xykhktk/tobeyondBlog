@@ -3,10 +3,12 @@ package com.tobeyond.blog.dao.mapper;
 import com.tobeyond.blog.model.po.ArticleTagsExample;
 import com.tobeyond.blog.model.po.ArticleTagsPo;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 
+@Repository
 public interface ArticleTagsMapper {
 
     @Select("select * from article_tags where article_id = #{id}")

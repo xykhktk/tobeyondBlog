@@ -43,13 +43,13 @@
             <td th:text="${article.id}"></td>
             <td th:text="${article.title}"></td>
             <td th:text="${article.subtitle}"></td>
-            <td th:text="(${article.is_show} eq 1)?'是':'否'"></td>
-            <td th:text="${article.created_at}"></td>
+            <td th:text="(${article.isShow} eq 1)?'是':'否'"></td>
+            <td th:text="${article.createdAt}"></td>
             <td>
-                <a th:if="${article.is_show} eq 1" th:onclick="|changeShow('${article.id}','0')|" href="javascript:;" title="停止">
+                <a th:if="${article.isShow} eq 1" th:onclick="|changeShow('${article.id}','0')|" href="javascript:;" title="停止">
                     <i class="layui-icon">&#xe601;</i>
                 </a>
-                <a th:if="${article.is_show} eq 0" th:onclick="|changeShow('${article.id}','1')|"  href="javascript:;" title="启动">
+                <a th:if="${article.isShow} eq 0" th:onclick="|changeShow('${article.id}','1')|"  href="javascript:;" title="启动">
                     <i class="layui-icon">&#xe62f;</i>
                 </a>
                 <a title="编辑" th:onclick="|x_admin_show('编辑','edit/${article.id}')|" href="javascript:;">

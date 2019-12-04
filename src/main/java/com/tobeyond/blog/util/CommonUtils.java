@@ -2,7 +2,7 @@ package com.tobeyond.blog.util;
 
 import com.alibaba.fastjson.JSON;
 import com.tobeyond.blog.constant.WebConst;
-import com.tobeyond.blog.model.Bo.UserCustom;
+import com.tobeyond.blog.model.bo.UserCustom;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.renderer.html.HtmlRenderer;

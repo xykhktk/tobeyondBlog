@@ -4,11 +4,11 @@ import com.auth0.jwt.JWT;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.annotation.AdminLoginToken;
 import com.tobeyond.blog.config.QiniuConfig;
-import com.tobeyond.blog.model.Bo.ArticleBo;
-import com.tobeyond.blog.model.Bo.ArticleTagBo;
-import com.tobeyond.blog.model.Bo.TagBo;
-import com.tobeyond.blog.model.Dto.ReturnJson;
-import com.tobeyond.blog.model.Vo.ArticleVo;
+import com.tobeyond.blog.model.bo.ArticleBo;
+import com.tobeyond.blog.model.bo.ArticleTagBo;
+import com.tobeyond.blog.model.bo.TagBo;
+import com.tobeyond.blog.model.dto.ReturnJson;
+import com.tobeyond.blog.model.vo.ArticleVo;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.IArticleService;
@@ -61,14 +61,14 @@ public class ArticleController extends BaseController{
         String token = request.getHeader("token");
         String userId = JWT.decode(token).getAudience().get(0);
         ArticlePo article = new ArticlePo();
-        article.setUser_id(Integer.valueOf(userId));
+        article.setUserId(Integer.valueOf(userId));
         article.setContent(content);
         article.setTitle(title);
         article.setSubtitle(subtitle);
-        article.setPage_image(page_image);
+        article.setPageImage(page_image);
 
         if(is_show == null) is_show = 0;
-        article.setIs_show(is_show);
+        article.setIsShow(is_show);
 
         ReturnJson returnJson;
         try {
@@ -90,7 +90,7 @@ public class ArticleController extends BaseController{
         ArticleBo articleBo = articleService.articleFullInfo(Long.valueOf(id));
         ArticleVo articleVo = new ArticleVo();
         BeanUtils.copyProperties(articleBo,articleVo);
-        articleVo.setPageImgFull(qiniuConfig.getPath() +articleVo.getPage_image());
+        articleVo.setPageImgFull(qiniuConfig.getPath() +articleVo.getPageImage());
 
         List<TagPo> tagPoList = tagService.selectByExample(null);
         List<TagBo> tagBoList = new ArrayList<>();
@@ -128,8 +128,8 @@ public class ArticleController extends BaseController{
         article.setContent(content);
         article.setTitle(title);
         article.setSubtitle(subtitle);
-        article.setPage_image(page_image);
-        article.setIs_show(is_show);
+        article.setPageImage(page_image);
+        article.setIsShow(is_show);
 
         try {
             if(articleService.articleEditSave(article,tagIds)){
