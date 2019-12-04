@@ -64,7 +64,7 @@ public class AdminApiInterceptor implements HandlerInterceptor {
                 throw new RuntimeException("用户不存在，请重新登录");
             }
             // 验证 token
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(String.valueOf(user.getId()) + String.valueOf(user.getToken_time()))).build();
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(String.valueOf(user.getId()) + String.valueOf(user.getTokenTime()))).build();
             try {
                 jwtVerifier.verify(token);
             } catch (JWTVerificationException e) {

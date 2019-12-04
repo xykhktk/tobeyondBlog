@@ -23,7 +23,7 @@
     </select>
 
     <update id="updateTokenTimeById" parameterType="com.tobeyond.blog.model.po.User">
-        update users set token_time = #{token_time,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER }
+        update users set token_time = #{tokenTime,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER }
     </update>
 
 </mapper>

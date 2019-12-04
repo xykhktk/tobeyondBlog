@@ -67,7 +67,10 @@ public class ArticleServiceImpl implements IArticleService {
     public ArticleBo articleFullInfo(Long id) {
         HashMap<String,Object> paramMap = new HashMap<>();
         paramMap.put("id",id);
-        return articleMapper.articleFullInfo(paramMap);
+        ArticleBo articleBo = articleMapper.articleFullInfo(paramMap);
+        ArrayList<ArticleTagBo> articleTagBo =  articleMapper.getArticleTags(articleBo.getId());
+        articleBo.setTagList(articleTagBo);
+        return articleBo;
     }
 
     @Override
@@ -141,7 +144,7 @@ public class ArticleServiceImpl implements IArticleService {
             List<String> dbTag = new ArrayList<>(); //数据库里记录的tag
 //            for(String selectTag : selectTags){ newTag.add(selectTag); }
             selectedTag.addAll(Arrays.asList(tagIds.split(",")));
-            for(ArticleTagBo tag : articleTagBo){ dbTag.add(String.valueOf(tag.getTag_id())); }
+            for(ArticleTagBo tag : articleTagBo){ dbTag.add(String.valueOf(tag.getTagId())); }
 
             List<String> insertTag = new ArrayList<>(selectedTag);   //要新增的tag
             insertTag.removeAll(dbTag);

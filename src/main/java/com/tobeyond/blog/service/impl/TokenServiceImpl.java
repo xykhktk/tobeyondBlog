@@ -25,7 +25,7 @@ public class TokenServiceImpl implements ITokenService {
         String token =  JWT.create().withAudience(String.valueOf(id)).sign(Algorithm.HMAC256(String.valueOf(id) + String.valueOf(tokenTime)));
         User user = new User();
         user.setId(id);
-        user.setToken_time((int) tokenTime);
+        user.setTokenTime((int) tokenTime);
         userMapper.updateTokenTimeById(user);
         return token;
     }

@@ -116,7 +116,7 @@ public class ArticleController {
         for(TagBo tagBo : tagBoList){
             tagBo.setIs_selected(false);
             for (ArticleTagBo articleTagBo :articleBo.getTagList()){
-                if(Objects.equals(articleTagBo.getTag_id(), tagBo.getId())){
+                if(Objects.equals(articleTagBo.getTagId(), tagBo.getId())){
                     tagBo.setIs_selected(true);
                 }
             }

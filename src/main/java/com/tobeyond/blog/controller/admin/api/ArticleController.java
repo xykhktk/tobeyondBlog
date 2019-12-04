@@ -90,7 +90,7 @@ public class ArticleController extends BaseController{
         ArticleBo articleBo = articleService.articleFullInfo(Long.valueOf(id));
         ArticleVo articleVo = new ArticleVo();
         BeanUtils.copyProperties(articleBo,articleVo);
-        articleVo.setPageImgFull(qiniuConfig.getPath() +articleVo.getPageImage());
+        articleVo.setPageImgFull(qiniuConfig.getPath() + articleVo.getPageImage());
 
         List<TagPo> tagPoList = tagService.selectByExample(null);
         List<TagBo> tagBoList = new ArrayList<>();
@@ -100,16 +100,9 @@ public class ArticleController extends BaseController{
             tagBoList.add(tagBo);
         }
 
-        for(TagBo tagBo : tagBoList){
-            tagBo.setIs_selected(false);
-            for (ArticleTagBo articleTagBo :articleBo.getTagList()){
-                if(Objects.equals(articleTagBo.getTag_id(), tagBo.getId())){
-                    tagBo.setIs_selected(true);
-                }
-            }
-        }
         returnData.put("article",articleVo);
         returnData.put("tagList",tagBoList);
+        returnJson.setData(returnData);
         return  returnJson;
     }
 
