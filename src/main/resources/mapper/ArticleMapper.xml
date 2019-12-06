@@ -112,16 +112,16 @@
             <if test="subtitle != null">
                 subtitle = #{subtitle,jdbcType=VARCHAR},
             </if>
-            <if test="updated_at != null">
+            <if test="updatedAt != null">
                 updated_at = #{updatedAt,jdbcType=VARCHAR},
             </if>
-            <if test="is_show != null">
+            <if test="isShow != null">
                 is_show = #{isShow,jdbcType=INTEGER},
             </if>
-            <if test="page_image != null">
+            <if test="pageImage != null">
                 page_image = #{pageImage,jdbcType=VARCHAR},
             </if>
-            <if test="category_id != null">
+            <if test="categoryId != null">
                 category_id = #{categoryId,jdbcType=INTEGER},
             </if>
             <if test="content != null">
