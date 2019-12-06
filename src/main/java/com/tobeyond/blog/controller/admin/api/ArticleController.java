@@ -54,8 +54,8 @@ public class ArticleController extends BaseController{
     public ReturnJson articleAddSave(@RequestParam(value = "title",required = true) String title,
                                      @RequestParam(value = "subtitle",required = true) String subtitle,
                                      @RequestParam(value = "text",required = true) String content,
-                                     @RequestParam(value = "is_show") Integer is_show,
-                                     @RequestParam(value = "page_image",required = true) String page_image,
+                                     @RequestParam(value = "isShow") Integer isShow,
+                                     @RequestParam(value = "pageImage",required = true) String pageImage,
                                      @RequestParam(value = "tagIds")String tagIds,
                                      HttpServletRequest request){
         String token = request.getHeader("token");
@@ -65,10 +65,10 @@ public class ArticleController extends BaseController{
         article.setContent(content);
         article.setTitle(title);
         article.setSubtitle(subtitle);
-        article.setPageImage(page_image);
+        article.setPageImage(pageImage);
 
-        if(is_show == null) is_show = 0;
-        article.setIsShow(is_show);
+        if(isShow == null) isShow = 0;
+        article.setIsShow(isShow);
 
         ReturnJson returnJson;
         try {
@@ -112,8 +112,8 @@ public class ArticleController extends BaseController{
                                   @RequestParam(value = "title") String title,
                                   @RequestParam(value = "subtitle") String subtitle,
                                   @RequestParam(value = "text") String content,
-                                  @RequestParam(value = "is_show", required = false) Integer is_show,
-                                  @RequestParam(value = "page_image") String page_image,
+                                  @RequestParam(value = "isShow", required = false) Integer isShow,
+                                  @RequestParam(value = "pageImage") String pageImage,
                                   @RequestParam(value = "tagIds") String tagIds) {
 
         ArticlePo article = new ArticlePo();
@@ -121,8 +121,8 @@ public class ArticleController extends BaseController{
         article.setContent(content);
         article.setTitle(title);
         article.setSubtitle(subtitle);
-        article.setPageImage(page_image);
-        article.setIsShow(is_show);
+        article.setPageImage(pageImage);
+        article.setIsShow(isShow);
 
         try {
             if(articleService.articleEditSave(article,tagIds)){
