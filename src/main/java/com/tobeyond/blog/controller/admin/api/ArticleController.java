@@ -38,16 +38,14 @@ public class ArticleController extends BaseController{
     public ReturnJson articleList(@RequestParam(value = "page",required = false) Integer page){
         PageInfo<ArticleBo> articlesPaginator =  articleService.articleListBaseInfo(page,10,null,false);
         returnData.put("data",articlesPaginator);
-        returnJson.setData(returnData);
-        return  returnJson;
+        return  ReturnJson.success("获取列表成功",returnData);
     }
 
     @PostMapping(value = "/addPage")
     public ReturnJson articleAdd(){
         List<TagPo> tagList = tagService.selectByExample(null);
         returnData.put("tagList",tagList);
-        returnJson.setData(returnData);
-        return  returnJson;
+        return  ReturnJson.success("获取数据成功",returnData);
     }
 
     @PostMapping(value = "/add")
@@ -102,8 +100,7 @@ public class ArticleController extends BaseController{
 
         returnData.put("article",articleVo);
         returnData.put("tagList",tagBoList);
-        returnJson.setData(returnData);
-        return  returnJson;
+        return  ReturnJson.success("获取详情成功",returnData);
     }
 
     @PostMapping(value = "/edit")
