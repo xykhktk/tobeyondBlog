@@ -25,18 +25,18 @@ public class ArticleController {
     @RequestMapping(value = "/articleList", method = RequestMethod.GET)
     public ModelAndView articleList(
             @RequestParam(value = "page", required = false) Integer page,
-            @RequestParam(value = "tag_id", required = false) Long tag_id
+            @RequestParam(value = "tag_id", required = false) Integer tagId
     ) {
 
-        PageInfo<ArticleBo> articlesPaginator = articleService.articleListBaseInfo(page, 12, tag_id,true);
+        PageInfo<ArticleBo> articlesPaginator = articleService.articleList(page, 12, tagId,Byte.valueOf("1"));
         ModelAndView modelAndView = new ModelAndView("/articleList");
         modelAndView.addObject("articlesPaginator", articlesPaginator);
         return modelAndView;
     }
 
     @RequestMapping("/articleDetail/{id}")
-    public ModelAndView articleDetail(@PathVariable Long id){
-        ArticleBo article = articleService.articleFullInfo(id);
+    public ModelAndView articleDetail(@PathVariable Integer id){
+        ArticleBo article = articleService.articleDetail(id);
         Parser parser = Parser.builder().build();
         Node node = parser.parse(article.getContent());
         HtmlRenderer renderer = HtmlRenderer.builder().build();

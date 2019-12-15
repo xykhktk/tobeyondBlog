@@ -3,15 +3,17 @@ package com.tobeyond.blog.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.config.QiniuConfig;
+import com.tobeyond.blog.dao.mapper.ArticleMapper;
 import com.tobeyond.blog.dao.mapper.TagMapper;
 import com.tobeyond.blog.model.bo.ArticleBo;
 import com.tobeyond.blog.model.bo.ArticleTagBo;
 import com.tobeyond.blog.model.po.*;
-import com.tobeyond.blog.dao.mapper.ArticleMapper;
+import com.tobeyond.blog.dao.mapper.ArticleMapperHistory;
 import com.tobeyond.blog.dao.mapper.ArticleTagsMapper;
 import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.util.DateKit;
 //import org.markdownj.MarkdownProcessor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +26,15 @@ public class ArticleServiceImpl implements IArticleService {
     @Autowired
     QiniuConfig qiniuConfig;
     @Autowired
+    ArticleMapperHistory articleMapperHistory;
+    @Autowired
     ArticleMapper articleMapper;
     @Autowired
     ArticleTagsMapper articleTagsMapper;
     @Autowired
     TagMapper tagMapper;
+    @Autowired
+    ArticleExample articleExample;
 
     @Override
     public List<ArticleTagsPo> getTagListByTagId(Long tag_id) {
@@ -36,39 +42,49 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public PageInfo<ArticleBo> articleListBaseInfo(Integer page, Integer limit, Long tag_id,Boolean is_show) {
+    public PageInfo<ArticleBo> articleList(Integer page, Integer limit, Integer tag_id,Byte isShow) {
         if(page == null) page = 1;
 
-        List<String> inIds = null;
+        List<ArticleTagsPo> articleTagsPoList = new ArrayList<>();
         if(tag_id != null){
-            List<ArticleTagsPo> articleTags = getTagListByTagId(tag_id);
-            if(articleTags.size() > 0){
-                inIds = new ArrayList<>();
-                for(ArticleTagsPo articleTag : articleTags){
-                    inIds.add(String.valueOf(articleTag.getArticleId()));
-                }
-            }
+            ArticleTagsExample articleTagsExample = new ArticleTagsExample();
+            articleTagsExample.createCriteria().andTagIdEqualTo(tag_id);
+           articleTagsPoList = articleTagsMapper.selectByExample(articleTagsExample);
         }
-        HashMap<String,Object> params= new HashMap<>();
-        params.put("inIds",inIds);
 
-        if(is_show) params.put("is_show",'1');
+        ArticleExample.Criteria criteria = articleExample.createCriteria();
+        if(isShow != null) criteria.andIsShowEqualTo(isShow);
+        if(articleTagsPoList.size() > 0){
+            List<Integer> articleIds = new ArrayList<>();
+            for (ArticleTagsPo articleTagsPo : articleTagsPoList){
+                articleIds.add(articleTagsPo.getArticleId());
+            }
+            criteria.andIdIn(articleIds);
+        }
+        List<ArticlePo> articlePoList =  articleMapper.selectByExample(articleExample);
+
+        List<ArticleBo> articleBoList = new ArrayList<>();
+        for(ArticlePo articlePo : articlePoList){
+            ArticleBo articleBo = new ArticleBo();
+            BeanUtils.copyProperties(articlePo,articleBo);
+            articleBo.setPageImage(qiniuConfig.getPath() +  articleBo.getPageImage());
+
+            ArrayList<ArticleTagBo> articleTagBo =  articleTagsMapper.getTagsByArticleId(articleBo.getId());
+            articleBo.setTagList(articleTagBo);
+
+            articleBoList.add(articleBo);
+        }
 
         PageHelper.startPage(page, limit);
-        List<ArticleBo> articleList = articleMapper.articleListBaseInfo(params);
-        for(ArticleBo bo :articleList){
-            bo.setPageImage(qiniuConfig.getPath() +  bo.getPageImage());
-        }
-
-        return new PageInfo<>(articleList);
+        return new PageInfo<>(articleBoList);
     }
 
     @Override
-    public ArticleBo articleFullInfo(Long id) {
-        HashMap<String,Object> paramMap = new HashMap<>();
-        paramMap.put("id",id);
-        ArticleBo articleBo = articleMapper.articleFullInfo(paramMap);
-        ArrayList<ArticleTagBo> articleTagBo =  articleMapper.getArticleTags(articleBo.getId());
+    public ArticleBo articleDetail(Integer articleId) {
+        ArticlePo articleTagsPo =  articleMapper.selectByPrimaryKey(articleId);
+        ArticleBo articleBo = new ArticleBo();
+        BeanUtils.copyProperties(articleTagsPo,articleBo);
+        ArrayList<ArticleTagBo> articleTagBo =  articleMapperHistory.getArticleTags(articleBo.getId());
         articleBo.setTagList(articleTagBo);
         return articleBo;
     }
@@ -76,12 +92,11 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     @Transactional
     public Boolean articleAdd(ArticlePo article,String tagIds) {
-        String now = DateKit.dateFormat(new Date());
         Date dateNow = DateKit.getNow();
         try {
-            article.setCreatedAt(now); //article的bean是自己写的,date字段设置为String了。有点不规范。
-            article.setUpdatedAt(now);
-            articleMapper.articleAdd(article);
+            article.setCreatedAt(dateNow);
+            article.setUpdatedAt(dateNow);
+            articleMapperHistory.articleAdd(article);
 
             //批量插入
             String[] tagArray =  tagIds.split(",");
@@ -105,25 +120,28 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public Boolean articleDel(Integer id) {
+    public Boolean articleDel(Integer articleId) {
         try {
-            articleMapper.articleDel(id);
+            ArticlePo article = new ArticlePo();
+            article.setId(articleId);
+            article.setIsDel(Byte.valueOf("1"));
+            articleExample.createCriteria().andIdEqualTo(article.getId());
+            articleMapper.updateByExample(article,articleExample);
         }catch (Exception e){
-            System.out.println(e.getMessage());
             return false;
         }
         return true;
     }
 
     @Override
-    public Boolean changeShow(Integer id, Integer is_show) {
+    public Boolean changeShow(Integer articleId, Byte isShow) {
         try {
-            HashMap<String,Object> params = new HashMap<>();
-            params.put("id",id);
-            params.put("is_show",is_show);
-            articleMapper.changeShow(params);
+            ArticlePo article = new ArticlePo();
+            article.setId(articleId);
+            article.setIsShow(isShow);
+            articleExample.createCriteria().andIdEqualTo(article.getId());
+            articleMapper.updateByExample(article,articleExample);
         }catch (Exception e){
-            System.out.println(e.getMessage());
             return false;
         }
         return true;
@@ -131,13 +149,14 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public Boolean articleEditSave(ArticlePo article, String tagIds) {
-        String now = DateKit.dateFormat(new Date());
         Date dateNow = DateKit.getNow();
-
         try {
-            article.setUpdatedAt(now);
-            articleMapper.articleUpdate(article);
-            ArrayList<ArticleTagBo> articleTagBo =  articleMapper.getArticleTags(article.getId());
+            article.setUpdatedAt(dateNow);
+//            articleMapperHistory.articleUpdate(article);
+            articleExample.createCriteria().andIdEqualTo(article.getId());
+            articleMapper.updateByExample(article,articleExample);
+
+            ArrayList<ArticleTagBo> articleTagBo =  articleMapperHistory.getArticleTags(article.getId());
 
             //求并集 交集 差级 https://blog.csdn.net/u011595939/article/details/74348216/
             List<String> selectedTag = new ArrayList<>();   //页面上选择的tag
@@ -168,7 +187,7 @@ public class ArticleServiceImpl implements IArticleService {
                 HashMap<String,Object> params = new HashMap<>();
                 params.put("article_id",article.getId());
                 params.put("whereInTagIds",delTag); //在mapper试使用where in，collection="whereInTagIds"要与这里对应
-                params.put("deleted_at",now);
+//                params.put("deleted_at",now);
                 articleTagsMapper.delArticleTags(params);
             }
 

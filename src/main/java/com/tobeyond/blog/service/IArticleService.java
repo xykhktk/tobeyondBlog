@@ -19,15 +19,15 @@ public interface IArticleService {
 
     List<ArticleTagsPo> getTagListByTagId(Long tag_id);
 
-    PageInfo<ArticleBo> articleListBaseInfo(Integer page, Integer limit, Long tag_id,Boolean is_show);
+    PageInfo<ArticleBo> articleList(Integer page, Integer limit, Integer tag_id,Byte is_show);
 
-    ArticleBo articleFullInfo(Long id);
+    ArticleBo articleDetail(Integer id);
 
     Boolean articleAdd(ArticlePo article,String tagIds);
 
     Boolean articleDel(Integer id);
 
-    Boolean changeShow(Integer id,Integer is_show);
+    Boolean changeShow(Integer articleId, Byte isShow);
 
     Boolean articleEditSave(ArticlePo articlePo,String ids);
 

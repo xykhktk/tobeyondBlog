@@ -36,7 +36,7 @@ public class ArticleController extends BaseController{
 
     @PostMapping(value = "/list")
     public ReturnJson articleList(@RequestParam(value = "page",required = false) Integer page){
-        PageInfo<ArticleBo> articlesPaginator =  articleService.articleListBaseInfo(page,10,null,false);
+        PageInfo<ArticleBo> articlesPaginator =  articleService.articleList(page,10,null,null);
         returnData.put("data",articlesPaginator);
         return  ReturnJson.success("获取列表成功",returnData);
     }
@@ -52,7 +52,7 @@ public class ArticleController extends BaseController{
     public ReturnJson articleAddSave(@RequestParam(value = "title",required = true) String title,
                                      @RequestParam(value = "subtitle",required = true) String subtitle,
                                      @RequestParam(value = "text",required = true) String content,
-                                     @RequestParam(value = "isShow") Integer isShow,
+                                     @RequestParam(value = "isShow") Byte isShow,
                                      @RequestParam(value = "pageImage",required = true) String pageImage,
                                      @RequestParam(value = "tagIds")String tagIds,
                                      HttpServletRequest request){
@@ -85,7 +85,7 @@ public class ArticleController extends BaseController{
 
     @PostMapping(value = "/editPage")
     public ReturnJson articleEditPage(@RequestParam(value = "id") Integer id){
-        ArticleBo articleBo = articleService.articleFullInfo(Long.valueOf(id));
+        ArticleBo articleBo = articleService.articleDetail(id);
         ArticleVo articleVo = new ArticleVo();
         BeanUtils.copyProperties(articleBo,articleVo);
         articleVo.setPageImgFull(qiniuConfig.getPath() + articleVo.getPageImage());
@@ -109,7 +109,7 @@ public class ArticleController extends BaseController{
                                   @RequestParam(value = "title") String title,
                                   @RequestParam(value = "subtitle") String subtitle,
                                   @RequestParam(value = "text") String content,
-                                  @RequestParam(value = "isShow", required = false) Integer isShow,
+                                  @RequestParam(value = "isShow", required = false) Byte isShow,
                                   @RequestParam(value = "pageImage") String pageImage,
                                   @RequestParam(value = "tagIds") String tagIds) {
 
@@ -150,10 +150,10 @@ public class ArticleController extends BaseController{
     @PostMapping(value = "/changeShow")
     @ResponseBody
     public ReturnJson changeShow(@RequestParam(value = "id",required = true) Integer id,
-                                 @RequestParam(value = "is_show",required = true) Integer is_show){
+                                 @RequestParam(value = "isShow",required = true) Byte isShow){
         ReturnJson returnJson;
         try {
-            articleService.changeShow(id,is_show);
+            articleService.changeShow(id,isShow);
             returnJson = ReturnJson.success("设置成功");
         } catch (Exception e) {
             returnJson = ReturnJson.error(e.getMessage());

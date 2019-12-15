@@ -1,72 +1,34 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.model.bo.ArticleBo;
-import com.tobeyond.blog.model.bo.ArticleTagBo;
 import com.tobeyond.blog.model.po.ArticlePo;
-import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.tobeyond.blog.model.po.ArticleExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
-@Component
 public interface ArticleMapper {
+    long countByExample(ArticleExample example);
 
-    /**
-     * 注解的方式进行数据库操作,不推荐.
-     * @param in_ids
-     * @return
-     */
-    @SelectProvider(type = com.tobeyond.blog.dao.provider.ArticleProvider.class,method = "articleList")
-    @Results({
-            @Result(id = true, column = "id", property = "article_id"), //在数据库字段名是id,希望取出来是article_id.注意bean里面也要对应有article_id
-//            @Result(column = "title", property = "title"),
-//            @Result(column = "subtitle", property = "subtitle"),
-//            @Result(column = "content", property = "content"),
-//            @Result(column = "page_image", property = "page_image"),
-//            @Result(column = "is_original", property = "is_original"),
-//            @Result(column = "created_at", property = "created_at"),
-//            @Result(column = "updated_at", property = "updated_at"),
-            @Result(column = "id", property = "articleTag", //将id作为参数传入findTagsByArticle
-                    many = @Many(
-                            select = "com.tobeyond.blog.dao.mapper.ArticleTagMapper.findTagsByArticle"
-//                            fetchType = FetchType.LAZY  //??? 加了这段会有问题.待研究
-                    )
-            )
-    })
-    List<ArticlePo> articleList(@Param("in_ids") String in_ids);
+    int deleteByPrimaryKey(Integer id);
 
-    @Select("select * from articles where id = #{id}")
-    @Results({
-            @Result(id = true, column = "id", property = "article_id"),
-            @Result(column = "id", property = "articleTag",
-                    many = @Many(select = "com.tobeyond.blog.dao.mapper.ArticleTagMapper.findTagsByArticle")
-            )})
-    ArticlePo getArticleById(Long id);
+    int insert(ArticlePo record);
 
-    @Select("select * from articles order by created_at limit 4")
-    @Results({
-            @Result(id = true, column = "id", property = "article_id"),
-            @Result(column = "id", property = "articleTag",
-                    many = @Many(
-                            select = "com.tobeyond.blog.dao.mapper.ArticleTagMapper.findTagsByArticle"
-                    )
-            )
-    })
-    List<ArticlePo> articleListForIndex();
+    int insertSelective(ArticlePo record);
 
-    List<ArticleBo> articleListBaseInfo(HashMap<String,Object> params);
+    List<ArticlePo> selectByExampleWithBLOBs(ArticleExample example);
 
-    ArticleBo articleFullInfo(HashMap<String,Object> params);
+    List<ArticlePo> selectByExample(ArticleExample example);
 
-    int articleAdd(ArticlePo article);
+    ArticlePo selectByPrimaryKey(Integer id);
 
-    int articleDel(Integer id);
+    int updateByExampleSelective(@Param("record") ArticlePo record, @Param("example") ArticleExample example);
 
-    int changeShow(HashMap<String,Object> param);
+    int updateByExampleWithBLOBs(@Param("record") ArticlePo record, @Param("example") ArticleExample example);
 
-    int articleUpdate(ArticlePo articlePo);
+    int updateByExample(@Param("record") ArticlePo record, @Param("example") ArticleExample example);
 
-    ArrayList<ArticleTagBo> getArticleTags(Integer id);
+    int updateByPrimaryKeySelective(ArticlePo record);
+
+    int updateByPrimaryKeyWithBLOBs(ArticlePo record);
+
+    int updateByPrimaryKey(ArticlePo record);
 }

@@ -215,4 +215,12 @@
         </if>
     </update>
 
+    <select id="getTagsByArticleId" parameterType="int" resultType="com.tobeyond.blog.model.bo.ArticleTagBo">
+        select
+        article_tags.id,article_tags.tag_id,tags.title
+        from article_tags
+        LEFT JOIN tags on article_tags.tag_id = tags.id
+        where article_tags.article_id = #{id} AND article_tags.is_del = '0'
+    </select>
+
 </mapper>

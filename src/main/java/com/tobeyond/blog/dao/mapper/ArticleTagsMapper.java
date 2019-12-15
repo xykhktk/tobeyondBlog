@@ -1,10 +1,12 @@
 package com.tobeyond.blog.dao.mapper;
 
+import com.tobeyond.blog.model.bo.ArticleTagBo;
 import com.tobeyond.blog.model.po.ArticleTagsExample;
 import com.tobeyond.blog.model.po.ArticleTagsPo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,5 +40,7 @@ public interface ArticleTagsMapper {
     int updateByExampleSelective(@Param("record") ArticleTagsPo record, @Param("example") ArticleTagsExample example);
 
     int updateByExample(@Param("record") ArticleTagsPo record, @Param("example") ArticleTagsExample example);
+
+    ArrayList<ArticleTagBo> getTagsByArticleId(Integer id);
 
 }
