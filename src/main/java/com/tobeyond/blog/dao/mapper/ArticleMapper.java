@@ -4,7 +4,9 @@ import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.ArticleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface ArticleMapper {
     long countByExample(ArticleExample example);
 
