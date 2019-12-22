@@ -8,7 +8,6 @@ import com.tobeyond.blog.dao.mapper.TagMapper;
 import com.tobeyond.blog.model.bo.ArticleBo;
 import com.tobeyond.blog.model.bo.ArticleTagBo;
 import com.tobeyond.blog.model.po.*;
-import com.tobeyond.blog.dao.mapper.ArticleMapperHistory;
 import com.tobeyond.blog.dao.mapper.ArticleTagsMapper;
 import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.util.DateKit;
@@ -25,8 +24,6 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Autowired
     QiniuConfig qiniuConfig;
-    @Autowired
-    ArticleMapperHistory articleMapperHistory;
     @Autowired
     ArticleMapper articleMapper;
     @Autowired
@@ -85,7 +82,7 @@ public class ArticleServiceImpl implements IArticleService {
         ArticlePo articleTagsPo =  articleMapper.selectByPrimaryKey(articleId);
         ArticleBo articleBo = new ArticleBo();
         BeanUtils.copyProperties(articleTagsPo,articleBo);
-        ArrayList<ArticleTagBo> articleTagBo =  articleMapperHistory.getArticleTags(articleBo.getId());
+        ArrayList<ArticleTagBo> articleTagBo = articleTagsMapper.getTagsByArticleId(articleBo.getId());
         articleBo.setTagList(articleTagBo);
         return articleBo;
     }
@@ -97,7 +94,7 @@ public class ArticleServiceImpl implements IArticleService {
         try {
             article.setCreatedAt(dateNow);
             article.setUpdatedAt(dateNow);
-            articleMapperHistory.articleAdd(article);
+            articleMapper.insert(article);
 
             //批量插入
             String[] tagArray =  tagIds.split(",");
@@ -161,26 +158,30 @@ public class ArticleServiceImpl implements IArticleService {
             articleExample.createCriteria().andIdEqualTo(article.getId());
             articleMapper.updateByExample(article,articleExample);
 
-            ArrayList<ArticleTagBo> articleTagBo =  articleMapperHistory.getArticleTags(article.getId());
+            ArrayList<ArticleTagBo> articleTagBo = articleTagsMapper.getTagsByArticleId(article.getId());
 
             //求并集 交集 差级 https://blog.csdn.net/u011595939/article/details/74348216/
-            List<String> selectedTag = new ArrayList<>();   //页面上选择的tag
-            List<String> dbTag = new ArrayList<>(); //数据库里记录的tag
-//            for(String selectTag : selectTags){ newTag.add(selectTag); }
-            selectedTag.addAll(Arrays.asList(tagIds.split(",")));
-            for(ArticleTagBo tag : articleTagBo){ dbTag.add(String.valueOf(tag.getTagId())); }
+            List<Integer> selectedTagsInPage = new ArrayList<>();   //页面上选择的tag
+            for(String id : Arrays.asList(tagIds.split(","))){
+                selectedTagsInPage.add(Integer.valueOf(id));
+            }
 
-            List<String> insertTag = new ArrayList<>(selectedTag);   //要新增的tag
-            insertTag.removeAll(dbTag);
-            List<String> delTag = new ArrayList<>(dbTag);   //要删除的tag
-            delTag.removeAll(selectedTag);
+            List<Integer> tagsInDb = new ArrayList<>(); //数据库里记录的tag
+            for(ArticleTagBo tag : articleTagBo){
+                tagsInDb.add(tag.getTagId());
+            }
+
+            List<Integer> insertTag = new ArrayList<>(selectedTagsInPage);   //要新增的tag
+            insertTag.removeAll(tagsInDb);
+            List<Integer> delTag = new ArrayList<>(tagsInDb);   //要删除的tag
+            delTag.removeAll(selectedTagsInPage);
 
             if(insertTag.size() > 0){
                 List<ArticleTagsPo> articleTagPoList = new ArrayList<>();
-                for(String insertTagId : insertTag){
+                for(Integer insertTagId : insertTag){
                     ArticleTagsPo articleTagPo = new ArticleTagsPo();
                     articleTagPo.setArticleId(article.getId());
-                    articleTagPo.setTagId(Integer.valueOf(insertTagId));
+                    articleTagPo.setTagId(insertTagId);
                     articleTagPo.setCreatedAt(dateNow);
                     articleTagPo.setUpdatedAt(dateNow);
                     articleTagPoList.add(articleTagPo);
@@ -189,11 +190,18 @@ public class ArticleServiceImpl implements IArticleService {
             }
 
             if(delTag.size() > 0){
-                HashMap<String,Object> params = new HashMap<>();
-                params.put("article_id",article.getId());
-                params.put("whereInTagIds",delTag); //在mapper试使用where in，collection="whereInTagIds"要与这里对应
+//                HashMap<String,Object> params = new HashMap<>();
+//                params.put("article_id",article.getId());
+//                params.put("whereInTagIds",delTag); //在mapper使用where in，collection="whereInTagIds"要与这里对应
 //                params.put("deleted_at",now);
-                articleTagsMapper.delArticleTags(params);
+//                articleTagsMapper.delArticleTags(params);
+
+                ArticleTagsPo articleTagsPo = new ArticleTagsPo();
+                articleTagsPo.setIsDel(Byte.valueOf("1"));
+                articleTagsPo.setDeletedAt(dateNow);
+                ArticleTagsExample articleTagsExample = new ArticleTagsExample();
+                articleTagsExample.createCriteria().andIdIn(delTag);
+                articleTagsMapper.updateByExample(articleTagsPo,articleTagsExample);
             }
 
         }catch (Exception e){
