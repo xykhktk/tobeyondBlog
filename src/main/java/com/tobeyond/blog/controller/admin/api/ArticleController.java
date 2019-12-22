@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.annotation.AdminLoginToken;
 import com.tobeyond.blog.config.QiniuConfig;
 import com.tobeyond.blog.model.bo.ArticleBo;
-import com.tobeyond.blog.model.bo.ArticleTagBo;
 import com.tobeyond.blog.model.bo.TagBo;
 import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.model.vo.ArticleVo;
@@ -151,10 +150,12 @@ public class ArticleController extends BaseController{
     @ResponseBody
     public ReturnJson changeShow(@RequestParam(value = "id",required = true) Integer id,
                                  @RequestParam(value = "isShow",required = true) Byte isShow){
-        ReturnJson returnJson;
         try {
-            articleService.changeShow(id,isShow);
-            returnJson = ReturnJson.success("设置成功");
+            if(articleService.changeShow(id,isShow)){
+                returnJson = ReturnJson.success("设置成功");
+            }else{
+                returnJson = ReturnJson.error("设置失败");
+            }
         } catch (Exception e) {
             returnJson = ReturnJson.error(e.getMessage());
         }

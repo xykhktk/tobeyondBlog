@@ -52,6 +52,7 @@ public class ArticleServiceImpl implements IArticleService {
            articleTagsPoList = articleTagsMapper.selectByExample(articleTagsExample);
         }
 
+        articleExample.clear();
         ArticleExample.Criteria criteria = articleExample.createCriteria();
         if(isShow != null) criteria.andIsShowEqualTo(isShow);
         if(articleTagsPoList.size() > 0){
@@ -123,9 +124,9 @@ public class ArticleServiceImpl implements IArticleService {
     public Boolean articleDel(Integer articleId) {
         try {
             ArticlePo article = new ArticlePo();
-            article.setId(articleId);
             article.setIsDel(Byte.valueOf("1"));
-            articleExample.createCriteria().andIdEqualTo(article.getId());
+            articleExample.clear();
+            articleExample.createCriteria().andIdEqualTo(articleId);
             articleMapper.updateByExample(article,articleExample);
         }catch (Exception e){
             return false;
@@ -137,10 +138,13 @@ public class ArticleServiceImpl implements IArticleService {
     public Boolean changeShow(Integer articleId, Byte isShow) {
         try {
             ArticlePo article = new ArticlePo();
-            article.setId(articleId);
             article.setIsShow(isShow);
-            articleExample.createCriteria().andIdEqualTo(article.getId());
-            articleMapper.updateByExample(article,articleExample);
+            //要么 @Autowired，然后articleExample每次都clear()一次，
+            //要么每次都重新new一个 example
+            //有待优化
+            articleExample.clear();
+            articleExample.createCriteria().andIdEqualTo(articleId);
+            articleMapper.updateByExampleSelective(article,articleExample);
         }catch (Exception e){
             return false;
         }
@@ -152,6 +156,7 @@ public class ArticleServiceImpl implements IArticleService {
         Date dateNow = DateKit.getNow();
         try {
             article.setUpdatedAt(dateNow);
+            articleExample.clear();
 //            articleMapperHistory.articleUpdate(article);
             articleExample.createCriteria().andIdEqualTo(article.getId());
             articleMapper.updateByExample(article,articleExample);
