@@ -145,7 +145,7 @@
     delete from articles
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.tobeyond.blog.model.po.ArticlePo">
+  <insert id="insert" parameterType="com.tobeyond.blog.model.po.ArticlePo" useGeneratedKeys="true" keyProperty="id">
     insert into articles (id, category_id, user_id, 
       title, subtitle, page_image, 
       meta_description, is_show, is_del, 
@@ -157,7 +157,7 @@
       #{viewCount,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
       #{deletedAt,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.tobeyond.blog.model.po.ArticlePo">
+  <insert id="insertSelective" parameterType="com.tobeyond.blog.model.po.ArticlePo" useGeneratedKeys="true" keyProperty="id">
     insert into articles
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

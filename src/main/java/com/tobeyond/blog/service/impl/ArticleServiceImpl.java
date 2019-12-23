@@ -59,6 +59,7 @@ public class ArticleServiceImpl implements IArticleService {
             }
             criteria.andIdIn(articleIds);
         }
+        articleExample.setOrderByClause("id desc");
         List<ArticlePo> articlePoList =  articleMapper.selectByExample(articleExample);
 
         List<ArticleBo> articleBoList = new ArrayList<>();
@@ -94,20 +95,22 @@ public class ArticleServiceImpl implements IArticleService {
         try {
             article.setCreatedAt(dateNow);
             article.setUpdatedAt(dateNow);
-            articleMapper.insert(article);
+            articleMapper.insertSelective(article);
 
             //批量插入
             String[] tagArray =  tagIds.split(",");
-            List<ArticleTagsPo> articleTagPoList = new ArrayList<>();
-            for(String tagId : tagArray){
-                ArticleTagsPo articleTagPo = new ArticleTagsPo();
-                articleTagPo.setArticleId(article.getId());
-                articleTagPo.setTagId(Integer.valueOf(tagId));
-                articleTagPo.setCreatedAt(dateNow); //代码生成器生成的代码是Date类型
-                articleTagPo.setUpdatedAt(dateNow);
-                articleTagPoList.add(articleTagPo);
+            if(tagArray.length > 0){
+                List<ArticleTagsPo> articleTagPoList = new ArrayList<>();
+                for(String tagId : tagArray){
+                    ArticleTagsPo articleTagPo = new ArticleTagsPo();
+                    articleTagPo.setArticleId(article.getId());
+                    articleTagPo.setTagId(Integer.valueOf(tagId));
+                    articleTagPo.setCreatedAt(dateNow); //代码生成器生成的代码是Date类型
+                    articleTagPo.setUpdatedAt(dateNow);
+                    articleTagPoList.add(articleTagPo);
+                }
+                articleTagsMapper.insertBatch(articleTagPoList);
             }
-            articleTagsMapper.insertBatch(articleTagPoList);
 
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -154,9 +157,8 @@ public class ArticleServiceImpl implements IArticleService {
         try {
             article.setUpdatedAt(dateNow);
             articleExample.clear();
-//            articleMapperHistory.articleUpdate(article);
             articleExample.createCriteria().andIdEqualTo(article.getId());
-            articleMapper.updateByExample(article,articleExample);
+            articleMapper.updateByExampleSelective(article,articleExample);
 
             ArrayList<ArticleTagBo> articleTagBo = articleTagsMapper.getTagsByArticleId(article.getId());
 

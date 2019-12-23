@@ -1,5 +1,6 @@
 package com.tobeyond.blog.controller;
 
+import com.tobeyond.blog.model.bo.TaskInformationsBo;
 import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.model.vo.TaskInformationsVo;
 import com.tobeyond.blog.service.IQuartzService;
@@ -22,7 +23,7 @@ public class TestController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public ReturnJson list(){
-        List<TaskInformationsVo> list = quartzService.getList();
+        List<TaskInformationsBo> list = quartzService.getList();
         return  ReturnJson.success("成功",list);
     }
 
