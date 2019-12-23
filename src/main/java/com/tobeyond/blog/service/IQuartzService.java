@@ -1,6 +1,6 @@
 package com.tobeyond.blog.service;
 
-import com.tobeyond.blog.model.vo.TaskInformationsVo;
+import com.tobeyond.blog.model.bo.TaskInformationsBo;
 import org.quartz.SchedulerException;
 
 import java.util.List;
@@ -16,6 +16,6 @@ public interface IQuartzService {
 
 	public void delJob(String jobName,String jobGroup) throws SchedulerException;
 
-	public List<TaskInformationsVo> getList();
+	public List<TaskInformationsBo> getList();
 
 }

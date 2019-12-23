@@ -1,5 +1,6 @@
 package com.tobeyond.blog.service.impl;
 
+import com.tobeyond.blog.model.bo.TaskInformationsBo;
 import com.tobeyond.blog.model.vo.TaskInformationsVo;
 import com.tobeyond.blog.service.IQuartzService;
 import com.tobeyond.blog.util.DateKit;
@@ -46,9 +47,9 @@ public class QuartzServiceImpl implements IQuartzService {
     }
 
     @Override
-    public List<TaskInformationsVo> getList() {
+    public List<TaskInformationsBo> getList() {
         Scheduler scheduler = schedulerBean.getScheduler();
-        List<TaskInformationsVo> taskInformationsVoList = new ArrayList<>();
+        List<TaskInformationsBo> taskInformationsBoList = new ArrayList<>();
         try {
             List<String> jobGroupNames = scheduler.getJobGroupNames();
             for(String jobGroupName : jobGroupNames){
@@ -65,15 +66,15 @@ public class QuartzServiceImpl implements IQuartzService {
                         System.out.println("[jobName] : " + jobName + ", [groupName] : "
                                 + jobGroup + " - "  + triggerSstateCN + " - " + nextFireTime);
 
-                        TaskInformationsVo  taskInformationsVo = new TaskInformationsVo();
+                        TaskInformationsBo taskInformationsbBo = new TaskInformationsBo();
                         if (trigger instanceof CronTrigger) {
-                            taskInformationsVo.setCronExpression(((CronTrigger) trigger).getCronExpression());
+                            taskInformationsbBo.setCronExpression(((CronTrigger) trigger).getCronExpression());
                         }
-                        taskInformationsVo.setGroupName(jobGroup);
-                        taskInformationsVo.setJobName(jobName);
-                        taskInformationsVo.setNextFireTime(nextFireTime);
-                        taskInformationsVo.setTriggerState(triggerSstateCN);
-                        taskInformationsVoList.add(taskInformationsVo);
+                        taskInformationsbBo.setGroupName(jobGroup);
+                        taskInformationsbBo.setJobName(jobName);
+                        taskInformationsbBo.setNextFireTime(nextFireTime);
+                        taskInformationsbBo.setTriggerState(triggerSstateCN);
+                        taskInformationsBoList.add(taskInformationsbBo);
                     }
                 }
 
@@ -81,7 +82,7 @@ public class QuartzServiceImpl implements IQuartzService {
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
-        return taskInformationsVoList;
+        return taskInformationsBoList;
     }
 
     private static String getTriggerStatesCN(String key) {
