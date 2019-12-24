@@ -11,7 +11,7 @@ public interface IMaximsService {
 
     List<MaximPo> selectByExample(MaximExample example);
 
-    PageInfo<MaximPo>  listWithPager(MaximExample example,Integer page,Integer limit);
+    PageInfo<MaximPo>  listWithPager(Integer page,Integer limit);
 
     List<MaximPo> list(MaximExample example);
 

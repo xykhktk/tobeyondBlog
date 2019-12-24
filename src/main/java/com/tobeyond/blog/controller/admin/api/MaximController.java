@@ -1,43 +1,33 @@
-package com.tobeyond.blog.controller.admin.pc;
+package com.tobeyond.blog.controller.admin.api;
 
 import com.github.pagehelper.PageInfo;
+import com.tobeyond.blog.annotation.AdminLoginToken;
 import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.model.po.MaximExample;
 import com.tobeyond.blog.model.po.MaximPo;
 import com.tobeyond.blog.service.IMaximsService;
-import com.tobeyond.blog.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@Controller("adminMaximController")
-@RequestMapping(value = "/admin/maxim")
-public class MaximController {
-
-    private ModelAndView modelAndView;
+@AdminLoginToken
+@RestController("apiAdminMaximController")
+@RequestMapping(value = "/api/admin/maxim")
+public class MaximController extends BaseController{
 
     @Autowired
     IMaximsService iMaximsService;
 
-    @GetMapping(value = "/list")
-    public ModelAndView maximList(@RequestParam(value = "page",required = false) Integer page){
+    @PostMapping(value = "/list")
+    public ReturnJson maximList(@RequestParam(value = "page",required = false) Integer page){
         PageInfo<MaximPo> pageInfo =  iMaximsService.listWithPager(page,10);
-        ModelAndView modelAndView = new ModelAndView("/admin/maxim/list");
-        modelAndView.addObject("pageInfo",pageInfo);
-        return  modelAndView;
-    }
-
-    @GetMapping(value = "/add")
-    public ModelAndView addPage(){
-        return new ModelAndView("/admin/maxim/add");
+        returnData.put("data",pageInfo);
+        return  ReturnJson.success("获取列表成功",returnData);
     }
 
     @PostMapping(value = "/add")
-    @ResponseBody
     public ReturnJson addSave(MaximPo maximPo){
         if(maximPo.getIsShow() == null) maximPo.setIsShow(false);
         if(maximPo.getAuthor() == null || maximPo.getAuthor().equals("")) return  ReturnJson.error("作者不能为空");
@@ -51,21 +41,18 @@ public class MaximController {
         return  ReturnJson.success("添加成功");
     }
 
-    @GetMapping(value = "/edit/{id}")
-    public ModelAndView editPage(@PathVariable Long id){
+    @PostMapping(value = "/editPage")
+    public ReturnJson editPage(@RequestParam(value = "id") Integer id){
         MaximExample maximExample = new MaximExample();
-        maximExample.createCriteria().andIdEqualTo(id.intValue());
+        maximExample.createCriteria().andIdEqualTo(id);
         List<MaximPo> list = iMaximsService.list(maximExample);
-        CommonUtils.outputObject(list.get(0));
-
-        modelAndView =  new ModelAndView("/admin/maxim/edit");
-        modelAndView.addObject("maxim",list.get(0));
-        return modelAndView;
+        returnData.put("data",list.get(0));
+        return ReturnJson.success("获取数据成功",returnData);
     }
 
-    @PostMapping(value = "/edit/{id}")
+    @PostMapping(value = "/edit")
     @ResponseBody
-    public ReturnJson editSave(MaximPo maximPo,@PathVariable Long id){
+    public ReturnJson editSave(MaximPo maximPo){
         if(maximPo.getIsShow() == null) maximPo.setIsShow(false);
         if(maximPo.getId() == null) return  ReturnJson.error("id不能为空");
         if(maximPo.getAuthor() == null || maximPo.getAuthor().equals("")) return  ReturnJson.error("作者不能为空");

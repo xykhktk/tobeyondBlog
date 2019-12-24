@@ -7,7 +7,6 @@ import com.tobeyond.blog.model.po.MaximExample;
 import com.tobeyond.blog.model.po.MaximPo;
 import com.tobeyond.blog.service.IArticleService;
 import com.tobeyond.blog.service.IMaximsService;
-import com.tobeyond.blog.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +22,6 @@ public class IndexController {
 
     @Autowired
     IMaximsService maximsService;
-
-    @Autowired
-    IMessageService messageService;
 
     private ModelAndView modelAndView;
 
@@ -62,13 +58,13 @@ public class IndexController {
         return modelAndView;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/leaveMessage",method = RequestMethod.POST)
-    public ReturnJson leaveMessage(@RequestParam(value = "name",required = true) String name,
-                                   @RequestParam(value = "message",required = true) String message,
-                                   @RequestParam(value = "contact",required = true) String contact){
-
-        return  messageService.insertMessage(name,message,contact);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/leaveMessage",method = RequestMethod.POST)
+//    public ReturnJson leaveMessage(@RequestParam(value = "name",required = true) String name,
+//                                   @RequestParam(value = "message",required = true) String message,
+//                                   @RequestParam(value = "contact",required = true) String contact){
+//
+//        return  messageService.insertMessage(name,message,contact);
+//    }
 
 }

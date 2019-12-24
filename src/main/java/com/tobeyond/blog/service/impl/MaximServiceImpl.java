@@ -25,11 +25,13 @@ public class MaximServiceImpl implements IMaximsService {
     }
 
     @Override
-    public PageInfo<MaximPo> listWithPager(MaximExample example,Integer page,Integer limit) {
+    public PageInfo<MaximPo> listWithPager(Integer page,Integer limit) {
         if(page == null) page = 1;
         if(limit == null) limit = 10;
+        MaximExample maximExample = new MaximExample();
+        maximExample.createCriteria().andDeletedAtIsNull();
         PageHelper.startPage(page, limit);
-        List<MaximPo> List = maximMapper.selectByExample(example);
+        List<MaximPo> List = maximMapper.selectByExample(maximExample);
         return new PageInfo<>(List);
     }
 
