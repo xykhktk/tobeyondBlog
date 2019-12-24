@@ -2,7 +2,6 @@ package com.tobeyond.blog.controller;
 
 import com.tobeyond.blog.model.bo.TaskInformationsBo;
 import com.tobeyond.blog.model.dto.ReturnJson;
-import com.tobeyond.blog.model.vo.TaskInformationsVo;
 import com.tobeyond.blog.service.IQuartzService;
 import org.apache.ibatis.annotations.Param;
 import org.quartz.SchedulerException;
@@ -57,7 +56,7 @@ public class TestController {
 
 //    @RequestMapping(value = "/list")
 //    public ModelAndView list(){
-//        List<TaskInformationsVo> list = quartzService.getList();
+//        List<TaskInformationsBo> list = quartzService.getList();
 //        ModelAndView modelAndView = new ModelAndView("/admin/quartz/list");
 //        modelAndView.addObject("list",list);
 //        return modelAndView;
