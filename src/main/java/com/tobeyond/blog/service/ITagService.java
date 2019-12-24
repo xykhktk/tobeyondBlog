@@ -13,7 +13,7 @@ public interface ITagService {
 
     List<TagPo> selectByExample(TagExample example);
 
-    PageInfo<TagPo> listWithPager(TagExample example, Integer page, Integer limit);
+    PageInfo<TagPo> listWithPager(Integer page, Integer limit);
 
     Boolean add(TagPo po);
 

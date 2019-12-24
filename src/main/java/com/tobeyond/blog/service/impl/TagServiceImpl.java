@@ -25,9 +25,11 @@ public class TagServiceImpl implements ITagService {
     }
 
     @Override
-    public PageInfo<TagPo> listWithPager(TagExample example, Integer page, Integer limit) {
+    public PageInfo<TagPo> listWithPager(Integer page, Integer limit) {
         if(page == null) page = 1;
         if(limit == null) limit = 10;
+        TagExample example = new TagExample();
+        example.createCriteria().andDeletedAtIsNull();
         PageHelper.startPage(page, limit);
         List<TagPo> List = tagMapper.selectByExample(example);
         return new PageInfo<>(List);
