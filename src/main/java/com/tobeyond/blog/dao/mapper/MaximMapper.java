@@ -1,22 +1,17 @@
 package com.tobeyond.blog.dao.mapper;
 
-import com.tobeyond.blog.model.po.MaximExample;
 import com.tobeyond.blog.model.po.MaximPo;
+import com.tobeyond.blog.model.po.MaximExample;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public interface MaximMapper {
-
-    @Select("SELECT * FROM maxims WHERE is_show = 1 AND deleted_at IS NULL")
-    List<MaximPo> maximList();
-
     long countByExample(MaximExample example);
 
-//    int deleteByExample(MaximExample example);
+//    int deleteByPrimaryKey(Integer id);
 
     int insert(MaximPo record);
 
@@ -24,7 +19,13 @@ public interface MaximMapper {
 
     List<MaximPo> selectByExample(MaximExample example);
 
+    MaximPo selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") MaximPo record, @Param("example") MaximExample example);
 
     int updateByExample(@Param("record") MaximPo record, @Param("example") MaximExample example);
+
+    int updateByPrimaryKeySelective(MaximPo record);
+
+    int updateByPrimaryKey(MaximPo record);
 }

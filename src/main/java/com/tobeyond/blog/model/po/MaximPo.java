@@ -9,7 +9,7 @@ public class MaximPo {
 
     private String author;
 
-    private Boolean isShow;
+    private Byte isShow;
 
     private Date deletedAt;
 
@@ -17,7 +17,7 @@ public class MaximPo {
 
     private Date updatedAt;
 
-    public MaximPo(Integer id, String content, String author, Boolean isShow, Date deletedAt, Date createdAt, Date updatedAt) {
+    public MaximPo(Integer id, String content, String author, Byte isShow, Date deletedAt, Date createdAt, Date updatedAt) {
         this.id = id;
         this.content = content;
         this.author = author;
@@ -55,11 +55,11 @@ public class MaximPo {
         this.author = author == null ? null : author.trim();
     }
 
-    public Boolean getIsShow() {
+    public Byte getIsShow() {
         return isShow;
     }
 
-    public void setIsShow(Boolean isShow) {
+    public void setIsShow(Byte isShow) {
         this.isShow = isShow;
     }
 

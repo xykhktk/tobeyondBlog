@@ -37,7 +37,7 @@ public class IndexController {
 
 //        List<Maxim> maximList = maximsService.maximList();
         MaximExample maximExample = new MaximExample();
-        maximExample.createCriteria().andIsShowEqualTo(true);
+        maximExample.createCriteria().andIsShowEqualTo(Byte.valueOf("1"));
         List<MaximPo> maximList = maximsService.selectByExample(maximExample);
 
         ModelAndView modelAndView = new ModelAndView("/index");

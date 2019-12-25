@@ -315,52 +315,52 @@ public class MaximExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsShowEqualTo(Boolean value) {
+        public Criteria andIsShowEqualTo(Byte value) {
             addCriterion("is_show =", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowNotEqualTo(Boolean value) {
+        public Criteria andIsShowNotEqualTo(Byte value) {
             addCriterion("is_show <>", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowGreaterThan(Boolean value) {
+        public Criteria andIsShowGreaterThan(Byte value) {
             addCriterion("is_show >", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsShowGreaterThanOrEqualTo(Byte value) {
             addCriterion("is_show >=", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowLessThan(Boolean value) {
+        public Criteria andIsShowLessThan(Byte value) {
             addCriterion("is_show <", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsShowLessThanOrEqualTo(Byte value) {
             addCriterion("is_show <=", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowIn(List<Boolean> values) {
+        public Criteria andIsShowIn(List<Byte> values) {
             addCriterion("is_show in", values, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowNotIn(List<Boolean> values) {
+        public Criteria andIsShowNotIn(List<Byte> values) {
             addCriterion("is_show not in", values, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsShowBetween(Byte value1, Byte value2) {
             addCriterion("is_show between", value1, value2, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsShowNotBetween(Byte value1, Byte value2) {
             addCriterion("is_show not between", value1, value2, "isShow");
             return (Criteria) this;
         }

@@ -39,7 +39,7 @@ public class MaximController {
     @PostMapping(value = "/add")
     @ResponseBody
     public ReturnJson addSave(MaximPo maximPo){
-        if(maximPo.getIsShow() == null) maximPo.setIsShow(false);
+        if(maximPo.getIsShow() == null) maximPo.setIsShow(Byte.valueOf("0"));
         if(maximPo.getAuthor() == null || maximPo.getAuthor().equals("")) return  ReturnJson.error("作者不能为空");
         if(maximPo.getContent() == null || maximPo.getContent().equals("")) return  ReturnJson.error("内容不能为空");
 
@@ -66,7 +66,7 @@ public class MaximController {
     @PostMapping(value = "/edit/{id}")
     @ResponseBody
     public ReturnJson editSave(MaximPo maximPo,@PathVariable Long id){
-        if(maximPo.getIsShow() == null) maximPo.setIsShow(false);
+        if(maximPo.getIsShow() == null) maximPo.setIsShow(Byte.valueOf("0"));
         if(maximPo.getId() == null) return  ReturnJson.error("id不能为空");
         if(maximPo.getAuthor() == null || maximPo.getAuthor().equals("")) return  ReturnJson.error("作者不能为空");
         if(maximPo.getContent() == null || maximPo.getContent().equals("")) return  ReturnJson.error("内容不能为空");
@@ -82,7 +82,7 @@ public class MaximController {
     @PostMapping(value = "/changeShow")
     @ResponseBody
     public ReturnJson changeShow(@RequestParam(value = "id",required = true) Integer id,
-                                 @RequestParam(value = "isShow",required = true) Boolean isShow,
+                                 @RequestParam(value = "isShow",required = true) Byte isShow,
                                  HttpServletRequest request){
         MaximPo maximPo = new MaximPo();
         maximPo.setId(id);

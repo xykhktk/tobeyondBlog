@@ -3,10 +3,10 @@
 <mapper namespace="com.tobeyond.blog.dao.mapper.MaximMapper">
   <resultMap id="BaseResultMap" type="com.tobeyond.blog.model.po.MaximPo">
     <constructor>
-      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="is_show" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="is_show" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="deleted_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="created_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="updated_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -88,18 +88,22 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.tobeyond.blog.model.po.MaximExample">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from maxims
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from maxims
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.tobeyond.blog.model.po.MaximPo">
     insert into maxims (id, content, author, 
       is_show, deleted_at, created_at, 
       updated_at)
     values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
-      #{isShow,jdbcType=BIT}, #{deletedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{isShow,jdbcType=TINYINT}, #{deletedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, 
       #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.tobeyond.blog.model.po.MaximPo">
@@ -138,7 +142,7 @@
         #{author,jdbcType=VARCHAR},
       </if>
       <if test="isShow != null">
-        #{isShow,jdbcType=BIT},
+        #{isShow,jdbcType=TINYINT},
       </if>
       <if test="deletedAt != null">
         #{deletedAt,jdbcType=TIMESTAMP},
@@ -170,7 +174,7 @@
         author = #{record.author,jdbcType=VARCHAR},
       </if>
       <if test="record.isShow != null">
-        is_show = #{record.isShow,jdbcType=BIT},
+        is_show = #{record.isShow,jdbcType=TINYINT},
       </if>
       <if test="record.deletedAt != null">
         deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
@@ -191,7 +195,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
       author = #{record.author,jdbcType=VARCHAR},
-      is_show = #{record.isShow,jdbcType=BIT},
+      is_show = #{record.isShow,jdbcType=TINYINT},
       deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
@@ -199,5 +203,38 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-
+  <update id="updateByPrimaryKeySelective" parameterType="com.tobeyond.blog.model.po.MaximPo">
+    update maxims
+    <set>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=TINYINT},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tobeyond.blog.model.po.MaximPo">
+    update maxims
+    set content = #{content,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=TINYINT},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

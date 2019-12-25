@@ -30,6 +30,7 @@ public class MaximServiceImpl implements IMaximsService {
         if(limit == null) limit = 10;
         MaximExample maximExample = new MaximExample();
         maximExample.createCriteria().andDeletedAtIsNull();
+        maximExample.setOrderByClause("id desc");
         PageHelper.startPage(page, limit);
         List<MaximPo> List = maximMapper.selectByExample(maximExample);
         return new PageInfo<>(List);
