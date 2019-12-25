@@ -30,6 +30,7 @@ public class TagServiceImpl implements ITagService {
         if(limit == null) limit = 10;
         TagExample example = new TagExample();
         example.createCriteria().andDeletedAtIsNull();
+        example.setOrderByClause("id desc");
         PageHelper.startPage(page, limit);
         List<TagPo> List = tagMapper.selectByExample(example);
         return new PageInfo<>(List);
