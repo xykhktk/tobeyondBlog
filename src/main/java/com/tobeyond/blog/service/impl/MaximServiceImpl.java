@@ -25,6 +25,11 @@ public class MaximServiceImpl implements IMaximsService {
     }
 
     @Override
+    public MaximPo selectByPrimaryKey(Integer id) {
+        return maximMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public PageInfo<MaximPo> listWithPager(Integer page,Integer limit) {
         if(page == null) page = 1;
         if(limit == null) limit = 10;

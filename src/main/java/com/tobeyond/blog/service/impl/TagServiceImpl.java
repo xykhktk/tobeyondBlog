@@ -20,6 +20,11 @@ public class TagServiceImpl implements ITagService {
     TagMapper tagMapper;
 
     @Override
+    public TagPo selectByPrimaryKey(Integer id) {
+        return tagMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public List<TagPo> selectByExample(TagExample example) {
         return tagMapper.selectByExample(example);
     }

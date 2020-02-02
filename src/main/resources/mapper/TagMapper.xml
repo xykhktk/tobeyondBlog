@@ -3,10 +3,10 @@
 <mapper namespace="com.tobeyond.blog.dao.mapper.TagMapper">
     <resultMap id="BaseResultMap" type="com.tobeyond.blog.model.po.TagPo">
         <constructor>
-            <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
             <arg column="tag" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="is_del" javaType="java.lang.Boolean" jdbcType="TINYINT" />
+            <arg column="is_del" javaType="java.lang.Byte" jdbcType="TINYINT" />
             <arg column="meta_description" javaType="java.lang.String" jdbcType="VARCHAR" />
             <arg column="created_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
             <arg column="updated_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -89,6 +89,16 @@
             order by ${orderByClause}
         </if>
     </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tags
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from tags
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
     <insert id="insert" parameterType="com.tobeyond.blog.model.po.TagPo">
         insert into tags (id, tag, title,
         is_del, meta_description, created_at,
@@ -203,5 +213,43 @@
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause" />
         </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tobeyond.blog.model.po.TagPo">
+        update tags
+        <set>
+            <if test="tag != null">
+                tag = #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel,jdbcType=TINYINT},
+            </if>
+            <if test="metaDescription != null">
+                meta_description = #{metaDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tobeyond.blog.model.po.TagPo">
+        update tags
+        set tag = #{tag,jdbcType=VARCHAR},
+        title = #{title,jdbcType=VARCHAR},
+        is_del = #{isDel,jdbcType=TINYINT},
+        meta_description = #{metaDescription,jdbcType=VARCHAR},
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

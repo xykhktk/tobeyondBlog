@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ITagService {
 
-//    List<TagBo> tagList();
+    TagPo selectByPrimaryKey(Integer id);
 
     List<TagPo> selectByExample(TagExample example);
 

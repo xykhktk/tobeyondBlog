@@ -41,12 +41,10 @@ public class TagController extends BaseController{
         return  ReturnJson.success("添加成功");
     }
 
-    @PostMapping(value = "/editPage")
+    @PostMapping(value = "/detail")
     public ReturnJson editPage(@RequestParam(value = "id") Integer id){
-        TagExample example = new TagExample();
-        example.createCriteria().andIdEqualTo(id);
-        List<TagPo> list = iTagService.selectByExample(example);
-        returnData.put("data",list.get(0));
+        TagPo tagPo = iTagService.selectByPrimaryKey(id);
+        returnData.put("data",tagPo);
         return ReturnJson.success("获取数据成功",returnData);
     }
 

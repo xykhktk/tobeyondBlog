@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface IMaximsService {
 
+    MaximPo selectByPrimaryKey(Integer id);
+
     List<MaximPo> selectByExample(MaximExample example);
 
     PageInfo<MaximPo>  listWithPager(Integer page,Integer limit);

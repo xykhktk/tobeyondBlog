@@ -9,7 +9,7 @@ public class TagPo {
 
     private String title;
 
-    private Boolean isDel;
+    private Byte isDel;
 
     private String metaDescription;
 
@@ -19,7 +19,7 @@ public class TagPo {
 
     private Date deletedAt;
 
-    public TagPo(Integer id, String tag, String title, Boolean isDel, String metaDescription, Date createdAt, Date updatedAt, Date deletedAt) {
+    public TagPo(Integer id, String tag, String title, Byte isDel, String metaDescription, Date createdAt, Date updatedAt, Date deletedAt) {
         this.id = id;
         this.tag = tag;
         this.title = title;
@@ -58,11 +58,11 @@ public class TagPo {
         this.title = title == null ? null : title.trim();
     }
 
-    public Boolean getIsDel() {
+    public Byte getIsDel() {
         return isDel;
     }
 
-    public void setIsDel(Boolean isDel) {
+    public void setIsDel(Byte isDel) {
         this.isDel = isDel;
     }
 

@@ -315,52 +315,52 @@ public class TagExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsDelEqualTo(Boolean value) {
+        public Criteria andIsDelEqualTo(Byte value) {
             addCriterion("is_del =", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelNotEqualTo(Boolean value) {
+        public Criteria andIsDelNotEqualTo(Byte value) {
             addCriterion("is_del <>", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelGreaterThan(Boolean value) {
+        public Criteria andIsDelGreaterThan(Byte value) {
             addCriterion("is_del >", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsDelGreaterThanOrEqualTo(Byte value) {
             addCriterion("is_del >=", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelLessThan(Boolean value) {
+        public Criteria andIsDelLessThan(Byte value) {
             addCriterion("is_del <", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsDelLessThanOrEqualTo(Byte value) {
             addCriterion("is_del <=", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelIn(List<Boolean> values) {
+        public Criteria andIsDelIn(List<Byte> values) {
             addCriterion("is_del in", values, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelNotIn(List<Boolean> values) {
+        public Criteria andIsDelNotIn(List<Byte> values) {
             addCriterion("is_del not in", values, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsDelBetween(Byte value1, Byte value2) {
             addCriterion("is_del between", value1, value2, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsDelNotBetween(Byte value1, Byte value2) {
             addCriterion("is_del not between", value1, value2, "isDel");
             return (Criteria) this;
         }

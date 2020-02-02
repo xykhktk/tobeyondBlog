@@ -41,12 +41,10 @@ public class MaximController extends BaseController{
         return  ReturnJson.success("添加成功");
     }
 
-    @PostMapping(value = "/editPage")
+    @PostMapping(value = "/detail")
     public ReturnJson editPage(@RequestParam(value = "id") Integer id){
-        MaximExample maximExample = new MaximExample();
-        maximExample.createCriteria().andIdEqualTo(id);
-        List<MaximPo> list = iMaximsService.list(maximExample);
-        returnData.put("data",list.get(0));
+        MaximPo maximPo = iMaximsService.selectByPrimaryKey(id);
+        returnData.put("data",maximPo);
         return ReturnJson.success("获取数据成功",returnData);
     }
 
