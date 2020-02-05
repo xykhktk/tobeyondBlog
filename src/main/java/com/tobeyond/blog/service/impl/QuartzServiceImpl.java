@@ -72,7 +72,8 @@ public class QuartzServiceImpl implements IQuartzService {
                         taskInformationsbBo.setGroupName(jobGroup);
                         taskInformationsbBo.setJobName(jobName);
                         taskInformationsbBo.setNextFireTime(nextFireTime);
-                        taskInformationsbBo.setTriggerState(triggerSstateCN);
+                        taskInformationsbBo.setTriggerState(scheduler.getTriggerState(triggerKey).name());
+                        taskInformationsbBo.setTriggerStateCN(triggerSstateCN);
                         taskInformationsBoList.add(taskInformationsbBo);
                     }
                 }

@@ -6,6 +6,7 @@ import com.tobeyond.blog.model.bo.ArticleBo;
 import com.tobeyond.blog.model.bo.ArticleTagBo;
 import com.tobeyond.blog.model.bo.TagBo;
 import com.tobeyond.blog.model.bo.UserCustom;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.model.vo.ArticleVo;
 import com.tobeyond.blog.model.po.ArticlePo;
@@ -41,9 +42,9 @@ public class ArticleController {
 
     @GetMapping(value = "/list")
     public ModelAndView articleList(@RequestParam(value = "page",required = false) Integer page){
-        PageInfo<ArticleBo> articlesPaginator =  articleService.articleList(page,10,null,Byte.valueOf("1"));
+        ListWithPager listWithPager =  articleService.articleList(page,10,null,Byte.valueOf("1"));
         ModelAndView modelAndView = new ModelAndView("/admin/article/list");
-        modelAndView.addObject("articleList",articlesPaginator);
+        modelAndView.addObject("articleList",listWithPager);
         return  modelAndView;
     }
 

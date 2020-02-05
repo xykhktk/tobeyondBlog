@@ -2,6 +2,7 @@ package com.tobeyond.blog.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.bo.ArticleBo;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.model.po.MaximExample;
 import com.tobeyond.blog.model.po.MaximPo;
@@ -32,8 +33,8 @@ public class IndexController {
 
     @RequestMapping("/")
     public ModelAndView index(){
-        PageInfo<ArticleBo> articlesPaginator = articleService.articleList(1,4,null,Byte.valueOf("1"));
-        List<ArticleBo> articleList = articlesPaginator.getList();
+        ListWithPager listWithPager = articleService.articleList(1,4,null,Byte.valueOf("1"));
+        List<ArticleBo> articleList = listWithPager.getList();
 
 //        List<Maxim> maximList = maximsService.maximList();
         MaximExample maximExample = new MaximExample();

@@ -3,6 +3,7 @@ package com.tobeyond.blog.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.bo.ArticleBo;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.IArticleService;
 import org.commonmark.node.Node;
@@ -28,9 +29,9 @@ public class ArticleController {
             @RequestParam(value = "tag_id", required = false) Integer tagId
     ) {
 
-        PageInfo<ArticleBo> articlesPaginator = articleService.articleList(page, 12, tagId,Byte.valueOf("1"));
+        ListWithPager listWithPager = articleService.articleList(page, 12, tagId,Byte.valueOf("1"));
         ModelAndView modelAndView = new ModelAndView("/articleList");
-        modelAndView.addObject("articlesPaginator", articlesPaginator);
+        modelAndView.addObject("articlesPaginator", listWithPager);
         return modelAndView;
     }
 

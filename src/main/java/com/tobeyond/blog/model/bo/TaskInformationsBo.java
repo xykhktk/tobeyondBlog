@@ -7,6 +7,16 @@ public class TaskInformationsBo {
 	private String groupName;
 	private String nextFireTime;
 	private String triggerState;
+
+	public String getTriggerStateCN() {
+		return triggerStateCN;
+	}
+
+	public void setTriggerStateCN(String triggerStateCN) {
+		this.triggerStateCN = triggerStateCN;
+	}
+
+	private String triggerStateCN;
 	private String cronExpression;
 
 	public String getJobName() {

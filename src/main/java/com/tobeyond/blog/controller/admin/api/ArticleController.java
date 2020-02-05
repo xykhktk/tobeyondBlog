@@ -6,6 +6,7 @@ import com.tobeyond.blog.annotation.AdminLoginToken;
 import com.tobeyond.blog.config.QiniuConfig;
 import com.tobeyond.blog.model.bo.ArticleBo;
 import com.tobeyond.blog.model.bo.TagBo;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.model.vo.ArticleVo;
 import com.tobeyond.blog.model.po.ArticlePo;
@@ -35,8 +36,8 @@ public class ArticleController extends BaseController{
 
     @PostMapping(value = "/list")
     public ReturnJson articleList(@RequestParam(value = "page",required = false) Integer page){
-        PageInfo<ArticleBo> articlesPaginator =  articleService.articleList(page,10,null,null);
-        returnData.put("data",articlesPaginator);
+        ListWithPager listWithPager =  articleService.articleList(page,10,null,null);
+        returnData.put("data",listWithPager);
         return  ReturnJson.success("获取列表成功",returnData);
     }
 

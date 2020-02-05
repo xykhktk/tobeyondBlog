@@ -1,5 +1,6 @@
 package com.tobeyond.blog.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.config.QiniuConfig;
@@ -7,6 +8,7 @@ import com.tobeyond.blog.dao.mapper.ArticleMapper;
 import com.tobeyond.blog.dao.mapper.TagMapper;
 import com.tobeyond.blog.model.bo.ArticleBo;
 import com.tobeyond.blog.model.bo.ArticleTagBo;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.po.*;
 import com.tobeyond.blog.dao.mapper.ArticleTagsMapper;
 import com.tobeyond.blog.service.IArticleService;
@@ -39,8 +41,8 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public PageInfo<ArticleBo> articleList(Integer page, Integer limit, Integer tag_id,Byte isShow) {
-        if(page == null) page = 1;
+    public ListWithPager articleList(Integer currentPage, Integer limit, Integer tag_id, Byte isShow) {
+        if(currentPage == null) currentPage = 1;
 
         List<ArticleTagsPo> articleTagsPoList = new ArrayList<>();
         if(tag_id != null){
@@ -60,9 +62,10 @@ public class ArticleServiceImpl implements IArticleService {
             criteria.andIdIn(articleIds);
         }
         articleExample.setOrderByClause("id desc");
+        Page page = PageHelper.startPage(currentPage,limit);
         List<ArticlePo> articlePoList =  articleMapper.selectByExample(articleExample);
 
-        List<ArticleBo> articleBoList = new ArrayList<>();
+        ArrayList<ArticleBo> articleBoList = new ArrayList<>();
         for(ArticlePo articlePo : articlePoList){
             ArticleBo articleBo = new ArticleBo();
             BeanUtils.copyProperties(articlePo,articleBo);
@@ -74,8 +77,12 @@ public class ArticleServiceImpl implements IArticleService {
             articleBoList.add(articleBo);
         }
 
-        PageHelper.startPage(page, limit);
-        return new PageInfo<>(articleBoList);
+        ListWithPager listWithPager = new ListWithPager();
+        listWithPager.setTotal(page.getTotal());
+        listWithPager.setList(articleBoList);
+        listWithPager.setPageSize(page.getPageSize());
+        listWithPager.setPageNum(page.getPageNum());
+        return  listWithPager;
     }
 
     @Override

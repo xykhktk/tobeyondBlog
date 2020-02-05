@@ -3,6 +3,7 @@ package com.tobeyond.blog.service;
 
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.model.bo.ArticleBo;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.po.ArticlePo;
 import com.tobeyond.blog.model.po.ArticleTagsPo;
 import com.tobeyond.blog.model.po.TagPo;
@@ -19,7 +20,8 @@ public interface IArticleService {
 
     List<ArticleTagsPo> getTagListByTagId(Long tag_id);
 
-    PageInfo<ArticleBo> articleList(Integer page, Integer limit, Integer tag_id,Byte is_show);
+//    PageInfo<ArticleBo> articleList(Integer page, Integer limit, Integer tag_id,Byte is_show);
+    ListWithPager articleList(Integer page, Integer limit, Integer tag_id,Byte is_show);
 
     ArticleBo articleDetail(Integer id);
 
