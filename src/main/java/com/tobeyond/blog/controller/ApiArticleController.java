@@ -32,7 +32,7 @@ public class ApiArticleController extends ApiBaseController {
     }
 
     @PostMapping("/detail")
-    public ReturnJson articleDetail(@RequestParam(value = "page", required = true) Integer id){
+    public ReturnJson articleDetail(@RequestParam(value = "id", required = true) Integer id){
         ArticleBo article = articleService.articleDetail(id);
         Parser parser = Parser.builder().build();
         Node node = parser.parse(article.getContent());
