@@ -1,8 +1,10 @@
 package com.tobeyond.blog.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.dao.mapper.TagMapper;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.po.TagExample;
 import com.tobeyond.blog.model.po.TagPo;
 import com.tobeyond.blog.service.ITagService;
@@ -10,6 +12,7 @@ import com.tobeyond.blog.util.DateKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,15 +33,21 @@ public class TagServiceImpl implements ITagService {
     }
 
     @Override
-    public PageInfo<TagPo> listWithPager(Integer page, Integer limit) {
-        if(page == null) page = 1;
+    public ListWithPager listWithPager(Integer currentPage, Integer limit) {
+        if(currentPage == null) currentPage = 1;
         if(limit == null) limit = 10;
         TagExample example = new TagExample();
         example.createCriteria().andDeletedAtIsNull();
         example.setOrderByClause("id desc");
-        PageHelper.startPage(page, limit);
+        Page page = PageHelper.startPage(currentPage, limit);
         List<TagPo> List = tagMapper.selectByExample(example);
-        return new PageInfo<>(List);
+
+        ListWithPager listWithPager = new ListWithPager();
+        listWithPager.setTotal(page.getTotal());
+        listWithPager.setList((ArrayList) List);
+        listWithPager.setPageSize(page.getPageSize());
+        listWithPager.setPageNum(page.getPageNum());
+        return  listWithPager;
     }
 
     @Override

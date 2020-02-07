@@ -2,6 +2,7 @@ package com.tobeyond.blog.controller.admin.api;
 
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.annotation.AdminLoginToken;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.model.po.MaximExample;
 import com.tobeyond.blog.model.po.MaximPo;
@@ -22,8 +23,8 @@ public class MaximController extends BaseController{
 
     @PostMapping(value = "/list")
     public ReturnJson maximList(@RequestParam(value = "page",required = false) Integer page){
-        PageInfo<MaximPo> pageInfo =  iMaximsService.listWithPager(page,10);
-        returnData.put("data",pageInfo);
+        ListWithPager listWithPager =  iMaximsService.listWithPager(page,10);
+        returnData.put("data",listWithPager);
         return  ReturnJson.success("获取列表成功",returnData);
     }
 

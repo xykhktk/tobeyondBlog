@@ -2,6 +2,7 @@ package com.tobeyond.blog.service;
 
 
 import com.github.pagehelper.PageInfo;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.po.MaximExample;
 import com.tobeyond.blog.model.po.MaximPo;
 
@@ -13,7 +14,7 @@ public interface IMaximsService {
 
     List<MaximPo> selectByExample(MaximExample example);
 
-    PageInfo<MaximPo>  listWithPager(Integer page,Integer limit);
+    ListWithPager listWithPager(Integer page, Integer limit);
 
     List<MaximPo> list(MaximExample example);
 

@@ -2,6 +2,7 @@ package com.tobeyond.blog.controller.admin.api;
 
 import com.github.pagehelper.PageInfo;
 import com.tobeyond.blog.annotation.AdminLoginToken;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.dto.ReturnJson;
 import com.tobeyond.blog.model.po.TagExample;
 import com.tobeyond.blog.model.po.TagPo;
@@ -23,8 +24,8 @@ public class TagController extends BaseController{
 
     @PostMapping(value = "/list")
     public ReturnJson list(@RequestParam(value = "page",required = false) Integer page){
-        PageInfo<TagPo> pageInfo =  iTagService.listWithPager(page,10);
-        returnData.put("data",pageInfo);
+        ListWithPager listWithPager=  iTagService.listWithPager(page,10);
+        returnData.put("data",listWithPager);
         return  ReturnJson.success("获取列表成功",returnData);
     }
 

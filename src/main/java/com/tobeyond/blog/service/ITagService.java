@@ -1,7 +1,7 @@
 package com.tobeyond.blog.service;
 
 
-import com.github.pagehelper.PageInfo;
+import com.tobeyond.blog.model.dto.ListWithPager;
 import com.tobeyond.blog.model.po.TagExample;
 import com.tobeyond.blog.model.po.TagPo;
 
@@ -13,7 +13,7 @@ public interface ITagService {
 
     List<TagPo> selectByExample(TagExample example);
 
-    PageInfo<TagPo> listWithPager(Integer page, Integer limit);
+    ListWithPager listWithPager(Integer page, Integer limit);
 
     Boolean add(TagPo po);
 
