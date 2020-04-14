@@ -18,46 +18,45 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-    @Autowired
-    IArticleService articleService;
-
-    @Autowired
-    IMaximsService maximsService;
-
-    private ModelAndView modelAndView;
-
-    @RequestMapping("/show")
-    public String getIndex(){
-        return "index";
-    }
-
-    @RequestMapping("/")
-    public ModelAndView index(){
-        ListWithPager listWithPager = articleService.articleList(1,4,null,Byte.valueOf("1"));
-        List<ArticleBo> articleList = listWithPager.getList();
-
-//        List<Maxim> maximList = maximsService.maximList();
-        MaximExample maximExample = new MaximExample();
-        maximExample.createCriteria().andIsShowEqualTo(Byte.valueOf("1"));
-        List<MaximPo> maximList = maximsService.selectByExample(maximExample);
-
-        ModelAndView modelAndView = new ModelAndView("/index");
-        modelAndView.addObject("articleList",articleList);
-        modelAndView.addObject("maximList",maximList);
-        return modelAndView;
-    }
-
-    @RequestMapping("/contact")
-    public ModelAndView message(){
-        modelAndView = new ModelAndView("/contact");
-        return modelAndView;
-    }
-
-    @RequestMapping("/about")
-    public ModelAndView about(){
-        modelAndView = new ModelAndView("/about");
-        return modelAndView;
-    }
+//    @Autowired
+//    IArticleService articleService;
+//
+//    @Autowired
+//    IMaximsService maximsService;
+//
+//    private ModelAndView modelAndView;
+//
+//    @RequestMapping("/show")
+//    public String getIndex(){
+//        return "index";
+//    }
+//
+//    @RequestMapping("/")
+//    public ModelAndView index(){
+//        ListWithPager listWithPager = articleService.articleList(1,4,null,Byte.valueOf("1"));
+//        List<ArticleBo> articleList = listWithPager.getList();
+//
+//        MaximExample maximExample = new MaximExample();
+//        maximExample.createCriteria().andIsShowEqualTo(Byte.valueOf("1"));
+//        List<MaximPo> maximList = maximsService.selectByExample(maximExample);
+//
+//        ModelAndView modelAndView = new ModelAndView("/index");
+//        modelAndView.addObject("articleList",articleList);
+//        modelAndView.addObject("maximList",maximList);
+//        return modelAndView;
+//    }
+//
+//    @RequestMapping("/contact")
+//    public ModelAndView message(){
+//        modelAndView = new ModelAndView("/contact");
+//        return modelAndView;
+//    }
+//
+//    @RequestMapping("/about")
+//    public ModelAndView about(){
+//        modelAndView = new ModelAndView("/about");
+//        return modelAndView;
+//    }
 
 //    @ResponseBody
 //    @RequestMapping(value = "/leaveMessage",method = RequestMethod.POST)

@@ -1,9 +1,9 @@
 package com.tobeyond.blog.task;
 
-import com.tobeyond.blog.util.DateKit;
+import com.tobeyond.blog.mq.MqListener;
+import com.tobeyond.blog.mq.MqSender;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +12,8 @@ public class Scheduler {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Autowired MqSender mqSender;
+    @Autowired
+    MqSender mqSender;
 
     /**
      * 只是一个示例

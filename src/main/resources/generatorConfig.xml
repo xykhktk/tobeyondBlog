@@ -20,9 +20,10 @@
         </commentGenerator>
 
         <!--jdbc的数据库连接 -->
+        <!--tinyInt1isBit=false  对tinyint 生成byte，而不是 boolean-->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://127.0.0.1:3306/tobeyond_springboot?serverTimezone=GMT"
+                connectionURL="jdbc:mysql://127.0.0.1:3306/tobeyond_springboot?serverTimezone=GMT&amp;tinyInt1isBit=false"
                 userId="root"
                 password="root">
         </jdbcConnection>
@@ -38,7 +39,7 @@
             targetProject     指定在该项目下所在的路径
         -->
         <!--<javaModelGenerator targetPackage="com.wangpu.model" targetProject=".\src\main\java">-->
-        <javaModelGenerator targetPackage="com.tobeyond.blog.model.vo" targetProject="./src/main/java">
+        <javaModelGenerator targetPackage="com.tobeyond.blog.model" targetProject="./src/main/java">
             <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
             <property name="enableSubPackages" value="true"/>
             <!-- 是否对model添加 构造函数 -->
@@ -51,7 +52,8 @@
 
         <!--mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
         <!--<sqlMapGenerator targetPackage="mappers" targetProject=".\src\main\resources">-->
-        <sqlMapGenerator targetPackage="com.tobeyond.blog.dao" targetProject="./src/main/java">
+        <!--<sqlMapGenerator targetPackage="com.tobeyond.blog.dao" targetProject="./src/main/java">-->
+        <sqlMapGenerator targetPackage="com.tobeyond.blog.model" targetProject="./src/main/java">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
@@ -62,8 +64,8 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="article_tags"
-               domainObjectName="ArticleTags"
+        <table tableName="tags"
+               domainObjectName="Tag"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="false"
